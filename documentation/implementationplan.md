@@ -40,25 +40,25 @@ src/
 ```
 
 ### Development Phases
-#### Phase 1: Setup & Authentication (Week 1)
+#### Phase 1: Setup & Authentication
 - Initialize Vue project with Vite
 - Install and configure Firebase
 - Implement authentication with role management
 - Create basic layout with navigation
 
-#### Phase 2: Event Management (Week 2)
+#### Phase 2: Event Management
 - Create event creation/editing form
 - Implement event listing with categories
 - Add response system (Yes/No/Maybe)
 - Set up real-time Firestore listeners
 
-#### Phase 3: Additional Features (Week 3)
+#### Phase 3: Additional Features
 - Implement event chat functionality
 - Add signup deadline handling
 - Create admin panel for board members
 - Add user management
 
-#### Phase 4: Polish & Deployment (Week 4)
+#### Phase 4: Polish & Deployment
 - Responsive design improvements
 - Error handling and loading states
 - Performance optimization
