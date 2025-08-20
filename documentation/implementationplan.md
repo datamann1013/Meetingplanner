@@ -14,7 +14,7 @@
 - Role-based access (Board/Members)
 
 ### Project Structure
-
+```
 src/
 ├── components/
 │   ├── EventList.vue
@@ -36,6 +36,8 @@ src/
 │   └── index.js
 └── services/
     └── firebase.js
+
+```
 
 ### Development Phases
 #### Phase 1: Setup & Authentication (Week 1)
