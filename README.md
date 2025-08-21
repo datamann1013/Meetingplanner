@@ -1,93 +1,100 @@
 # EventHub - Student Organisation Event Manager
-A Vue-based event management system for student organisations with real-time updates.
+
+A self-hosted, modern event management system for student organisations. Built with Strapi (backend) and Vue 3 (frontend).
 
 ## Features
-- Role-based authentication (Board/Member)
-- Event creation with categories and deadlines
-- Yes/No/Maybe response system
-- Real-time event chats
-- Responsive design
-- Real-time updates
+
+- **User Roles:** Members and Board members.
+- **Event Management:** Board members can create, edit, and delete events.
+- **RSVP System:** Users can respond with Yes, No, or Maybe until a set signup deadline.
+- **Event Chat:** Live discussion for each event.
+- **Transparency:** Everyone can see who has answered what for an event.
+- **Moderation:** Board members can delete chat messages and manage users.
+- **User Tags:** Assign custom roles (e.g., "Treasurer", "Lead Volunteer") to users.
+- **Active/Inactive:** Mark members as active or inactive.
 
 ## Tech Stack
-- Vue 3 (Composition API)
-- Vuetify UI Framework
-- Firebase (Firestore, Authentication, Hosting)
-- Vue Router & Pinia
+
+### Backend
+- **Strapi** (Headless CMS)
+- **PostgreSQL** (Production Database)
+- **JWT** (Authentication)
+
+### Frontend
+- **Vue 3** (Composition API)
+- **Vite** (Build Tool)
+- **Pinia** (State Management)
+- **Vue Router** (Navigation)
+- **Vuetify** (UI Component Library)
+- **Axios** (HTTP Client)
 
 ## Project Setup
+
+### Prerequisites
+- Node.js (v18 or higher)
+- A PostgreSQL database (for production)
+- npm or yarn
+
+### 1. Backend (Strapi) Setup
+
 ```bash
+# Clone the repository (when available)
+# git clone <your-repo>
+# cd backend
+
+# Or create a new Strapi project
+npx create-strapi-app@latest backend --quickstart
+cd backend
+
+# Install dependencies (if cloning)
+npm install
+
+# Start the development server
+npm run develop
+```
+
+Access the Strapi admin panel at http://localhost:1337/admin to create your first admin user.
+
+**Configuration:**
+
+- In the Admin Panel, go to Settings > Content-Type Builder and create the Collections as described in the plan.
+- Go to Settings > Users & Permissions Plugin > Roles and configure the permissions for Public, Authenticated, and Board roles.
+
+### 2. Frontend (Vue) Setup
+```bash
+# Navigate to the frontend directory
+cd ../frontend
+
 # Install dependencies
 npm install
 
-# Compile and hot-reload for development
+# Start the development server
 npm run dev
-
-# Compile and minify for production
-npm run build
-
-# Deploy to Firebase
-npm run deploy
 ```
 
-## Firebase Configuration
-- Create a new Firebase project
-- Enable Authentication (Email/Password)
-- Create a Firestore database
-- Copy your config to .env.local:
+Access the application at http://localhost:5173.
 
-```text
-VUE_APP_FIREBASE_API_KEY=your_api_key
-VUE_APP_FIREBASE_AUTH_DOMAIN=your_project_id.firebaseapp.com
-VUE_APP_FIREBASE_PROJECT_ID=your_project_id
-VUE_APP_FIREBASE_STORAGE_BUCKET=your_project_id.appspot.com
-VUE_APP_FIREBASE_MESSAGING_SENDER_ID=123456789
-VUE_APP_FIREBASE_APP_ID=your_app_id
+#### Environment Variables:
+Create a .env file in the frontend directory:
+
+```env
+VITE_STRAPI_API_URL=http://localhost:1337/api
 ```
+## Deployment
+This setup is designed for deployment on a Linux server (e.g., Ubuntu).
+
+### Backend Deployment (Strapi + PostgreSQL):
+1. Server Setup: Install Node.js, PM2, Nginx, and PostgreSQL on your server.
+2. Database: Create a new PostgreSQL user and database for Strapi.
+3. Configuration: Update the backend's config/database.js and config/server.js files for production settings (use environment variables for secrets!).
+4. Process Management: Use PM2 to run npm start in the backend directory to keep Strapi running.
+5. Web Server: Configure Nginx as a reverse proxy to forward requests to your Strapi port (e.g., 1337).
+
+### Frontend Deployment (Vue):
+1. Build: Run npm run build in the frontend directory. This creates a dist folder with static files.
+2. Serve with Nginx: Configure a separate Nginx server block to serve the contents of the dist folder as a static website. Point your domain (e.g., app.yourdomain.com) to this.
+
 ## Usage
-### For Board Members:
-- Log in with board credentials
-- Access admin panel from navigation
-- Create events with details, categories, and deadlines
-- Monitor responses and chat activity
-
-### For Members:
-- Log in with member credentials
--View upcoming events on dashboard
-- Respond to events (Yes/No/Maybe)
-- Participate in event-specific chats
-
-## Firestore Security Rules
-```text
-rules_version = '2';
-service cloud.firestore {
-  match /databases/{database}/documents {
-    // Events collection
-    match /events/{eventId} {
-      allow read: if request.auth != null;
-      allow write: if request.auth != null && 
-        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'board';
-      
-      // Event responses subcollection
-      match /responses/{responseId} {
-        allow read: if request.auth != null;
-        allow create, update: if request.auth != null && 
-          request.auth.uid == responseId;
-        allow delete: if false;
-      }
-      
-      // Event chat subcollection
-      match /chat/{messageId} {
-        allow read: if request.auth != null;
-        allow write: if request.auth != null;
-      }
-    }
-    
-    // Users collection
-    match /users/{userId} {
-      allow read: if request.auth != null;
-      allow write: if request.auth.uid == userId;
-    }
-  }
-}
-```
+- Board Members: Log in and access the Admin Panel via the link in the navigation. You can create events and manage users there. You can also delete chat messages directly from the event view in the main app.
+- Members: Log in to view events, RSVP, and participate in event chats.
+- Signup Deadline: After an event's signup deadline passes, the RSVP buttons will be disabled for everyone.
