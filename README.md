@@ -98,3 +98,4 @@ This setup is designed for deployment on a Linux server (e.g., Ubuntu).
 - Board Members: Log in and access the Admin Panel via the link in the navigation. You can create events and manage users there. You can also delete chat messages directly from the event view in the main app.
 - Members: Log in to view events, RSVP, and participate in event chats.
 - Signup Deadline: After an event's signup deadline passes, the RSVP buttons will be disabled for everyone.
+  
