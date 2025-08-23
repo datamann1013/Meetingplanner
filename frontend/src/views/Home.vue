@@ -1,5 +1,5 @@
 <template>
-  <div class="centered-content">
+  <div class="centered-content" style="padding-top: 64px; min-height: calc(100vh - 64px);">
     <v-container>
       <v-row justify="center">
         <v-col cols="12" md="8" class="text-center">

@@ -1,5 +1,5 @@
 <template>
-  <div class="centered-content">
+  <div class="centered-content content-with-bars" style="padding-top: 64px; min-height: calc(100vh - 64px);">
     <v-card class="login-card" elevation="12">
       <v-toolbar color="primary" dark flat>
         <v-toolbar-title>Login</v-toolbar-title>

@@ -17,3 +17,9 @@ html, body {
   min-height: 100vh;
   width: 100%;
 }
+
+.content-with-bars {
+  padding-top: 60px;
+  padding-bottom: 70px;
+  min-height: calc(100vh - 180px);
+}
