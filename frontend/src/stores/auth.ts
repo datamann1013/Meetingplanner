@@ -1,0 +1,129 @@
+import { defineStore } from 'pinia'
+import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+
+interface User {
+  id: number
+  username: string
+  email: string
+  provider: string
+  confirmed: boolean
+  blocked: boolean
+  createdAt: string
+  updatedAt: string
+}
+
+interface AuthResponse {
+  jwt: string
+  user: User
+}
+
+export const useAuthStore = defineStore('auth', () => {
+  const user = ref<User | null>(null)
+  const token = ref<string | null>(localStorage.getItem('token') || null)
+  const isAuthenticated = ref<boolean>(false)
+  const isLoading = ref<boolean>(false)
+  const error = ref<string | null>(null)
+  const isBoardMember = ref<boolean>(false)
+  const router = useRouter()
+
+
+  function init() {
+    if (token.value) {
+      validateToken()
+    }
+  }
+
+  async function login(identifier: string, password: string): Promise<AuthResponse> {
+    isLoading.value = true
+    error.value = null
+    
+    try {
+      const response = await fetch('http://localhost:1337/api/auth/local', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ identifier, password }),
+      })
+
+      const data: AuthResponse & { error?: any } = await response.json()
+
+      if (data.error) {
+        throw new Error(data.error.message)
+      }
+
+      token.value = data.jwt
+      user.value = data.user
+      isAuthenticated.value = true
+      localStorage.setItem('token', data.jwt)
+      checkUserRole()
+      
+      return data
+    } catch (err) {
+      if (err instanceof Error) {
+        error.value = err.message
+      } else {
+        error.value = 'An unknown error occurred'
+      }
+      throw err
+    } finally {
+      isLoading.value = false
+    }
+  }
+
+  function logout(): void {
+    user.value = null
+    token.value = null
+    isAuthenticated.value = false
+    isBoardMember.value = false
+    localStorage.removeItem('token')
+    router.push('/login')
+  }
+
+
+  async function validateToken(): Promise<boolean> {
+    if (!token.value) return false
+    
+    try {
+      const response = await fetch('http://localhost:1337/api/users/me', {
+        headers: {
+          'Authorization': `Bearer ${token.value}`
+        }
+      })
+      
+      if (response.ok) {
+        user.value = await response.json()
+        isAuthenticated.value = true
+        checkUserRole()
+        return true
+      } else {
+        throw new Error('Invalid token')
+      }
+    } catch (err) {
+      logout()
+      return false
+    }
+  }
+
+  function checkUserRole(): void {
+    if (user.value && user.value.username.includes('board')) {
+      isBoardMember.value = true
+    } else {
+      isBoardMember.value = false
+    }
+  }
+
+  return { 
+    user, 
+    token, 
+    isAuthenticated, 
+    isLoading, 
+    error, 
+    isBoardMember,
+    login, 
+    logout, 
+    init,
+    checkUserRole
+  }
+})

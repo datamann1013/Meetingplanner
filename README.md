@@ -102,3 +102,5 @@ This setup is designed for deployment on a Linux server (e.g., Ubuntu).
 ## Delayed features
 Customization (Optional but Recommended for deadlines):
 We will write custom code in /src/api/rsvp/controllers/rsvp.js to prevent creating/updating an RSVP if the event's signup_deadline has passed.
+
+Proper board member check through Strapi. Go over authenticationwith that in mind later.

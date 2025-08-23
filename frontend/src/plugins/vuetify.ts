@@ -41,5 +41,4 @@ export default createVuetify({
   },
 })
 
-// Export types for TypeScript support
 export type Vuetify = ReturnType<typeof createVuetify>
