@@ -19,7 +19,7 @@ const LightThemeC: ThemeDefinition = {
     success: '#4CAF50', 
     warning: '#FB8C00',
    
-    'on-surface': '#2E2E2E'
+    'on-surface': '#2E2E2E',
   }
 }
 
