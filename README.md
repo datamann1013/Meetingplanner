@@ -99,3 +99,6 @@ This setup is designed for deployment on a Linux server (e.g., Ubuntu).
 - Members: Log in to view events, RSVP, and participate in event chats.
 - Signup Deadline: After an event's signup deadline passes, the RSVP buttons will be disabled for everyone.
   
+## Delayed features
+Customization (Optional but Recommended for deadlines):
+We will write custom code in /src/api/rsvp/controllers/rsvp.js to prevent creating/updating an RSVP if the event's signup_deadline has passed.

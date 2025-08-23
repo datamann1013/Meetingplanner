@@ -1,0 +1,60 @@
+{
+  "kind": "collectionType",
+  "collectionName": "events",
+  "info": {
+    "singularName": "event",
+    "pluralName": "events",
+    "displayName": "event"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "date": {
+      "type": "datetime"
+    },
+    "location": {
+      "type": "string"
+    },
+    "capacity": {
+      "type": "integer"
+    },
+    "signup_deadline": {
+      "type": "datetime"
+    },
+    "contact_info": {
+      "type": "text"
+    },
+    "categories": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::category.category",
+      "inversedBy": "events"
+    },
+    "chat_messages": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::chat-message.chat-message",
+      "mappedBy": "event"
+    },
+    "rsvps": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::rsvp.rsvp",
+      "mappedBy": "event"
+    },
+    "user": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "events"
+    }
+  }
+}

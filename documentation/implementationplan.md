@@ -37,7 +37,7 @@ cd backend
         - chat-message belongs to one user (author)
 
 - Collection: rsvp
-    - status (Enumeration: yes, no, maybe)
+    - status_answer (Enumeration: yes, no, maybe)
     - Relations:
         - rsvp belongs to one event
         - rsvp belongs to one user
