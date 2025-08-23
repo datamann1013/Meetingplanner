@@ -5,7 +5,6 @@ import { aliases, mdi } from 'vuetify/iconsets/mdi'
 import '@mdi/font/css/materialdesignicons.css'
 import type { ThemeDefinition } from 'vuetify'
 
-// light theme
 const LightThemeC: ThemeDefinition = {
   dark: false,
   colors: {
