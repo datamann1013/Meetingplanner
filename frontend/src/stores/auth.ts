@@ -11,6 +11,7 @@ interface User {
   blocked: boolean
   createdAt: string
   updatedAt: string
+  role?: string
 }
 
 interface AuthResponse {
@@ -25,12 +26,17 @@ export const useAuthStore = defineStore('auth', () => {
   const isLoading = ref<boolean>(false)
   const error = ref<string | null>(null)
   const isBoardMember = ref<boolean>(false)
+  const isInitialized = ref<boolean>(false)
   const router = useRouter()
 
 
-  function init() {
-    if (token.value) {
-      validateToken()
+  function init(): void {
+    if (token.value && !isInitialized.value) {
+      validateToken().then(() => {
+        isInitialized.value = true
+      })
+    } else {
+      isInitialized.value = true
     }
   }
 
@@ -121,6 +127,7 @@ export const useAuthStore = defineStore('auth', () => {
     isLoading, 
     error, 
     isBoardMember,
+    isInitialized,
     login, 
     logout, 
     init,
