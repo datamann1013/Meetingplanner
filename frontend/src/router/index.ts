@@ -1,21 +1,17 @@
-import { createRouter, createWebHistory } from 'vue-router'
-import type { RouteRecordRaw } from 'vue-router'
-import { useAuthStore } from '../stores/auth'
-import Home from '../views/Home.vue'
-import LoginView from '../views/LoginView.vue'
+import { createRouter, createWebHistory, RouteLocationNormalized, NavigationGuardNext } from 'vue-router'
+import { useAuthStore } from '@/stores/auth'
 
-
-const routes: Array<RouteRecordRaw> = [
+const routes = [
   {
     path: '/',
     name: 'Home',
-    component: Home,
-    meta: { requiresAuth: true }
+    component: () => import('@/views/HomeView.vue')
   },
   {
     path: '/login',
     name: 'Login',
-    component: LoginView
+    component: () => import('@/views/LoginView.vue'),
+    meta: { requiresGuest: true }
   }
 ]
 
@@ -24,27 +20,33 @@ const router = createRouter({
   routes
 })
 
-router.beforeEach((to, from, next) => {
+router.beforeEach(async (to: RouteLocationNormalized, from: RouteLocationNormalized, next: NavigationGuardNext) => {
   const authStore = useAuthStore()
   
-  if (!authStore.isInitialized && localStorage.getItem('token')) {
-    authStore.init()
+  if (localStorage.getItem('jwt') && !authStore.isAuthenticated) {
+    await authStore.checkAuth()
   }
   
   if (to.meta.requiresAuth && !authStore.isAuthenticated) {
     next('/login')
-  } 
-
-  else if (to.meta.requiresBoard && !authStore.isBoardMember) {
-    next('/')
-  } 
-
-  else if (to.name === 'Login' && authStore.isAuthenticated) {
-    next('/')
-  } 
-  else {
-    next()
+    return
   }
+  
+  if (to.meta.requiresGuest && authStore.isAuthenticated) {
+    next('/')
+    return
+  }
+  
+  if (to.meta.requiresBoard && authStore.isAuthenticated) {
+    //Temp version of board check, will be replaced with proper role management later
+    //const isBoardMember = authStore.user?.role?.name === 'Board'
+    //if (!isBoardMember) {
+      next('/')
+      return
+    //}
+  }
+  
+  next()
 })
 
 export default router

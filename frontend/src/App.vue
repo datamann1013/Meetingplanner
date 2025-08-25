@@ -1,45 +1,30 @@
+<!-- src/App.vue -->
 <template>
   <v-app>
-    <!-- Always show the navigation bar -->
-    <v-app-bar app color="primary" dark>
-      <v-toolbar-title>Event Manager</v-toolbar-title>
+    <v-app-bar color="primary" density="compact">
+      <v-app-bar-title>Event Manager</v-app-bar-title>
+      
       <v-spacer></v-spacer>
       
-      <!-- Show navigation links only when not on login page -->
-      <div v-if="!isLoginPage">
-        <!-- Navigation for authenticated users -->
-        <div v-if="authStore.isAuthenticated">
-          <v-btn to="/" text>Home</v-btn>
-          <v-btn @click="authStore.logout" text>Logout</v-btn>
-        </div>
-        
-        <!-- Navigation for unauthenticated users -->
-        <v-btn v-else to="/login" text>Login</v-btn>
-      </div>
+      <v-btn to="/" variant="text">Events</v-btn>
       
-      <!-- Show only the title on login page (no links) -->
-      <div v-else>
-        <!-- Empty div to maintain layout -->
-      </div>
+      <template v-if="authStore.isAuthenticated">
+        <!-- <v-btn v-if="authStore.user?.role?.name === 'Board'" to="/admin" variant="text">Admin</v-btn> -->
+        <v-btn variant="text" @click="authStore.logout">Logout</v-btn>
+      </template>
+      <template v-else>
+        <v-btn to="/login" variant="text">Login</v-btn>
+      </template>
     </v-app-bar>
-    
+
     <v-main>
-      <router-view />
+      <router-view></router-view>
     </v-main>
-    <v-footer app height="64" class="justify-center">
-      <span>&copy; {{ new Date().getFullYear() }} Event Manager</span>
-    </v-footer>
   </v-app>
 </template>
 
-<script setup>
-import { useAuthStore } from './stores/auth'
-import { computed } from 'vue'
-import { useRoute } from 'vue-router'
+<script setup lang="ts">
+import { useAuthStore } from '@/stores/auth'
 
 const authStore = useAuthStore()
-const route = useRoute()
-
-// Check if we're on the login page
-const isLoginPage = computed(() => route.name === 'Login')
 </script>

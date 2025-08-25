@@ -87,6 +87,9 @@ export const useAuthStore = defineStore('auth', () => {
     router.push('/login')
   }
 
+  async function checkAuth(): Promise<void> {
+    await validateToken()
+  }
 
   async function validateToken(): Promise<boolean> {
     if (!token.value) return false
@@ -131,6 +134,7 @@ export const useAuthStore = defineStore('auth', () => {
     login, 
     logout, 
     init,
-    checkUserRole
+    checkUserRole,
+    checkAuth
   }
 })
