@@ -2,6 +2,13 @@ import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 
+interface Role {
+  id: number
+  name: string
+  description: string
+  type: string
+}
+
 interface User {
   id: number
   username: string
@@ -11,7 +18,7 @@ interface User {
   blocked: boolean
   createdAt: string
   updatedAt: string
-  role?: string
+  role?: Role
 }
 
 interface AuthResponse {

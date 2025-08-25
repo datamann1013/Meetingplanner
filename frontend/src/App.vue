@@ -9,7 +9,7 @@
       <v-btn to="/" variant="text">Events</v-btn>
       
       <template v-if="authStore.isAuthenticated">
-        <!-- <v-btn v-if="authStore.user?.role?.name === 'Board'" to="/admin" variant="text">Admin</v-btn> -->
+        <v-btn v-if="authStore.user?.role?.name === 'Board'" to="/admin" variant="text">Admin</v-btn>
         <v-btn variant="text" @click="authStore.logout">Logout</v-btn>
       </template>
       <template v-else>

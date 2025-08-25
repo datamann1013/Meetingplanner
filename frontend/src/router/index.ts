@@ -12,6 +12,12 @@ const routes = [
     name: 'Login',
     component: () => import('@/views/LoginView.vue'),
     meta: { requiresGuest: true }
+  },
+  {
+    path: '/admin',
+    name: 'Admin',
+    component: () => import('@/views/AdminView.vue'),
+    meta: { requiresAuth: true, requiresBoard: true }
   }
 ]
 
@@ -39,11 +45,11 @@ router.beforeEach(async (to: RouteLocationNormalized, from: RouteLocationNormali
   
   if (to.meta.requiresBoard && authStore.isAuthenticated) {
     //Temp version of board check, will be replaced with proper role management later
-    //const isBoardMember = authStore.user?.role?.name === 'Board'
-    //if (!isBoardMember) {
+    const isBoardMember = authStore.user?.role?.name === 'Board'
+    if (!isBoardMember) {
       next('/')
       return
-    //}
+    }
   }
   
   next()
