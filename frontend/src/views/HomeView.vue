@@ -48,9 +48,11 @@
 import { ref, onMounted } from 'vue'
 import { strapi } from '@/services/strapi'
 import { StrapiResponse, StrapiEntity, Event } from '@/types'
+import { useAuthStore } from '@/stores/auth' // <-- Add this import
 
 const events = ref<StrapiEntity<Event>[]>([])
 const loading = ref<boolean>(true)
+const authStore = useAuthStore() // <-- Initialize the store
 
 onMounted(async (): Promise<void> => {
   try {

@@ -1,14 +1,12 @@
 import axios, { AxiosInstance, AxiosResponse, InternalAxiosRequestConfig } from 'axios'
 
-// Create axios instance
 const api: AxiosInstance = axios.create({
   baseURL: import.meta.env.VITE_STRAPI_API_URL || 'http://localhost:1337/api'
 })
 
-// Request interceptor to add auth token
 api.interceptors.request.use(
   (config: InternalAxiosRequestConfig): InternalAxiosRequestConfig => {
-    const token = localStorage.getItem('jwt')
+        const token = localStorage.getItem('jwt')
     if (token && config.headers) {
       config.headers.Authorization = `Bearer ${token}`
     }
@@ -19,7 +17,6 @@ api.interceptors.request.use(
   }
 )
 
-// Response interceptor to handle errors
 api.interceptors.response.use(
   (response: AxiosResponse) => response,
   (error) => {

@@ -1,4 +1,4 @@
-<!-- src/App.vue -->
+
 <template>
   <v-app>
     <v-app-bar color="primary" density="compact">

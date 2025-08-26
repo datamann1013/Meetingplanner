@@ -69,7 +69,7 @@ export const useAuthStore = defineStore('auth', () => {
       token.value = data.jwt
       user.value = data.user
       isAuthenticated.value = true
-      localStorage.setItem('token', data.jwt)
+      localStorage.setItem('jwt', data.jwt)
       checkUserRole()
       
       return data
@@ -100,22 +100,19 @@ export const useAuthStore = defineStore('auth', () => {
 
   async function validateToken(): Promise<boolean> {
     if (!token.value) return false
-    
+
     try {
-      const response = await fetch('http://localhost:1337/api/users/me', {
+      const response = await fetch('http://localhost:1337/api/users/me?populate=role', {
         headers: {
-          'Authorization': `Bearer ${token.value}`
+          'Authorization': `Bearer ${token.value}`,
+          'Content-Type': 'application/json'
         }
       })
-      
-      if (response.ok) {
-        user.value = await response.json()
-        isAuthenticated.value = true
-        checkUserRole()
-        return true
-      } else {
-        throw new Error('Invalid token')
-      }
+      const data = await response.json()
+      user.value = data
+      isAuthenticated.value = true
+      checkUserRole()
+      return true
     } catch (err) {
       logout()
       return false
@@ -123,7 +120,7 @@ export const useAuthStore = defineStore('auth', () => {
   }
 
   function checkUserRole(): void {
-    if (user.value && user.value.username.includes('board')) {
+    if (user.value && user.value.role?.name === 'Board') {
       isBoardMember.value = true
     } else {
       isBoardMember.value = false
