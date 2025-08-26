@@ -27,13 +27,13 @@
         lg="4"
       >
         <v-card>
-          <v-card-title>{{ event.attributes.title }}</v-card-title>
+          <v-card-title>{{ event.title }}</v-card-title>
           <v-card-subtitle>
-            {{ formatDate(event.attributes.date) }} • {{ event.attributes.location }}
+            {{ formatDate(event.date) }} • {{ event.location }}
           </v-card-subtitle>
           <v-card-text>
-            <p>{{ truncateText(event.attributes.description, 100) }}</p>
-            <p>Capacity: {{ event.attributes.capacity }}</p>
+            <p>{{ truncateText(event.description, 100) }}</p>
+            <p>Capacity: {{ event.capacity }}</p>
           </v-card-text>
           <v-card-actions>
             <v-btn :to="`/event/${event.id}`" color="primary">View Details</v-btn>
@@ -63,6 +63,7 @@ onMounted(async (): Promise<void> => {
       }
     })
     events.value = response.data.data
+    console.log('Fetched events:', events.value) // <-- Add this line
   } catch (error) {
     console.error('Error fetching events:', error)
   } finally {

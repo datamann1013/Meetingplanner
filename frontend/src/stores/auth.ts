@@ -66,10 +66,13 @@ export const useAuthStore = defineStore('auth', () => {
         throw new Error(data.error.message)
       }
 
+      localStorage.setItem('jwt', data.jwt)
       token.value = data.jwt
       user.value = data.user
       isAuthenticated.value = true
-      localStorage.setItem('jwt', data.jwt)
+
+      user.value = await fetchUserWithRole(data.jwt)
+      isAuthenticated.value = true
       checkUserRole()
       
       return data
@@ -85,6 +88,16 @@ export const useAuthStore = defineStore('auth', () => {
     }
   }
 
+  async function fetchUserWithRole(jwt: string): Promise<User> {
+    const response = await fetch('http://localhost:1337/api/users/me?populate=role', {
+      headers: {
+        'Authorization': `Bearer ${jwt}`,
+        'Content-Type': 'application/json'
+      }
+    })
+    return await response.json()
+  } 
+
   function logout(): void {
     user.value = null
     token.value = null
@@ -95,7 +108,12 @@ export const useAuthStore = defineStore('auth', () => {
   }
 
   async function checkAuth(): Promise<void> {
-    await validateToken()
+    const jwt = localStorage.getItem('jwt')
+    if (jwt) {
+      user.value = await fetchUserWithRole(jwt)
+      isAuthenticated.value = true
+      checkUserRole()
+    }
   }
 
   async function validateToken(): Promise<boolean> {
