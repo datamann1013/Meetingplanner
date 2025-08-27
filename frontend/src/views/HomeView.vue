@@ -74,16 +74,12 @@ const events = ref<Event[]>([])
 const loading = ref<boolean>(true)
 const showError = ref(false)
 const lastFailedQuery = ref('')
+
 const strapiBaseUrl = import.meta.env.VITE_STRAPI_API_URL || 'http://localhost:1337'
 
 onMounted(async (): Promise<void> => {
   try {
-    const response = await strapi.get<StrapiResponse<Event[]>>('/events', {
-      params: {
-        populate: 'Coverimage',
-        sort: 'date:asc'
-      }
-    })
+    const response = await strapi.get<StrapiResponse<Event[]>>('/events?populate=Coverimage&sort=date:asc')
     events.value = response.data.data
   } catch (error: any) {
     if (error.response?.status === 403) {
