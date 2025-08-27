@@ -3,7 +3,6 @@
   <v-app>
     <v-app-bar color="primary" density="compact">
       <v-app-bar-title>Event Manager</v-app-bar-title>
-      
       <v-spacer></v-spacer>
       
       <v-btn to="/" variant="text">Events</v-btn>

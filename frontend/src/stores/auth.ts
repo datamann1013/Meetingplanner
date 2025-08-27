@@ -28,7 +28,7 @@ interface AuthResponse {
 
 export const useAuthStore = defineStore('auth', () => {
   const user = ref<User | null>(null)
-  const token = ref<string | null>(localStorage.getItem('token') || null)
+    const jwt = ref<string | null>(localStorage.getItem('jwt') || null)
   const isAuthenticated = ref<boolean>(false)
   const isLoading = ref<boolean>(false)
   const error = ref<string | null>(null)
@@ -66,8 +66,8 @@ export const useAuthStore = defineStore('auth', () => {
         throw new Error(data.error.message)
       }
 
-      localStorage.setItem('jwt', data.jwt)
-      token.value = data.jwt
+    localStorage.setItem('jwt', data.jwt)
+    jwt.value = data.jwt
       user.value = data.user
       isAuthenticated.value = true
 
@@ -100,10 +100,10 @@ export const useAuthStore = defineStore('auth', () => {
 
   function logout(): void {
     user.value = null
-    token.value = null
+    jwt.value = null
     isAuthenticated.value = false
     isBoardMember.value = false
-    localStorage.removeItem('token')
+    localStorage.removeItem('jwt')
     router.push('/login')
   }
 
@@ -117,12 +117,12 @@ export const useAuthStore = defineStore('auth', () => {
   }
 
   async function validateToken(): Promise<boolean> {
-    if (!token.value) return false
+  if (!jwt.value) return false
 
     try {
       const response = await fetch('http://localhost:1337/api/users/me?populate=role', {
         headers: {
-          'Authorization': `Bearer ${token.value}`,
+      'Authorization': `Bearer ${jwt.value}`,
           'Content-Type': 'application/json'
         }
       })
@@ -147,7 +147,7 @@ export const useAuthStore = defineStore('auth', () => {
 
   return { 
     user, 
-    token, 
+    jwt, 
     isAuthenticated, 
     isLoading, 
     error, 

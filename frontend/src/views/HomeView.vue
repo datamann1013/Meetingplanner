@@ -26,14 +26,22 @@
         md="6"
         lg="4"
       >
-        <v-card>
-          <v-card-title>{{ event.title }}</v-card-title>
-          <v-card-subtitle>
+        <v-card
+            :style="event.Coverimage?.url
+              ? `background-image: url(${strapiBaseUrl}${event.Coverimage.url}); background-size: cover; background-position: center;`
+              : ''"
+          class="d-flex flex-column"
+        >
+          <v-card-title class="text-white" style="background: rgba(0,0,0,0.5);">
+            {{ event.title }}
+          </v-card-title>
+          <v-card-subtitle class="text-white" style="background: rgba(0,0,0,0.3);">
             {{ formatDate(event.date) }} • {{ event.location }}
           </v-card-subtitle>
-          <v-card-text>
+          <v-card-text style="background: rgba(255,255,255,0.7);">
             <p>{{ truncateText(event.description, 100) }}</p>
             <p>Capacity: {{ event.capacity }}</p>
+            <pre>{{ event }}</pre> 
           </v-card-text>
           <v-card-actions>
             <v-btn :to="`/event/${event.id}`" color="primary">View Details</v-btn>
@@ -47,23 +55,24 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import { strapi } from '@/services/strapi'
-import { StrapiResponse, StrapiEntity, Event } from '@/types'
-import { useAuthStore } from '@/stores/auth' // <-- Add this import
+import { StrapiResponse, Event } from '@/types'
+import { useAuthStore } from '@/stores/auth'
 
-const events = ref<StrapiEntity<Event>[]>([])
+const events = ref<Event[]>([])
 const loading = ref<boolean>(true)
-const authStore = useAuthStore() // <-- Initialize the store
+const authStore = useAuthStore()
+const strapiBaseUrl = import.meta.env.VITE_STRAPI_API_URL || 'http://localhost:1337'
 
 onMounted(async (): Promise<void> => {
   try {
     const response = await strapi.get<StrapiResponse<StrapiEntity<Event>[]>>('/events', {
       params: {
-        populate: '*',
+        populate: 'Coverimage',
         sort: 'date:asc'
       }
     })
-    events.value = response.data.data
-    console.log('Fetched events:', events.value) // <-- Add this line
+  events.value = response.data.data
+  console.log('Fetched events:', events.value)
   } catch (error) {
     console.error('Error fetching events:', error)
   } finally {

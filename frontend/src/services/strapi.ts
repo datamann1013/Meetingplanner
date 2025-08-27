@@ -6,9 +6,9 @@ const api: AxiosInstance = axios.create({
 
 api.interceptors.request.use(
   (config: InternalAxiosRequestConfig): InternalAxiosRequestConfig => {
-        const token = localStorage.getItem('jwt')
-    if (token && config.headers) {
-      config.headers.Authorization = `Bearer ${token}`
+    const jwt = localStorage.getItem('jwt')
+    if (jwt && config.headers) {
+      config.headers.Authorization = `Bearer ${jwt}`
     }
     return config
   },

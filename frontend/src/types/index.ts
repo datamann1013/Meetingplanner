@@ -61,6 +61,26 @@ export interface Event {
   rsvps?: {
     data: StrapiEntity<RSVP>[];
   };
+  Coverimage?: {
+    id?: number;
+    url?: string;
+    name?: string;
+    alternativeText?: string | null;
+    caption?: string | null;
+    width?: number;
+    height?: number;
+    formats?: Record<string, any>;
+    hash?: string;
+    ext?: string;
+    mime?: string;
+    size?: number;
+    previewUrl?: string | null;
+    provider?: string;
+    provider_metadata?: any;
+    createdAt?: string;
+    updatedAt?: string;
+    publishedAt?: string;
+  }
 }
 
 export interface Category {
