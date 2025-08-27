@@ -27,24 +27,21 @@
         lg="4"
       >
         <v-card
-            :style="event.Coverimage?.url
-              ? `background-image: url(${strapiBaseUrl}${event.Coverimage.url}); background-size: cover; background-position: center;`
-              : ''"
-          class="d-flex flex-column"
+          :style="event.Coverimage?.url
+            ? `background-image: url(${strapiBaseUrl}${event.Coverimage.url}); background-size: cover; background-position: center;`
+            : `background-color: var(--v-theme-surface);`
+          "
+          class="d-flex flex-column justify-end card-relative"
+          height="250"
         >
-          <v-card-title class="text-white" style="background: rgba(0,0,0,0.5);">
-            {{ event.title }}
-          </v-card-title>
-          <v-card-subtitle class="text-white" style="background: rgba(0,0,0,0.3);">
-            {{ formatDate(event.date) }} • {{ event.location }}
-          </v-card-subtitle>
-          <v-card-text style="background: rgba(255,255,255,0.7);">
-            <p>{{ truncateText(event.description, 100) }}</p>
-            <p>Capacity: {{ event.capacity }}</p>
-          </v-card-text>
-          <v-card-actions>
-            <v-btn :to="`/event/${event.id}`" color="primary">View Details</v-btn>
-          </v-card-actions>
+          <div style="background: rgba(200,218,166,0.85); width: 100%; display: flex; align-items: center; justify-content: space-between; padding: 12px; position: absolute; bottom: 0;">
+            <span style="color: var(--v-theme-on-surface); font-weight: bold;">{{ event.title }}</span>
+            <span style="color: var(--v-theme-primary);">{{ formatDate(event.date) }}</span>
+            <span style="color: var(--v-theme-secondary);">Signup: {{ formatDate(event.signup_deadline) }}</span>
+            <v-btn :to="`/event/${event.id}`" icon color="primary" size="small">
+              <v-icon color="secondary">mdi-information</v-icon>
+            </v-btn>
+          </div>
         </v-card>
       </v-col>
     </v-row>
