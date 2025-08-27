@@ -41,7 +41,6 @@
           <v-card-text style="background: rgba(255,255,255,0.7);">
             <p>{{ truncateText(event.description, 100) }}</p>
             <p>Capacity: {{ event.capacity }}</p>
-            <pre>{{ event }}</pre> 
           </v-card-text>
           <v-card-actions>
             <v-btn :to="`/event/${event.id}`" color="primary">View Details</v-btn>
@@ -49,6 +48,20 @@
         </v-card>
       </v-col>
     </v-row>
+      <v-dialog v-model="showError" max-width="400">
+        <v-card style="position: relative;">
+          <v-btn icon @click="showError = false" style="position: absolute; top: 8px; right: 8px; z-index: 10; background: white; box-shadow: 0 2px 8px rgba(0,0,0,0.15);">
+            <v-icon>mdi-close</v-icon>
+          </v-btn>
+          <v-card-title class="d-flex align-center">
+            <span>Error</span>
+          </v-card-title>
+          <v-card-text>
+            <div>You don't have access to this resource.</div>
+            <div class="mt-2"><strong>Query:</strong> {{ lastFailedQuery }}</div>
+          </v-card-text>
+        </v-card>
+      </v-dialog>
   </v-container>
 </template>
 
@@ -56,24 +69,27 @@
 import { ref, onMounted } from 'vue'
 import { strapi } from '@/services/strapi'
 import { StrapiResponse, Event } from '@/types'
-import { useAuthStore } from '@/stores/auth'
 
 const events = ref<Event[]>([])
 const loading = ref<boolean>(true)
-const authStore = useAuthStore()
+const showError = ref(false)
+const lastFailedQuery = ref('')
 const strapiBaseUrl = import.meta.env.VITE_STRAPI_API_URL || 'http://localhost:1337'
 
 onMounted(async (): Promise<void> => {
   try {
-    const response = await strapi.get<StrapiResponse<StrapiEntity<Event>[]>>('/events', {
+    const response = await strapi.get<StrapiResponse<Event[]>>('/events', {
       params: {
         populate: 'Coverimage',
         sort: 'date:asc'
       }
     })
-  events.value = response.data.data
-  console.log('Fetched events:', events.value)
-  } catch (error) {
+    events.value = response.data.data
+  } catch (error: any) {
+    if (error.response?.status === 403) {
+      showError.value = true
+      lastFailedQuery.value = '/events?populate=Coverimage&sort=date:asc'
+    }
     console.error('Error fetching events:', error)
   } finally {
     loading.value = false
