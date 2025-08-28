@@ -2,17 +2,18 @@
   text-decoration: none;
   display: block;
 }
-.event-info-btn-overlay {
+.event-info-btn-static {
   position: absolute;
-  top: 16px;
   right: 16px;
-  z-index: 4;
+  bottom: 16px;
+  z-index: 5;
 }
 /* Event card hover overlay styles */
 .event-card {
   position: relative;
   overflow: hidden;
 }
+/* Info bar default at bottom */
 .event-info-bar {
   background: rgba(200,218,166,0.85);
   width: 100%;
@@ -24,6 +25,16 @@
   bottom: 0;
   left: 0;
   z-index: 2;
+  transition: bottom 0.2s, top 0.2s;
+}
+/* Info bar on hover moves to top */
+.event-info-bar-hover {
+  top: 0;
+  bottom: auto;
+  position: absolute;
+  left: 0;
+  z-index: 4;
+  background: rgba(200,218,166,0.95);
 }
 .event-hover-overlay {
   background: rgba(200,218,166,0.95);
@@ -35,7 +46,7 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  justify-content: center;
+  justify-content: flex-start;
   padding: 24px;
   opacity: 0;
   pointer-events: none;

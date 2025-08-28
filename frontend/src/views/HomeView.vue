@@ -44,11 +44,16 @@
               </v-btn>
             </div>
             <div class="event-hover-overlay">
-              <span style="color: var(--v-theme-on-surface); font-weight: bold;">Description</span>
+              <div class="event-info-bar event-info-bar-hover">
+                <span style="color: var(--v-theme-on-surface); font-weight: bold;">{{ event.title }}</span>
+                <span style="color: var(--v-theme-primary);">{{ formatDate(event.date) }}</span>
+                <span style="color: var(--v-theme-secondary);">Signup: {{ formatDate(event.signup_deadline) }}</span>
+                <v-btn icon color="primary" size="small" class="event-info-btn-overlay">
+                  <v-icon color="secondary">mdi-information</v-icon>
+                </v-btn>
+              </div>
+              <span style="color: var(--v-theme-on-surface); font-weight: bold; margin-top: 32px;">Description</span>
               <p style="color: var(--v-theme-on-surface); margin-top: 8px;">{{ event.description }}</p>
-              <v-btn icon color="primary" size="small" class="event-info-btn-overlay">
-                <v-icon color="secondary">mdi-information</v-icon>
-              </v-btn>
             </div>
           </v-card>
         </router-link>
