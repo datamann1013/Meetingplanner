@@ -26,27 +26,32 @@
         md="6"
         lg="4"
       >
-        <v-card
-          :style="event.Coverimage?.url
-            ? `background-image: url(${strapiBaseUrl}${event.Coverimage.url}); background-size: cover; background-position: center;`
-            : `background-color: var(--v-theme-surface);`
-          "
-          class="d-flex flex-column justify-end card-relative event-card"
-          height="250"
-        >
-          <div class="event-info-bar">
-            <span style="color: var(--v-theme-on-surface); font-weight: bold;">{{ event.title }}</span>
-            <span style="color: var(--v-theme-primary);">{{ formatDate(event.date) }}</span>
-            <span style="color: var(--v-theme-secondary);">Signup: {{ formatDate(event.signup_deadline) }}</span>
-            <v-btn :to="`/event/${event.id}`" icon color="primary" size="small">
-              <v-icon color="secondary">mdi-information</v-icon>
-            </v-btn>
-          </div>
-          <div class="event-hover-overlay">
-            <span style="color: var(--v-theme-on-surface); font-weight: bold;">Description</span>
-            <p style="color: var(--v-theme-on-surface); margin-top: 8px;">{{ event.description }}</p>
-          </div>
-        </v-card>
+        <router-link :to="`/event/${event.id}`" class="event-card-link">
+          <v-card
+            :style="event.Coverimage?.url
+              ? `background-image: url(${strapiBaseUrl}${event.Coverimage.url}); background-size: cover; background-position: center;`
+              : `background-color: var(--v-theme-surface);`
+            "
+            class="d-flex flex-column justify-end card-relative event-card"
+            height="250"
+          >
+            <div class="event-info-bar">
+              <span style="color: var(--v-theme-on-surface); font-weight: bold;">{{ event.title }}</span>
+              <span style="color: var(--v-theme-primary);">{{ formatDate(event.date) }}</span>
+              <span style="color: var(--v-theme-secondary);">Signup: {{ formatDate(event.signup_deadline) }}</span>
+              <v-btn icon color="primary" size="small" class="event-info-btn">
+                <v-icon color="secondary">mdi-information</v-icon>
+              </v-btn>
+            </div>
+            <div class="event-hover-overlay">
+              <span style="color: var(--v-theme-on-surface); font-weight: bold;">Description</span>
+              <p style="color: var(--v-theme-on-surface); margin-top: 8px;">{{ event.description }}</p>
+              <v-btn icon color="primary" size="small" class="event-info-btn-overlay">
+                <v-icon color="secondary">mdi-information</v-icon>
+              </v-btn>
+            </div>
+          </v-card>
+        </router-link>
       </v-col>
     </v-row>
       <v-dialog v-model="showError" max-width="400">
