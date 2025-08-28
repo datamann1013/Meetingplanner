@@ -1,3 +1,24 @@
+/* Signup deadline always bottom left */
+.event-deadline-bottomleft {
+  position: absolute;
+  left: 16px;
+  bottom: 16px;
+  z-index: 4;
+}
+/* Event date always bottom right */
+.event-date-bottomright {
+  position: absolute;
+  right: 16px;
+  bottom: 16px;
+  z-index: 4;
+}
+/* Info button always top right */
+.event-info-btn-topright {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  z-index: 5;
+}
 .event-card-link {
   text-decoration: none;
   display: block;

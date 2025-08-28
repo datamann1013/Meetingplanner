@@ -1,30 +1,31 @@
 <template>
   <v-container>
     <v-row>
-      <v-col cols="12">
+      <v-col cols="20">
         <h1 class="text-h4 mb-4">Upcoming Events</h1>
       </v-col>
     </v-row>
     
     <v-row v-if="loading">
-      <v-col cols="12" class="text-center">
+      <v-col cols="20" class="text-center">
         <v-progress-circular indeterminate color="primary"></v-progress-circular>
       </v-col>
     </v-row>
     
     <v-row v-else-if="events.length === 0">
-      <v-col cols="12" class="text-center">
+      <v-col cols="20" class="text-center">
         <p>No events found.</p>
       </v-col>
     </v-row>
     
-    <v-row v-else>
+  <v-row v-else :cols="20">
       <v-col
         v-for="event in events"
         :key="event.id"
-        cols="12"
-        md="6"
+        cols="20"
+        md="10"
         lg="4"
+        class="mb-4"
       >
         <router-link :to="`/event/${event.id}`" class="event-card-link">
           <v-card
@@ -36,22 +37,20 @@
             height="250"
           >
             <div class="event-info-bar">
-              <span style="color: var(--v-theme-on-surface); font-weight: bold;">{{ event.title }}</span>
-              <span style="color: var(--v-theme-primary);">{{ formatDate(event.date) }}</span>
-              <span style="color: var(--v-theme-secondary); margin-right: 40px;">Signup: {{ formatDate(event.signup_deadline) }}</span>
-              <!-- Info button moved outside flex row -->
+              <span style="color: var(--v-theme-on-surface); font-size: 1.5rem; font-weight: bold;">{{ event.title }}</span>
+              <span class="event-date-bottomright" style="color: var(--v-theme-primary);">{{ formatDate(event.date) }}</span>
             </div>
-            <v-btn icon color="primary" size="small" class="event-info-btn-static">
+            <v-btn icon color="primary" size="small" class="event-info-btn-topright">
               <v-icon color="secondary">mdi-information</v-icon>
             </v-btn>
             
             <div class="event-hover-overlay">
               <div class="event-info-bar event-info-bar-hover">
-                <span style="color: var(--v-theme-on-surface); font-weight: bold;">{{ event.title }}</span>
-                <span style="color: var(--v-theme-primary);">{{ formatDate(event.date) }}</span>
-                <span style="color: var(--v-theme-secondary); margin-right: 40px;">Signup: {{ formatDate(event.signup_deadline) }}</span>
+                <span style="color: var(--v-theme-on-surface); font-size: 1.5rem; font-weight: bold;">{{ event.title }}</span>
               </div>
-              <v-btn icon color="primary" size="small" class="event-info-btn-static">
+              <span class="event-date-bottomright" style="color: var(--v-theme-primary);">{{ formatDate(event.date) }}</span>
+              <span class="event-deadline-bottomleft" style="color: var(--v-theme-secondary);">Signup: {{ formatDate(event.signup_deadline) }}</span>
+              <v-btn icon color="primary" size="small" class="event-info-btn-topright">
                 <v-icon color="secondary">mdi-information</v-icon>
               </v-btn>
               <span style="color: var(--v-theme-on-surface); font-weight: bold; margin-top: 32px;">Description</span>
