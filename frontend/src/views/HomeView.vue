@@ -31,16 +31,20 @@
             ? `background-image: url(${strapiBaseUrl}${event.Coverimage.url}); background-size: cover; background-position: center;`
             : `background-color: var(--v-theme-surface);`
           "
-          class="d-flex flex-column justify-end card-relative"
+          class="d-flex flex-column justify-end card-relative event-card"
           height="250"
         >
-          <div style="background: rgba(200,218,166,0.85); width: 100%; display: flex; align-items: center; justify-content: space-between; padding: 12px; position: absolute; bottom: 0;">
+          <div class="event-info-bar">
             <span style="color: var(--v-theme-on-surface); font-weight: bold;">{{ event.title }}</span>
             <span style="color: var(--v-theme-primary);">{{ formatDate(event.date) }}</span>
             <span style="color: var(--v-theme-secondary);">Signup: {{ formatDate(event.signup_deadline) }}</span>
             <v-btn :to="`/event/${event.id}`" icon color="primary" size="small">
               <v-icon color="secondary">mdi-information</v-icon>
             </v-btn>
+          </div>
+          <div class="event-hover-overlay">
+            <span style="color: var(--v-theme-on-surface); font-weight: bold;">Description</span>
+            <p style="color: var(--v-theme-on-surface); margin-top: 8px;">{{ event.description }}</p>
           </div>
         </v-card>
       </v-col>
