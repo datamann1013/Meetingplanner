@@ -38,20 +38,22 @@
             <div class="event-info-bar">
               <span style="color: var(--v-theme-on-surface); font-weight: bold;">{{ event.title }}</span>
               <span style="color: var(--v-theme-primary);">{{ formatDate(event.date) }}</span>
-              <span style="color: var(--v-theme-secondary);">Signup: {{ formatDate(event.signup_deadline) }}</span>
-              <v-btn icon color="primary" size="small" class="event-info-btn">
-                <v-icon color="secondary">mdi-information</v-icon>
-              </v-btn>
+              <span style="color: var(--v-theme-secondary); margin-right: 40px;">Signup: {{ formatDate(event.signup_deadline) }}</span>
+              <!-- Info button moved outside flex row -->
             </div>
+            <v-btn icon color="primary" size="small" class="event-info-btn-static">
+              <v-icon color="secondary">mdi-information</v-icon>
+            </v-btn>
+            
             <div class="event-hover-overlay">
               <div class="event-info-bar event-info-bar-hover">
                 <span style="color: var(--v-theme-on-surface); font-weight: bold;">{{ event.title }}</span>
                 <span style="color: var(--v-theme-primary);">{{ formatDate(event.date) }}</span>
-                <span style="color: var(--v-theme-secondary);">Signup: {{ formatDate(event.signup_deadline) }}</span>
-                <v-btn icon color="primary" size="small" class="event-info-btn-overlay">
-                  <v-icon color="secondary">mdi-information</v-icon>
-                </v-btn>
+                <span style="color: var(--v-theme-secondary); margin-right: 40px;">Signup: {{ formatDate(event.signup_deadline) }}</span>
               </div>
+              <v-btn icon color="primary" size="small" class="event-info-btn-static">
+                <v-icon color="secondary">mdi-information</v-icon>
+              </v-btn>
               <span style="color: var(--v-theme-on-surface); font-weight: bold; margin-top: 32px;">Description</span>
               <p style="color: var(--v-theme-on-surface); margin-top: 8px;">{{ event.description }}</p>
             </div>
