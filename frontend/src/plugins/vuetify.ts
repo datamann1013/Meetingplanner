@@ -20,6 +20,7 @@ const LightThemeC: ThemeDefinition = {
     warning: '#FB8C00',
    
     'on-surface': '#2E2E2E',
+    overlay: 'rgba(200,218,166,0.95)',
   }
 }
 
