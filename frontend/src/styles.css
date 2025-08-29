@@ -1,3 +1,10 @@
+/* Sidebar selected item override */
+.v-list-item,
+.v-list-item.sidebar-selected {
+  color: #92a57b !important;
+  background-color: transparent;
+}
+
 /* Signup deadline always bottom left */
 .event-deadline-bottomleft {
   position: absolute;

@@ -2,9 +2,15 @@
   <v-container fluid class="pa-0" style="height: 100vh;">
     <v-row no-gutters style="height: 100%;">
       <v-col cols="2" class="d-flex flex-column align-start pa-0" style="background: var(--v-theme-surface); min-width: 200px; max-width: 260px; height: 100vh;">
-  <v-list nav dense style="height: calc(100vh - 48px); position: fixed; left: 0; top: 48px; z-index: 100; min-width: 260px; max-width: 280px;">
-          <v-list-item v-for="item in sidebarItems" :key="item.title" @click="selectedTab = item.title" :active="selectedTab === item.title">
-            <v-list-item-title>{{ item.title }}</v-list-item-title>
+        <v-list nav dense style="height: calc(100vh - 48px); position: fixed; left: 0; top: 48px; z-index: 100; min-width: 260px; max-width: 280px;">
+          <v-list-item
+              v-for="item in sidebarItems"
+              :key="item.title"
+              @click="selectedTab = item.title"
+              :active="selectedTab === item.title"
+              :class="selectedTab === item.title ? 'sidebar-selected' : ''"
+          >
+              <v-list-item-title style="font-size: 1.25rem;">{{ item.title }}</v-list-item-title>
           </v-list-item>
         </v-list>
       </v-col>
