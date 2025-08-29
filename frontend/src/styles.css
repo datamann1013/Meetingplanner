@@ -4,6 +4,10 @@
   left: 16px;
   bottom: 16px;
   z-index: 4;
+  background: var(--v-theme-deadline);
+  color: var(--v-theme-on-surface);
+  border-radius: 6px;
+  padding: 4px 10px;
 }
 /* Event date always bottom right */
 .event-date-bottomright {
@@ -11,11 +15,15 @@
   right: 16px;
   bottom: 16px;
   z-index: 4;
+  background: var(--v-theme-date);
+  color: var(--v-theme-on-surface);
+  border-radius: 6px;
+  padding: 4px 10px;
 }
 /* Info button always top right */
 .event-info-btn-topright {
   position: absolute;
-  top: 16px;
+  top: 16px;  
   right: 16px;
   z-index: 5;
 }
