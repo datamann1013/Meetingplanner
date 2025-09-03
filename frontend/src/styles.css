@@ -1,3 +1,52 @@
+/* Admin layout and sidebar styles */
+.admin-layout {
+  display: flex;
+  height: 100vh;
+}
+.admin-sidebar {
+  width: 260px;
+  background: #C8DAA6;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding-top: 48px;
+  height: calc(100vh - 48px);
+  position: fixed;
+  top: 48px;
+  left: 0;
+}
+.admin-sidebar-list {
+  width: 100%;
+}
+.admin-sidebar-spacer {
+  flex: 1;
+}
+.admin-sidebar-bottom {
+  width: 100%;
+  border-top: 1px solid #b5c9a3;
+  margin-top: 16px;
+  padding-top: 8px;
+}
+.admin-sidebar-item {
+  font-size: 1.25rem;
+  padding: 16px;
+  color: #222;
+  text-align: left;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: background 0.2s;
+}
+.admin-sidebar-item:hover {
+  background: #A3B18A;
+}
+.admin-sidebar-item-selected {
+  background: #A3B18A;
+}
+.admin-main {
+  flex: 1;
+  padding: 48px 32px;
+  margin-left: 260px;
+}
 /* Sidebar item hover effect */
 .admin-sidebar-item:hover {
   background: #A3B18A !important;
