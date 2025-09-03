@@ -28,6 +28,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 const sidebarItems = [
+  { title: 'Dashboard' },
   { title: 'Events' },
   { title: 'Emails' },
   { title: 'Users' },
