@@ -33,7 +33,7 @@
   color: #222;
   text-align: left;
   cursor: pointer;
-  border-radius: 8px;
+  border-radius: 0;
   transition: background 0.2s;
 }
 .admin-sidebar-item:hover {
