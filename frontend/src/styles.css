@@ -1,9 +1,8 @@
-/* Sidebar selected item override */
-.v-list-item,
-.v-list-item.sidebar-selected {
-  color: #92a57b !important;
-  background-color: transparent;
+/* Sidebar item hover effect */
+.admin-sidebar-item:hover {
+  background: #A3B18A !important;
 }
+
 
 /* Signup deadline always bottom left */
 .event-deadline-bottomleft {
