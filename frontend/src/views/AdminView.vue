@@ -56,8 +56,11 @@ const dashboardConfigs = {
     [{ size: 'long', label: 'Overview' }],
   ],
   events: [
-    [{ size: 'primary', label: 'Upcoming Events', flex: 1 }, { size: 'secondary', label: 'Past Events', flex: 1 }, { size: 'accent', label: 'Create Event', flex: 1 }],
-    [{ size: 'long', label: 'Event Details' }],
+  [
+      { size: 'primary', label: 'Short Left', flex: 1 },
+      { size: 'secondary', label: 'Middle Left', flex: 2 }
+    ],
+    [{ size: 'long', label: 'Overview' }],
   ],
   emails: [
     [{ size: 'primary', label: 'Inbox', flex: 1 }, { size: 'secondary', label: 'Sent', flex: 1 }],
