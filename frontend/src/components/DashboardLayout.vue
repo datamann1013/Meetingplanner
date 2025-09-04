@@ -25,6 +25,8 @@
 
     <script setup lang="ts">
     import DashboardBox from './DashboardBox.vue'
+    import EventActionsBox from './EventActionsBox.vue'
+    import EventCalendarBox from './EventCalendarBox.vue'
     type BoxConfig = { size: string, label?: string, flex?: number, content?: any }
     const props = defineProps<{ title?: string, layoutConfig: Array<Array<BoxConfig>> }>()
     </script>
