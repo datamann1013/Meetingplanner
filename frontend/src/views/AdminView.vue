@@ -49,7 +49,7 @@ const sidebarItems = [
   { title: 'Logs', tag: 'logs' },
   { title: 'Settings', tag: 'settings' },
 ]
-const selectedTab = ref('events')
+const selectedTab = ref('Dashboard')
 
 const dashboardConfigs = {
   dashboard: [

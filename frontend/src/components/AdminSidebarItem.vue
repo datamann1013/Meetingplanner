@@ -3,6 +3,9 @@
     class="admin-sidebar-item"
     :class="{ 'admin-sidebar-item-selected': selected }"
     @click="onClick"
+    @mouseover="hovered = true"
+    @mouseleave="hovered = false"
+    :style="itemStyle"
   >
     {{ title }}
   </div>
