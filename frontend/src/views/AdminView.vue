@@ -43,6 +43,7 @@ import DashboardLayout from '../components/DashboardLayout.vue'
 import AdminSidebarItem from '../components/AdminSidebarItem.vue'
 import EventActionsBox from '../components/EventActionsBox.vue'
 import EventCalendarBox from '../components/EventCalendarBox.vue'
+import EventListTable from '../components/EventListTable.vue'
 
 const sidebarItems = [
   { title: 'Dashboard', tag: 'dashboard', hoverColor: '#A3B18A' },
@@ -73,7 +74,7 @@ const dashboardConfigs = {
       { size: 'primary', label: 'Short Left', flex: 1, content: EventActionsBox },
       { size: 'secondary', label: 'Middle Left', flex: 2, content: EventCalendarBox }
     ],
-    [{ size: 'long', label: 'Overview' }],
+    [{ size: 'long', label: 'Overview', content: EventListTable }],
   ],
   emails: [
     [{ size: 'primary', label: 'Inbox', flex: 1 }, { size: 'secondary', label: 'Sent', flex: 1 }],
