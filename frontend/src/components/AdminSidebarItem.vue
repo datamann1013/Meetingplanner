@@ -7,7 +7,7 @@
     @mouseleave="hovered = false"
     :style="itemStyle"
   >
-    <span class="admin-sidebar-item-text">{{ title }}</span>
+    <span class="admin-sidebar-item-text" :style="{ paddingLeft: leftPadding }">{{ title }}</span>
   </div>
 </template>
 
@@ -19,6 +19,10 @@ const props = defineProps({
   hoverColor: {
     type: String,
     default: '#f0f0f0'
+  },
+  leftPadding: {
+    type: String,
+    default: '1.5rem'
   }
 })
 const hovered = ref(false)
@@ -32,6 +36,7 @@ const itemStyle = computed(() => {
     ? { backgroundColor: props.hoverColor, cursor: 'pointer' }
     : { cursor: 'pointer' }
 })
+const leftPadding = props.leftPadding
 </script>
 
 <style scoped>
@@ -47,6 +52,6 @@ const itemStyle = computed(() => {
 }
 .admin-sidebar-item-text {
   display: block;
-  padding: 0 1rem;
+  padding-right: 2rem;
 }
 </style>

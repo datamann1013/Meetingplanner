@@ -8,6 +8,7 @@
           :title="item.title"
           :selected="selectedTab === item.title"
           :hoverColor="item.hoverColor || '#e0e7ff'"
+          :leftPadding="'1.5rem'"
           @click="selectedTab = item.title"
         />
       </div>
@@ -19,6 +20,7 @@
           :title="item.title"
           :selected="selectedTab === item.title"
           :hoverColor="item.hoverColor || '#fee2e2'"
+          :leftPadding="'1.5rem'"
           @click="selectedTab = item.title"
         />
       </div>

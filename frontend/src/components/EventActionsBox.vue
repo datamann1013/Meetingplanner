@@ -3,11 +3,11 @@
     <h3 style="margin-bottom: 16px;">Event Actions</h3>
     <div class="event-actions-list-wrapper">
       <div class="event-actions-list">
-        <AdminSidebarItem title="Create Event" :selected="false" hoverColor="#d6bfa7" />
-        <AdminSidebarItem title="Duplicate Previous Event" :selected="false" hoverColor="#d6bfa7" />
-        <AdminSidebarItem title="Import Events" :selected="false" hoverColor="#d6bfa7" />
-        <AdminSidebarItem title="Upload Images/Attachments" :selected="false" hoverColor="#d6bfa7" />
-        <AdminSidebarItem title="Email Attendees" :selected="false" hoverColor="#d6bfa7" />
+        <AdminSidebarItem title="Create Event" :selected="false" hoverColor="#d6bfa7" leftPadding="2.5rem" />
+        <AdminSidebarItem title="Duplicate Previous Event" :selected="false" hoverColor="#d6bfa7" leftPadding="2.5rem" />
+        <AdminSidebarItem title="Import Events" :selected="false" hoverColor="#d6bfa7" leftPadding="2.5rem" />
+        <AdminSidebarItem title="Upload Images/Attachments" :selected="false" hoverColor="#d6bfa7" leftPadding="2.5rem" />
+        <AdminSidebarItem title="Email Attendees" :selected="false" hoverColor="#d6bfa7" leftPadding="2.5rem" />
       </div>
     </div>
   </div>
