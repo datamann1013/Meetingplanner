@@ -32,9 +32,10 @@ function onClick() {
 }
 
 const itemStyle = computed(() => {
-  return hovered.value
-    ? { backgroundColor: props.hoverColor, cursor: 'pointer' }
-    : { cursor: 'pointer' }
+  if (props.selected || hovered.value) {
+    return { backgroundColor: props.hoverColor, cursor: 'pointer' }
+  }
+  return { cursor: 'pointer' }
 })
 const leftPadding = props.leftPadding
 </script>
@@ -53,5 +54,6 @@ const leftPadding = props.leftPadding
 .admin-sidebar-item-text {
   display: block;
   padding-right: 2rem;
+  position: relative;
 }
 </style>
