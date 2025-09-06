@@ -7,6 +7,7 @@
           :key="item.title"
           :title="item.title"
           :selected="selectedTab === item.title"
+          :hoverColor="item.hoverColor || '#e0e7ff'"
           @click="selectedTab = item.title"
         />
       </div>
@@ -17,6 +18,7 @@
           :key="item.title"
           :title="item.title"
           :selected="selectedTab === item.title"
+          :hoverColor="item.hoverColor || '#fee2e2'"
           @click="selectedTab = item.title"
         />
       </div>
@@ -41,14 +43,15 @@ import EventActionsBox from '../components/EventActionsBox.vue'
 import EventCalendarBox from '../components/EventCalendarBox.vue'
 
 const sidebarItems = [
-  { title: 'Dashboard', tag: 'dashboard' },
-  { title: 'Events', tag: 'events' },
-  { title: 'Emails', tag: 'emails' },
-  { title: 'Users', tag: 'users' },
-  { title: 'RSVPs', tag: 'rsvps' },
-  { title: 'Logs', tag: 'logs' },
-  { title: 'Settings', tag: 'settings' },
+  { title: 'Dashboard', tag: 'dashboard', hoverColor: '#A3B18A' },
+  { title: 'Events', tag: 'events', hoverColor: '#A3B18A' },
+  { title: 'Emails', tag: 'emails', hoverColor: '#A3B18A' },
+  { title: 'Users', tag: 'users', hoverColor: '#A3B18A' },
+  { title: 'RSVPs', tag: 'rsvps', hoverColor: '#A3B18A' },
+  { title: 'Logs', tag: 'logs', hoverColor: '#A3B18A' },
+  { title: 'Settings', tag: 'settings', hoverColor: '#A3B18A' },
 ]
+
 const selectedTab = ref('Dashboard')
 
 const dashboardConfigs = {

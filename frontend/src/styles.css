@@ -29,15 +29,11 @@
 }
 .admin-sidebar-item {
   font-size: 1.25rem;
-  padding: 16px;
   color: #222;
   text-align: left;
   cursor: pointer;
   border-radius: 0;
   transition: background 0.2s;
-}
-.admin-sidebar-item:hover {
-  background: #A3B18A;
 }
 .admin-sidebar-item-selected {
   background: #A3B18A;
@@ -48,9 +44,7 @@
   margin-left: 260px;
 }
 /* Sidebar item hover effect */
-.admin-sidebar-item:hover {
-  background: #A3B18A !important;
-}
+
 
 
 /* Signup deadline always bottom left */
