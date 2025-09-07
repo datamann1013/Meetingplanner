@@ -1,0 +1,166 @@
+/* Admin layout and sidebar styles */
+.admin-layout {
+  display: flex;
+  height: 100vh;
+}
+.admin-sidebar {
+  width: 260px;
+  background: #C8DAA6;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding-top: 48px;
+  height: calc(100vh - 48px);
+  position: fixed;
+  top: 48px;
+  left: 0;
+}
+.admin-sidebar-list {
+  width: 100%;
+}
+.admin-sidebar-spacer {
+  flex: 1;
+}
+.admin-sidebar-bottom {
+  width: 100%;
+  border-top: 1px solid #b5c9a3;
+  margin-top: 16px;
+  padding-top: 8px;
+}
+.admin-sidebar-item {
+  font-size: 1.25rem;
+  color: #222;
+  text-align: left;
+  cursor: pointer;
+  border-radius: 0;
+  transition: background 0.2s;
+}
+.admin-sidebar-item-selected {
+  background: #A3B18A;
+}
+.admin-main {
+  flex: 1;
+  padding: 48px 32px;
+  margin-left: 260px;
+}
+/* Sidebar item hover effect */
+
+
+
+/* Signup deadline always bottom left */
+.event-deadline-bottomleft {
+  position: absolute;
+  left: 16px;
+  bottom: 16px;
+  z-index: 4;
+  background: var(--v-theme-deadline);
+  color: var(--v-theme-on-surface);
+  border-radius: 6px;
+  padding: 4px 10px;
+}
+/* Event date always bottom right */
+.event-date-bottomright {
+  position: absolute;
+  right: 16px;
+  bottom: 16px;
+  z-index: 4;
+  background: var(--v-theme-date);
+  color: var(--v-theme-on-surface);
+  border-radius: 6px;
+  padding: 4px 10px;
+}
+/* Info button always top right */
+.event-info-btn-topright {
+  position: absolute;
+  top: 16px;  
+  right: 16px;
+  z-index: 5;
+}
+.event-card-link {
+  text-decoration: none;
+  display: block;
+}
+.event-info-btn-static {
+  position: absolute;
+  right: 16px;
+  bottom: 16px;
+  z-index: 5;
+}
+/* Event card hover overlay styles */
+.event-card {
+  position: relative;
+  overflow: hidden;
+}
+/* Info bar default at bottom */
+.event-info-bar {
+  background: rgba(200,218,166,0.85);
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  z-index: 2;
+  transition: bottom 0.2s, top 0.2s;
+}
+/* Info bar on hover moves to top */
+.event-info-bar-hover {
+  top: 0;
+  bottom: auto;
+  position: absolute;
+  left: 0;
+  z-index: 4;
+  background: var(--v-theme-overlay);
+}
+.event-hover-overlay {
+  background: rgba(200,218,166,0.95);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 24px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s;
+  z-index: 3;
+}
+.event-card:hover .event-hover-overlay {
+  opacity: 1;
+  pointer-events: auto;
+}
+.card-relative {
+  position: relative;
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  overflow: hidden;
+}
+
+
+.centered-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  width: 100%;
+}
+
+.content-with-bars {
+  padding-top: 60px;
+  padding-bottom: 70px;
+  min-height: calc(100vh - 180px);
+}
+

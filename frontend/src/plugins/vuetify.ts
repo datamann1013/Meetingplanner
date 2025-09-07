@@ -19,7 +19,11 @@ const LightThemeC: ThemeDefinition = {
     success: '#4CAF50', 
     warning: '#FB8C00',
    
-    'on-surface': '#2E2E2E'
+    'on-surface': '#2E2E2E',
+    overlay: 'rgba(200,218,166,0.95)',
+    infoBar: 'rgba(200,218,166,0.85)',
+    deadline: '#FFD21D',
+    date: '#C8DAA6',
   }
 }
 
@@ -41,5 +45,4 @@ export default createVuetify({
   },
 })
 
-// Export types for TypeScript support
 export type Vuetify = ReturnType<typeof createVuetify>

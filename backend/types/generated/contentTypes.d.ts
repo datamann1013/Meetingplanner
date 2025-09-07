@@ -456,6 +456,9 @@ export interface ApiEventEvent extends Struct.CollectionTypeSchema {
       'api::chat-message.chat-message'
     >;
     contact_info: Schema.Attribute.Text;
+    Coverimage: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios'
+    >;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;

@@ -32,6 +32,16 @@
     "contact_info": {
       "type": "text"
     },
+    "Coverimage": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
     "categories": {
       "type": "relation",
       "relation": "manyToMany",
