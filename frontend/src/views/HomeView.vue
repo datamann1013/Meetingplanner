@@ -47,7 +47,7 @@
 </template>
 
 <script setup lang="ts">
-import EventCard from '@/components/EventCard.vue'
+import EventCard from '@/components/shared/EventCard.vue'
 import { ref, onMounted } from 'vue'
 import { strapi } from '@/services/strapi'
 import { StrapiResponse, Event } from '@/types'
@@ -73,14 +73,4 @@ onMounted(async (): Promise<void> => {
     loading.value = false
   }
 })
-
-const formatDate = (dateString: string): string => {
-  return new Date(dateString).toLocaleDateString()
-}
-
-const truncateText = (text: string, maxLength: number): string => {
-  if (!text) return ''
-  if (text.length <= maxLength) return text
-  return text.substring(0, maxLength) + '...'
-}
 </script>
