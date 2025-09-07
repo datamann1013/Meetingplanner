@@ -40,7 +40,13 @@
             initialAction="Calendar"
           >
             <template #bottom>
-              <EventListTable />
+              <EventTable
+                :events="events"
+                :columns="eventColumns"
+                :topBarProps="eventTopBarProps"
+                @edit="onEditEvent"
+                @delete="onDeleteEvent"
+              />
             </template>
           </DualInteractiveBoxes>
         </template>
@@ -62,7 +68,7 @@ import SidebarItem from '../components/admin/SidebarItem.vue'
 import DualInteractiveBoxes from '../components/admin/DualInteractiveBoxes.vue'
 import EventActionsBox from '../components/EventActionsBox.vue'
 import EventCalendarBox from '../components/EventCalendarBox.vue'
-import EventListTable from '../components/EventListTable.vue'
+import EventTable from '../components/admin/EventTable.vue'
 import { h } from 'vue'
 
 const sidebarItems = [
@@ -94,7 +100,7 @@ const dashboardConfigs = {
       { size: 'primary', label: 'Short Left', flex: 1, content: EventActionsBox },
       { size: 'secondary', label: 'Middle Left', flex: 2, content: EventCalendarBox }
     ],
-    [{ size: 'long', label: 'Overview', content: EventListTable }],
+    [{ size: 'long', label: 'Overview', content: EventTable }],
   ],
   emails: [
     [{ size: 'primary', label: 'Inbox', flex: 1 }, { size: 'secondary', label: 'Sent', flex: 1 }],
@@ -113,5 +119,20 @@ const dashboardConfigs = {
   settings: [
     [{ size: 'primary', label: 'General Settings', flex: 1 }, { size: 'secondary', label: 'Advanced Settings', flex: 1 }],
   ],
+}
+
+const events = [] // Replace with your event data
+const eventColumns = [
+  { key: 'name', label: 'Name' },
+  { key: 'date', label: 'Date' },
+  { key: 'location', label: 'Location' },
+  { key: 'actions', label: 'Actions' }
+]
+const eventTopBarProps = {} // Add your top bar props if needed
+function onEditEvent(event) {
+  // Handle edit
+}
+function onDeleteEvent(event) {
+  // Handle delete
 }
 </script>
