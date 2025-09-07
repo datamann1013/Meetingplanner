@@ -47,10 +47,10 @@
 </template>
 
 <script setup lang="ts">
-import EventCard from '@/components/shared/EventCard.vue'
+import EventCard from "../../components/shared/EventCard.vue"
 import { ref, onMounted } from 'vue'
-import { strapi } from '@/services/strapi'
-import { StrapiResponse, Event } from '@/types'
+import { strapi } from '../../services/strapi'
+import { StrapiResponse, Event } from '../../types'
 
 const events = ref<Event[]>([])
 const loading = ref<boolean>(true)
