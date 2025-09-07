@@ -78,10 +78,19 @@
 import { ref, onMounted } from 'vue';
 import TableEntry from "../../shared/TableEntry.vue";
 import { strapi } from '../../../services/strapi';
-import { formatDateTime } from '../../../composables/DateUtils';
+import { formatDateTime } from '@/composables/DateUtils';
+
+interface TopBarProps {
+  searchPlaceholder?: string;
+  showAdvancedSearch?: boolean;
+  showFilter?: boolean;
+  showBulkEdit?: boolean;
+  showBulkDelete?: boolean;
+  // Add other expected properties here
+}
 
 defineProps<{
-  topBarProps?: Record<string, any>
+  topBarProps?: TopBarProps
 }>()
 
 const events = ref<any[]>([]);
@@ -128,13 +137,6 @@ onMounted(async () => {
   }
 })
 
-function toggleAll() {
-  if (selectAll.value) {
-    selectedEvents.value = events.value.map(e => e.id)
-  } else {
-    selectedEvents.value = []
-  }
-}
 </script>
 
 <style scoped>
