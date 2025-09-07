@@ -26,13 +26,16 @@
       </div>
     </div>
     <div class="admin-main">
-        <DashboardLayout
-          v-if="dashboardConfigs[selectedTab.toLowerCase()]"
-          :title="sidebarItems.find(i => i.title === selectedTab)?.title"
-          :layoutConfig="dashboardConfigs[selectedTab.toLowerCase()]"
-        >
-          <!-- Use DashboardLayout's default slot for other tabs, but let DashboardLayout handle dynamic content for Events tab -->
-        </DashboardLayout>
+        <template v-if="selectedTab === 'Events'">
+          <EventActionsAndCalendar />
+        </template>
+        <template v-else>
+          <DashboardLayout
+            v-if="dashboardConfigs[selectedTab.toLowerCase() as keyof typeof dashboardConfigs]"
+            :title="sidebarItems.find(i => i.title === selectedTab)?.title"
+            :layoutConfig="dashboardConfigs[selectedTab.toLowerCase() as keyof typeof dashboardConfigs]"
+          />
+        </template>
     </div>
   </div>
 </template>
@@ -44,6 +47,7 @@ import AdminSidebarItem from '../components/AdminSidebarItem.vue'
 import EventActionsBox from '../components/EventActionsBox.vue'
 import EventCalendarBox from '../components/EventCalendarBox.vue'
 import EventListTable from '../components/EventListTable.vue'
+import EventActionsAndCalendar from '../components/EventActionsAndCalendar.vue'
 
 const sidebarItems = [
   { title: 'Dashboard', tag: 'dashboard', hoverColor: '#A3B18A' },
