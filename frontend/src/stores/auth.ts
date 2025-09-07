@@ -38,7 +38,7 @@ export const useAuthStore = defineStore('auth', () => {
 
 
   function init(): void {
-    if (token.value && !isInitialized.value) {
+    if (jwt.value && !isInitialized.value) {
       validateToken().then(() => {
         isInitialized.value = true
       })
@@ -68,8 +68,6 @@ export const useAuthStore = defineStore('auth', () => {
 
     localStorage.setItem('jwt', data.jwt)
     jwt.value = data.jwt
-      user.value = data.user
-      isAuthenticated.value = true
 
       user.value = await fetchUserWithRole(data.jwt)
       isAuthenticated.value = true

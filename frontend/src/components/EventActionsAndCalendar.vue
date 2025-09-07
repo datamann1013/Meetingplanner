@@ -75,7 +75,7 @@ const currentComponent = computed(() => {
   }
 })
 
-function updateAction(action) {
+function updateAction(action: string) {
   selectedAction.value = action
   emit('actionChanged', action)
 }
