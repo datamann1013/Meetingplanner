@@ -19,7 +19,7 @@
 
 <script setup lang="ts">
 import { ref, defineEmits } from 'vue'
-import SidebarItem from './admin/SidebarItem.vue'
+import SidebarItem from '../SidebarItem.vue'
 
 const emit = defineEmits(['updateAction'])
 const actions = [

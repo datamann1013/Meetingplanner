@@ -23,7 +23,7 @@
 <script setup lang="ts">
 import { ref, computed, watch, defineProps, defineEmits, h } from 'vue'
 import DashboardBox from './DashboardBox.vue'
-import EventActionsBox from '../EventActionsBox.vue'
+import EventActionsBox from "./eventview/EventActionsBox.vue";
 
 const props = defineProps<{
   actions: string[];
