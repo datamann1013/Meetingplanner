@@ -19,7 +19,7 @@
 <script setup lang="ts">
 import { ref, computed, watch, defineProps, defineEmits, h } from 'vue'
 import EventListTable from './EventListTable.vue'
-import DashboardBox from './DashboardBox.vue'
+import DashboardBox from './admin/DashboardBox.vue'
 import EventActionsBox from './EventActionsBox.vue'
 import EventCalendarBox from './EventCalendarBox.vue'
 

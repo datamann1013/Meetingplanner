@@ -27,7 +27,22 @@
     </div>
     <div class="admin-main">
         <template v-if="selectedTab === 'Events'">
-          <EventActionsAndCalendar />
+          <DualInteractiveBoxes
+            :actions="['Calendar', 'Create Event', 'Duplicate Previous Event', 'Import Events', 'Upload Images/Attachments', 'Email Attendees']"
+            :contentMap="{
+              'Calendar': EventCalendarBox,
+              'Create Event': { render() { return h('h2', 'Create Event') } },
+              'Duplicate Previous Event': { render() { return h('h2', 'Duplicate Previous Event') } },
+              'Import Events': { render() { return h('h2', 'Import Events') } },
+              'Upload Images/Attachments': { render() { return h('h2', 'Upload Images/Attachments') } },
+              'Email Attendees': { render() { return h('h2', 'Email Attendees') } }
+            }"
+            initialAction="Calendar"
+          >
+            <template #bottom>
+              <EventListTable />
+            </template>
+          </DualInteractiveBoxes>
         </template>
         <template v-else>
           <DashboardLayout
@@ -42,12 +57,13 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import DashboardLayout from '../components/DashboardLayout.vue'
+import DashboardLayout from '../components/admin/DashboardLayout.vue'
 import SidebarItem from '../components/admin/SidebarItem.vue'
+import DualInteractiveBoxes from '../components/admin/DualInteractiveBoxes.vue'
 import EventActionsBox from '../components/EventActionsBox.vue'
 import EventCalendarBox from '../components/EventCalendarBox.vue'
 import EventListTable from '../components/EventListTable.vue'
-import EventActionsAndCalendar from '../components/EventActionsAndCalendar.vue'
+import { h } from 'vue'
 
 const sidebarItems = [
   { title: 'Dashboard', tag: 'dashboard', hoverColor: '#A3B18A' },
