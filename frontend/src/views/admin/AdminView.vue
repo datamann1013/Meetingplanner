@@ -2,7 +2,7 @@
   <div class="admin-layout">
     <div class="admin-sidebar">
       <div class="admin-sidebar-list">
-        <AdminSidebarItem
+        <SidebarItem
           v-for="item in sidebarItems.filter(i => i.title !== 'Settings' && i.title !== 'Logs')"
           :key="item.title"
           :title="item.title"
@@ -14,7 +14,7 @@
       </div>
       <div class="admin-sidebar-spacer"></div>
       <div class="admin-sidebar-bottom">
-        <AdminSidebarItem
+        <SidebarItem
           v-for="item in sidebarItems.filter(i => i.title === 'Settings' || i.title === 'Logs')"
           :key="item.title"
           :title="item.title"
@@ -27,7 +27,28 @@
     </div>
     <div class="admin-main">
         <template v-if="selectedTab === 'Events'">
-          <EventActionsAndCalendar />
+          <DualInteractiveBoxes
+            :actions="['Calendar', 'Create Event', 'Duplicate Previous Event', 'Import Events', 'Upload Images/Attachments', 'Email Attendees']"
+            :contentMap="{
+              'Calendar': { render() { return h('h2', 'Calendar') } },
+              'Create Event': { render() { return h('h2', 'Create Event') } },
+              'Duplicate Previous Event': { render() { return h('h2', 'Duplicate Previous Event') } },
+              'Import Events': { render() { return h('h2', 'Import Events') } },
+              'Upload Images/Attachments': { render() { return h('h2', 'Upload Images/Attachments') } },
+              'Email Attendees': { render() { return h('h2', 'Email Attendees') } }
+            }"
+            initialAction="Calendar"
+          >
+            <template #bottom>
+              <EventTable
+                :events="events"
+                :columns="eventColumns"
+                :topBarProps="eventTopBarProps"
+                @edit="onEditEvent"
+                @delete="onDeleteEvent"
+              />
+            </template>
+          </DualInteractiveBoxes>
         </template>
         <template v-else>
           <DashboardLayout
@@ -42,12 +63,12 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import DashboardLayout from '../components/DashboardLayout.vue'
-import AdminSidebarItem from '../components/AdminSidebarItem.vue'
-import EventActionsBox from '../components/EventActionsBox.vue'
-import EventCalendarBox from '../components/EventCalendarBox.vue'
-import EventListTable from '../components/EventListTable.vue'
-import EventActionsAndCalendar from '../components/EventActionsAndCalendar.vue'
+import DashboardLayout from "../../components/admin/DashboardLayout.vue";
+import SidebarItem from "../../components/admin/SidebarItem.vue";
+import DualInteractiveBoxes from "../../components/admin/DualInteractiveBoxes.vue";
+import EventActionsBox from "../../components/admin/eventview/EventActionsBox.vue";
+import EventTable from "../../components/admin/eventview/EventTable.vue";
+import { h } from 'vue'
 
 const sidebarItems = [
   { title: 'Dashboard', tag: 'dashboard', hoverColor: '#A3B18A' },
@@ -76,9 +97,9 @@ const dashboardConfigs = {
   events: [
     [
       { size: 'primary', label: 'Short Left', flex: 1, content: EventActionsBox },
-      { size: 'secondary', label: 'Middle Left', flex: 2, content: EventCalendarBox }
+      { size: 'secondary', label: 'Middle Left', flex: 2, content: "Box" }
     ],
-    [{ size: 'long', label: 'Overview', content: EventListTable }],
+    [{ size: 'long', label: 'Overview', content: EventTable }],
   ],
   emails: [
     [{ size: 'primary', label: 'Inbox', flex: 1 }, { size: 'secondary', label: 'Sent', flex: 1 }],
@@ -97,5 +118,20 @@ const dashboardConfigs = {
   settings: [
     [{ size: 'primary', label: 'General Settings', flex: 1 }, { size: 'secondary', label: 'Advanced Settings', flex: 1 }],
   ],
+}
+
+const events = [] // Replace with your event data
+const eventColumns = [
+  { key: 'name', label: 'Name' },
+  { key: 'date', label: 'Date' },
+  { key: 'location', label: 'Location' },
+  { key: 'actions', label: 'Actions' }
+]
+const eventTopBarProps = {} // Add your top bar props if needed
+function onEditEvent(event) {
+  // Handle edit
+}
+function onDeleteEvent(event) {
+  // Handle delete
 }
 </script>

@@ -3,7 +3,7 @@
     <h3 style="margin-bottom: 16px;">Event Actions</h3>
     <div class="event-actions-list-wrapper">
       <div class="event-actions-list">
-        <AdminSidebarItem
+        <SidebarItem
           v-for="action in actions"
           :key="action"
           :title="action"
@@ -19,7 +19,7 @@
 
 <script setup lang="ts">
 import { ref, defineEmits } from 'vue'
-import AdminSidebarItem from './AdminSidebarItem.vue'
+import SidebarItem from '../SidebarItem.vue'
 
 const emit = defineEmits(['updateAction'])
 const actions = [
