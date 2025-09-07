@@ -30,7 +30,7 @@
           <DualInteractiveBoxes
             :actions="['Calendar', 'Create Event', 'Duplicate Previous Event', 'Import Events', 'Upload Images/Attachments', 'Email Attendees']"
             :contentMap="{
-              'Calendar': EventCalendarBox,
+              'Calendar': { render() { return h('h2', 'Calendar') } },
               'Create Event': { render() { return h('h2', 'Create Event') } },
               'Duplicate Previous Event': { render() { return h('h2', 'Duplicate Previous Event') } },
               'Import Events': { render() { return h('h2', 'Import Events') } },
@@ -63,12 +63,11 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import DashboardLayout from '../components/admin/DashboardLayout.vue'
-import SidebarItem from '../components/admin/SidebarItem.vue'
-import DualInteractiveBoxes from '../components/admin/DualInteractiveBoxes.vue'
+import DashboardLayout from "../components/admin/DashboardLayout.vue";
+import SidebarItem from "../components/admin/SidebarItem.vue"
+import DualInteractiveBoxes from "../components/admin/DualInteractiveBoxes.vue"
 import EventActionsBox from "../components/admin/eventview/EventActionsBox.vue"
-import EventCalendarBox from '../components/EventCalendarBox.vue'
-import EventTable from "../components/admin/eventview/EventTable.vue";
+import EventTable from "../components/admin/eventview/EventTable.vue"
 import { h } from 'vue'
 
 const sidebarItems = [
@@ -98,7 +97,7 @@ const dashboardConfigs = {
   events: [
     [
       { size: 'primary', label: 'Short Left', flex: 1, content: EventActionsBox },
-      { size: 'secondary', label: 'Middle Left', flex: 2, content: EventCalendarBox }
+      { size: 'secondary', label: 'Middle Left', flex: 2, content: "Box" }
     ],
     [{ size: 'long', label: 'Overview', content: EventTable }],
   ],
