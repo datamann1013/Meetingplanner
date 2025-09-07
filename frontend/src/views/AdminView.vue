@@ -2,7 +2,7 @@
   <div class="admin-layout">
     <div class="admin-sidebar">
       <div class="admin-sidebar-list">
-        <AdminSidebarItem
+        <SidebarItem
           v-for="item in sidebarItems.filter(i => i.title !== 'Settings' && i.title !== 'Logs')"
           :key="item.title"
           :title="item.title"
@@ -14,7 +14,7 @@
       </div>
       <div class="admin-sidebar-spacer"></div>
       <div class="admin-sidebar-bottom">
-        <AdminSidebarItem
+        <SidebarItem
           v-for="item in sidebarItems.filter(i => i.title === 'Settings' || i.title === 'Logs')"
           :key="item.title"
           :title="item.title"
@@ -43,7 +43,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import DashboardLayout from '../components/DashboardLayout.vue'
-import AdminSidebarItem from '../components/AdminSidebarItem.vue'
+import SidebarItem from '../components/admin/SidebarItem.vue'
 import EventActionsBox from '../components/EventActionsBox.vue'
 import EventCalendarBox from '../components/EventCalendarBox.vue'
 import EventListTable from '../components/EventListTable.vue'
