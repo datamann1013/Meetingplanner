@@ -78,7 +78,7 @@
 import { ref, onMounted } from 'vue';
 import TableEntry from "../../shared/TableEntry.vue";
 import { strapi } from '../../../services/strapi';
-import { formatDateTime } from '../../DateUtils';
+import { formatDateTime } from '../../../composables/DateUtils';
 
 defineProps<{
   topBarProps?: Record<string, any>

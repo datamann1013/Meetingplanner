@@ -16,7 +16,7 @@ const routes = [
   {
     path: '/admin',
     name: 'Admin',
-    component: () => import('@/views/AdminView.vue'),
+    component: () => import('@/views/admin/AdminView.vue'),
     meta: { requiresAuth: true, requiresBoard: true }
   }
 ]

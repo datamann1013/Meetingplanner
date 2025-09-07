@@ -63,11 +63,11 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import DashboardLayout from "../components/admin/DashboardLayout.vue";
-import SidebarItem from "../components/admin/SidebarItem.vue"
-import DualInteractiveBoxes from "../components/admin/DualInteractiveBoxes.vue"
-import EventActionsBox from "../components/admin/eventview/EventActionsBox.vue"
-import EventTable from "../components/admin/eventview/EventTable.vue"
+import DashboardLayout from "../../components/admin/DashboardLayout.vue";
+import SidebarItem from "../../components/admin/SidebarItem.vue";
+import DualInteractiveBoxes from "../../components/admin/DualInteractiveBoxes.vue";
+import EventActionsBox from "../../components/admin/eventview/EventActionsBox.vue";
+import EventTable from "../../components/admin/eventview/EventTable.vue";
 import { h } from 'vue'
 
 const sidebarItems = [
