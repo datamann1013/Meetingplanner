@@ -24,31 +24,43 @@
   --padding-chip: 4px 10px;
   --padding-content-top: 60px;
   --padding-content-bottom: 70px;
+
+  /* Height and width variables */
+  --full-vh: 100vh;
+  --height-sidebar: calc(100vh - 48px);
+  --height-btn: 40px;
+  --height-card: 100%;
+  --height-content-with-bars: calc(100vh - 180px);
+
+  --width-sidebar: 260px;
+  --width-full: 100%;
+  --width-btn: 40px;
+  --width-card: 100%;
 }
 .admin-layout {
   display: flex;
-  height: 100vh;
+  height: var(--full-vh);
 }
 .admin-sidebar {
-  width: 260px;
+  width: var(--width-sidebar);
   background: var(--color-sidebar-bg);
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   padding-top: var(--padding-xxl);
-  height: calc(100vh - 48px);
+  height: var(--height-sidebar);
   position: fixed;
   top: 48px;
   left: 0;
 }
 .admin-sidebar-list {
-  width: 100%;
+  width: var(--width-full);
 }
 .admin-sidebar-spacer {
   flex: 1;
 }
 .admin-sidebar-bottom {
-  width: 100%;
+  width: var(--width-full);
   border-top: 1px solid var(--color-sidebar-border);
   margin-top: 16px;
   padding-top: var(--padding-s);
@@ -102,8 +114,8 @@
   z-index: 5;
   background: var(--color-event-info-btn);
   border-radius: 50%;
-  width: 40px;
-  height: 40px;
+  width: var(--width-btn);
+  height: var(--height-btn);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -124,11 +136,13 @@
 .event-card {
   position: relative;
   overflow: hidden;
+  width: var(--width-card);
+  height: var(--height-card);
 }
 /* Info bar default at bottom */
 .event-info-bar {
   background: var(--color-event-info-bar);
-  width: 100%;
+  width: var(--width-full);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -153,8 +167,8 @@
   position: absolute;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
+  width: var(--width-card);
+  height: var(--height-card);
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -188,13 +202,13 @@ html, body {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
-  width: 100%;
+  min-height: var(--full-vh);
+  width: var(--width-full);
 }
 
 .content-with-bars {
   padding-top: var(--padding-content-top);
   padding-bottom: var(--padding-content-bottom);
-  min-height: calc(100vh - 180px);
+  min-height: var(--height-content-with-bars);
 }
 
