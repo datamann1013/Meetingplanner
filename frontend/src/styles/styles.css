@@ -22,9 +22,6 @@
   --padding-xxl : 48px;
 
   --padding-chip: 4px 10px;
-
- 
-  --padding-hover-overlay: 24px;
   --padding-content-top: 60px;
   --padding-content-bottom: 70px;
 }
@@ -162,7 +159,7 @@
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-start;
-  padding: var(--padding-hover-overlay);
+  padding: var(--padding-l);
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.2s;
