@@ -24,7 +24,7 @@ const LightThemeC: ThemeDefinition = {
     overlay: 'rgba(200,218,166,0.95)',
     infoBar: 'rgba(200,218,166,0.85)',
     deadline: '#FFD21D',
-    date: '#C8DAA6',
+
   }
 }
 
@@ -47,6 +47,7 @@ const DarkThemeC: ThemeDefinition = {
     infoBar: 'rgba(31, 41, 22, 0.88)',
     deadline: '#FFD21D',
     date: '#2E3B21',
+    sidebar: '#60793E',
   }
 }
 

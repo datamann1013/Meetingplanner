@@ -1,11 +1,25 @@
-/* Admin layout and sidebar styles */
+/* Color variables for the app */
+:root {
+  --color-sidebar-bg: #C8DAA6;
+  --color-sidebar-selected: #A3B18A;
+  --color-sidebar-border: #b5c9a3;
+  --color-sidebar-text: #222;
+  --color-event-info-btn: #76944C;
+  --color-event-info-bar: rgba(200,218,166,0.85);
+  --color-event-hover-overlay: rgba(200,218,166,0.95);
+  --color-event-date: #C8DAA6;
+  --color-event-deadline: #FFD21D;
+  --color-on-surface: #2E2E2E;
+  --color-box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  --color-overlay: rgba(200,218,166,0.95);
+}
 .admin-layout {
   display: flex;
   height: 100vh;
 }
 .admin-sidebar {
   width: 260px;
-  background: #C8DAA6;
+  background: var(--color-sidebar-bg);
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -23,20 +37,20 @@
 }
 .admin-sidebar-bottom {
   width: 100%;
-  border-top: 1px solid #b5c9a3;
+  border-top: 1px solid var(--color-sidebar-border);
   margin-top: 16px;
   padding-top: 8px;
 }
 .admin-sidebar-item {
   font-size: 1.25rem;
-  color: #222;
+  color: var(--color-sidebar-text);
   text-align: left;
   cursor: pointer;
   border-radius: 0;
   transition: background 0.2s;
 }
 .admin-sidebar-item-selected {
-  background: #A3B18A;
+  background: var(--color-sidebar-selected);
 }
 .admin-main {
   flex: 1;
@@ -53,8 +67,8 @@
   left: 16px;
   bottom: 16px;
   z-index: 4;
-  background: var(--v-theme-deadline);
-  color: var(--v-theme-on-surface);
+  background: var(--color-event-deadline);
+  color: var(--color-on-surface);
   border-radius: 6px;
   padding: 4px 10px;
 }
@@ -64,8 +78,7 @@
   right: 16px;
   bottom: 16px;
   z-index: 4;
-  background: var(--v-theme-date);
-  color: var(--v-theme-on-surface);
+  color: var(--color-on-surface);
   border-radius: 6px;
   padding: 4px 10px;
 }
@@ -75,14 +88,14 @@
   top: 16px;
   right: 16px;
   z-index: 5;
-  background: #76944C;
+  background: var(--color-event-info-btn);
   border-radius: 50%;
   width: 40px;
   height: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  box-shadow: var(--color-box-shadow);
   transition: background 0.2s;
 }
 .event-card-link {
@@ -102,7 +115,7 @@
 }
 /* Info bar default at bottom */
 .event-info-bar {
-  background: rgba(200,218,166,0.85);
+  background: var(--color-event-info-bar);
   width: 100%;
   display: flex;
   align-items: center;
@@ -121,10 +134,10 @@
   position: absolute;
   left: 0;
   z-index: 4;
-  background: var(--v-theme-overlay);
+  background: var(--color-overlay);
 }
 .event-hover-overlay {
-  background: rgba(200,218,166,0.95);
+  background: var(--color-event-hover-overlay);
   position: absolute;
   top: 0;
   left: 0;
