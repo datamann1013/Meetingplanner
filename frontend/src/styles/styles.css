@@ -1,5 +1,6 @@
 
 :root {
+  
   /* Color variables for the app */
   --color-sidebar-bg: #C8DAA6;
   --color-sidebar-selected: #A3B18A;
@@ -36,6 +37,11 @@
   --width-full: 100%;
   --width-btn: 40px;
   --width-card: 100%;
+
+  /* Margin variables */
+  --margin-top-sidebar-bottom: 16px;
+  --margin-left-admin-main: 260px;
+  --margin-reset: 0;
 }
 .admin-layout {
   display: flex;
@@ -62,7 +68,7 @@
 .admin-sidebar-bottom {
   width: var(--width-full);
   border-top: 1px solid var(--color-sidebar-border);
-  margin-top: 16px;
+  margin-top: var(--margin-top-sidebar-bottom);
   padding-top: var(--padding-s);
 }
 .admin-sidebar-item {
@@ -79,7 +85,7 @@
 .admin-main {
   flex: 1;
   padding: var(--padding-xxl) var(--padding-xl);
-  margin-left: 260px;
+  margin-left: var(--margin-left-admin-main);
 }
 /* Sidebar item hover effect */
 
@@ -187,7 +193,7 @@
   position: relative;
 }
 * {
-  margin: 0;
+  margin: var(--margin-reset);
   padding: 0;
   box-sizing: border-box;
 }
