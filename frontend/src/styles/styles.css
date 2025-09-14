@@ -134,7 +134,7 @@
   position: absolute;
   left: 0;
   z-index: 4;
-  background: var(--color-overlay);
+  background: transparent;
 }
 .event-hover-overlay {
   background: var(--color-event-hover-overlay);
