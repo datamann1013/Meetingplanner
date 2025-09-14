@@ -1,5 +1,6 @@
-/* Color variables for the app */
+
 :root {
+  /* Color variables for the app */
   --color-sidebar-bg: #C8DAA6;
   --color-sidebar-selected: #A3B18A;
   --color-sidebar-border: #b5c9a3;
@@ -12,6 +13,20 @@
   --color-on-surface: #2E2E2E;
   --color-box-shadow: 0 2px 8px rgba(0,0,0,0.15);
   --color-overlay: rgba(200,218,166,0.95);
+
+  /* Padding variables */
+  --padding-s : 8px;
+  --padding-m : 12px;
+  --padding-l : 24px;
+  --padding-xl : 36px;
+  --padding-xxl : 48px;
+
+  --padding-chip: 4px 10px;
+
+ 
+  --padding-hover-overlay: 24px;
+  --padding-content-top: 60px;
+  --padding-content-bottom: 70px;
 }
 .admin-layout {
   display: flex;
@@ -23,7 +38,7 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  padding-top: 48px;
+  padding-top: var(--padding-xxl);
   height: calc(100vh - 48px);
   position: fixed;
   top: 48px;
@@ -39,7 +54,7 @@
   width: 100%;
   border-top: 1px solid var(--color-sidebar-border);
   margin-top: 16px;
-  padding-top: 8px;
+  padding-top: var(--padding-s);
 }
 .admin-sidebar-item {
   font-size: 1.25rem;
@@ -54,7 +69,7 @@
 }
 .admin-main {
   flex: 1;
-  padding: 48px 32px;
+  padding: var(--padding-xxl) var(--padding-xl);
   margin-left: 260px;
 }
 /* Sidebar item hover effect */
@@ -70,7 +85,7 @@
   background: var(--color-event-deadline);
   color: var(--color-on-surface);
   border-radius: 6px;
-  padding: 4px 10px;
+  padding: var(--padding-chip);
 }
 /* Event date always bottom right */
 .event-date-bottomright {
@@ -80,7 +95,7 @@
   z-index: 4;
   color: var(--color-on-surface);
   border-radius: 6px;
-  padding: 4px 10px;
+  padding: var(--padding-chip);
 }
 /* Info button always top right */
 .event-info-btn-topright {
@@ -120,7 +135,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 12px;
+  padding: var(--padding-m);
   position: absolute;
   bottom: 0;
   left: 0;
@@ -147,7 +162,7 @@
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-start;
-  padding: 24px;
+  padding: var(--padding-hover-overlay);
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.2s;
@@ -181,8 +196,8 @@ html, body {
 }
 
 .content-with-bars {
-  padding-top: 60px;
-  padding-bottom: 70px;
+  padding-top: var(--padding-content-top);
+  padding-bottom: var(--padding-content-bottom);
   min-height: calc(100vh - 180px);
 }
 
