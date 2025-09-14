@@ -94,8 +94,8 @@
 /* Signup deadline always bottom left */
 .event-deadline-bottomleft {
   position: absolute;
-  left: 16px;
-  bottom: 16px;
+  left: var(--padding-m);
+  bottom: var(--padding-m);
   z-index: 4;
   background: var(--color-event-deadline);
   color: var(--color-on-surface);
@@ -105,18 +105,18 @@
 /* Event date always bottom right */
 .event-date-bottomright {
   position: absolute;
-  right: 16px;
-  bottom: 16px;
+  right: var(--padding-m);
+  bottom: var(--padding-m);
   z-index: 4;
   color: var(--color-on-surface);
-  border-radius: 6px;
+  border-radius: var(--padding-s);
   padding: var(--padding-chip);
 }
 /* Info button always top right */
 .event-info-btn-topright {
   position: absolute;
-  top: 16px;
-  right: 16px;
+  top: var(--padding-m);
+  right: var(--padding-m);
   z-index: 5;
   background: var(--color-event-info-btn);
   border-radius: 50%;
@@ -134,8 +134,8 @@
 }
 .event-info-btn-static {
   position: absolute;
-  right: 16px;
-  bottom: 16px;
+  right: var(--padding-m);
+  bottom: var(--padding-m);
   z-index: 5;
 }
 /* Event card hover overlay styles */
