@@ -18,26 +18,30 @@
         <TextInput id="location" label="Location" v-model="form.location" inputColor="#f5f5f5" borderColor="#616161" />
       </div>
 
-      <label class="grid-label" for="contact_info">Contact Info</label>
-      <div class="grid-span-3">
-        <TextInput id="contact_info" label="Contact Info" v-model="form.contact_info" inputColor="#f5f5f5" borderColor="#616161" />
-      </div>
-
-      <label class="grid-label">Cover Image</label>
-      <div class="grid-span-3">
-        <button type="button" @click="openMediaPicker">Choose Cover Image</button>
-      </div>
-
-      <!-- Split fields after -->
+      <!-- Split fields: Date & Signup Deadline -->
       <label class="grid-label" for="date">Date</label>
       <DateTimePicker id="date" label="Date" v-model="form.date" inputColor="#f5f5f5" borderColor="#616161" />
       <label class="grid-label" for="signup_deadline">Signup Deadline</label>
       <DateTimePicker id="signup_deadline" label="Signup Deadline" v-model="form.signup_deadline" inputColor="#f5f5f5" borderColor="#616161" />
 
+      <!-- Split fields: Capacity & Categories -->
       <label class="grid-label" for="capacity">Capacity</label>
       <NumberInput id="capacity" label="Capacity" v-model="form.capacity" inputColor="#f5f5f5" borderColor="#616161" />
       <label class="grid-label" for="category">Categories</label>
       <CategoryDropdown id="category" label="Categories" v-model="form.category" :categories="categories" inputColor="#f5f5f5" borderColor="#616161" />
+
+      <!-- Split fields: Cover Image & Contact Info -->
+      <label class="grid-label">Cover Image</label>
+      <div>
+        <InputButton type="button" inputColor="#f5f5f5" borderColor="#616161" @click="openMediaPicker">Choose Cover Image</InputButton>
+      </div>
+      <label class="grid-label" for="contact_info">Contact Info</label>
+      <TextInput id="contact_info" label="Contact Info" v-model="form.contact_info" inputColor="#f5f5f5" borderColor="#616161" />
+
+      <!-- Create Event Button -->
+      <div class="button-row grid-span-3 grid-col-2-4">
+        <InputButton type="submit" inputColor="#f5f5f5" borderColor="#616161" class="full-width-button">Create Event</InputButton>
+      </div>
     </form>
   </div>
 </template>
@@ -49,6 +53,7 @@ import TextArea from '../../shared/TextArea.vue'
 import DateTimePicker from '../../shared/DateTimePicker.vue'
 import NumberInput from '../../shared/NumberInput.vue'
 import CategoryDropdown from '../../shared/CategoryDropdown.vue'
+import InputButton from '../../shared/InputButton.vue'
 
 const props = defineProps<{ mode: 'create' | 'duplicate' }>()
 const form = ref({
@@ -90,5 +95,18 @@ function openMediaPicker() {
 }
 .grid-span-3 {
   grid-column: span 3;
+}
+.grid-span-4 {
+  grid-column: span 4;
+}
+.button-row {
+  display: flex;
+  justify-content: center;
+}
+.grid-col-2-4 {
+  grid-column: 2 / 5;
+}
+.full-width-button {
+  width: 100%;
 }
 </style>
