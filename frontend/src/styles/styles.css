@@ -1,127 +1,119 @@
-
 :root {
-  
-  /* Color variables for the app */
-  --color-sidebar-bg: #C8DAA6;
-  --color-sidebar-selected: #A3B18A;
-  --color-sidebar-border: #b5c9a3;
-  --color-sidebar-text: #222;
-  --color-event-info-btn: #76944C;
-  --color-event-info-bar: rgba(200,218,166,0.85);
-  --color-event-hover-overlay: rgba(200,218,166,0.95);
-  --color-event-date: #C8DAA6;
-  --color-event-deadline: #FFD21D;
+  /* Colors */
+  --color-primary-bg: #C8DAA6;
+  --color-primary-selected: #A3B18A;
+  --color-primary-border: #b5c9a3;
+  --color-primary-text: #222;
+  --color-accent: #76944C;
+  --color-info-bar: rgba(200,218,166,0.85);
+  --color-hover-overlay: rgba(200,218,166,0.95);
+  --color-date: #C8DAA6;
+  --color-deadline: #FFD21D;
   --color-on-surface: #2E2E2E;
   --color-box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-  --color-overlay: rgba(200,218,166,0.95);
 
-  /* Padding variables */
-  --padding-s : 8px;
-  --padding-m : 12px;
-  --padding-l : 24px;
-  --padding-xl : 36px;
-  --padding-xxl : 48px;
+  /* Spacing */
+  --space-xs: 8px;
+  --space-s: 12px;
+  --space-m: 16px;
+  --space-l: 24px;
+  --space-xl: 36px;
+  --space-xxl: 48px;
+  --space-chip: 4px 10px;
+  --space-content-top: 60px;
+  --space-content-bottom: 70px;
 
-  --padding-chip: 4px 10px;
-  --padding-content-top: 60px;
-  --padding-content-bottom: 70px;
+  /* Sizes */
+  --size-sidebar: 260px;
+  --size-btn: 40px;
+  --size-card: 100%;
+  --size-full: 100%;
+  --size-content-with-bars: calc(100vh - 180px);
 
-  /* Height and width variables */
-  --full-vh: 100vh;
-  --height-sidebar: calc(100vh - 48px);
-  --height-btn: 40px;
+  /* Heights */
+  --height-full-vh: 100vh;
+  --height-sidebar: calc(100vh - var(--space-xxl));
   --height-card: 100%;
   --height-content-with-bars: calc(100vh - 180px);
 
-  --width-sidebar: 260px;
-  --width-full: 100%;
-  --width-btn: 40px;
-  --width-card: 100%;
-
-  /* Margin variables */
-  --margin-top-sidebar-bottom: 16px;
-  --margin-left-admin-main: 260px;
+  /* Margins */
+  --margin-m: 16px;
   --margin-reset: 0;
 }
+
 .admin-layout {
   display: flex;
-  height: var(--full-vh);
+  height: var(--height-full-vh);
 }
 .admin-sidebar {
-  width: var(--width-sidebar);
-  background: var(--color-sidebar-bg);
+  width: var(--size-sidebar);
+  background: var(--color-primary-bg);
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  padding-top: var(--padding-xxl);
+  padding-top: var(--space-xxl);
   height: var(--height-sidebar);
   position: fixed;
   top: 48px;
   left: 0;
 }
 .admin-sidebar-list {
-  width: var(--width-full);
+  width: var(--size-full);
 }
 .admin-sidebar-spacer {
   flex: 1;
 }
 .admin-sidebar-bottom {
-  width: var(--width-full);
-  border-top: 1px solid var(--color-sidebar-border);
-  margin-top: var(--margin-top-sidebar-bottom);
-  padding-top: var(--padding-s);
+  width: var(--size-full);
+  border-top: 1px solid var(--color-primary-border);
+  margin-top: var(--margin-m);
+  padding-top: var(--space-xs);
 }
 .admin-sidebar-item {
   font-size: 1.25rem;
-  color: var(--color-sidebar-text);
+  color: var(--color-primary-text);
   text-align: left;
   cursor: pointer;
   border-radius: 0;
   transition: background 0.2s;
 }
 .admin-sidebar-item-selected {
-  background: var(--color-sidebar-selected);
+  background: var(--color-primary-selected);
 }
 .admin-main {
   flex: 1;
-  padding: var(--padding-xxl) var(--padding-xl);
-  margin-left: var(--margin-left-admin-main);
+  padding: var(--space-xxl) var(--space-xl);
+  margin-left: var(--size-sidebar);
 }
-/* Sidebar item hover effect */
 
-
-
-/* Signup deadline always bottom left */
 .event-deadline-bottomleft {
   position: absolute;
-  left: var(--padding-m);
-  bottom: var(--padding-m);
+  left: var(--space-m);
+  bottom: var(--space-m);
   z-index: 4;
-  background: var(--color-event-deadline);
+  background: var(--color-deadline);
   color: var(--color-on-surface);
-  border-radius: 6px;
-  padding: var(--padding-chip);
+  border-radius: var(--space-xs);
+  padding: var(--space-chip);
 }
-/* Event date always bottom right */
 .event-date-bottomright {
   position: absolute;
-  right: var(--padding-m);
-  bottom: var(--padding-m);
+  right: var(--space-m);
+  bottom: var(--space-m);
   z-index: 4;
   color: var(--color-on-surface);
-  border-radius: var(--padding-s);
-  padding: var(--padding-chip);
+  border-radius: var(--space-xs);
+  padding: var(--space-chip);
 }
-/* Info button always top right */
 .event-info-btn-topright {
   position: absolute;
-  top: var(--padding-m);
-  right: var(--padding-m);
+  top: var(--space-m);
+  right: var(--space-m);
   z-index: 5;
-  background: var(--color-event-info-btn);
+  background: var(--color-accent);
   border-radius: 50%;
-  width: var(--width-btn);
-  height: var(--height-btn);
+  width: var(--size-btn);
+  height: var(--size-btn);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -134,32 +126,29 @@
 }
 .event-info-btn-static {
   position: absolute;
-  right: var(--padding-m);
-  bottom: var(--padding-m);
+  right: var(--space-m);
+  bottom: var(--space-m);
   z-index: 5;
 }
-/* Event card hover overlay styles */
 .event-card {
   position: relative;
   overflow: hidden;
-  width: var(--width-card);
+  width: var(--size-card);
   height: var(--height-card);
 }
-/* Info bar default at bottom */
 .event-info-bar {
-  background: var(--color-event-info-bar);
-  width: var(--width-full);
+  background: var(--color-info-bar);
+  width: var(--size-full);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: var(--padding-m);
+  padding: var(--space-m);
   position: absolute;
   bottom: 0;
   left: 0;
   z-index: 2;
   transition: bottom 0.2s, top 0.2s;
 }
-/* Info bar on hover moves to top */
 .event-info-bar-hover {
   top: 0;
   bottom: auto;
@@ -169,17 +158,17 @@
   background: transparent;
 }
 .event-hover-overlay {
-  background: var(--color-event-hover-overlay);
+  background: var(--color-hover-overlay);
   position: absolute;
   top: 0;
   left: 0;
-  width: var(--width-card);
+  width: var(--size-card);
   height: var(--height-card);
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-start;
-  padding: var(--padding-l);
+  padding: var(--space-l);
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.2s;
@@ -197,24 +186,20 @@
   padding: 0;
   box-sizing: border-box;
 }
-
 html, body {
   height: 100%;
   overflow: hidden;
 }
-
-
 .centered-content {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: var(--full-vh);
-  width: var(--width-full);
+  min-height: var(--height-full-vh);
+  width: var(--size-full);
 }
-
 .content-with-bars {
-  padding-top: var(--padding-content-top);
-  padding-bottom: var(--padding-content-bottom);
+  padding-top: var(--space-content-top);
+  padding-bottom: var(--space-content-bottom);
   min-height: var(--height-content-with-bars);
 }
 
