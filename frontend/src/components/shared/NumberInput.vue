@@ -1,28 +1,37 @@
 <template>
-  <div class="input-row">
-    <label>{{ label }}</label>
-    <input :value="modelValue" @input="onInput($event)" type="number" class="input" :style="inputStyle" />
-    <slot name="controls" />
+  <div class="number-input-wrapper">
+    <input
+      type="number"
+      :value="modelValue"
+      @input="$emit('update:modelValue', $event.target.value)"
+      :style="{ backgroundColor: inputColor, borderColor: borderColor }"
+      class="number-input"
+      :placeholder="placeholder"
+    />
   </div>
 </template>
-<script setup lang="ts">
-import { computed } from 'vue'
-const props = defineProps<{ label: string; modelValue: number; inputColor?: string; borderColor?: string }>()
-defineEmits(['update:modelValue'])
 
-function onInput(e: Event) {
-  const value = (e.target as HTMLInputElement).value
-  // emit update:modelValue as number
-  // @ts-ignore
-  emit('update:modelValue', value === '' ? null : Number(value))
+<script setup lang="ts">
+const props = defineProps<{
+  modelValue: number
+  inputColor?: string
+  borderColor?: string
+  placeholder?: string
+}>()
+defineEmits(['update:modelValue'])
+</script>
+
+<style scoped>
+.number-input-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
 }
 
-const inputStyle = computed(() => ({
-  background: props.inputColor || '',
-  borderColor: props.borderColor || '',
-}))
-</script>
-<style scoped>
-.input-row { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem; }
-.input { flex: 1; padding: 0.5rem; border: 1px solid var(--color-border, #ccc); }
+.number-input {
+  flex: 1;
+  padding: 0.5rem;
+  border: 1px solid var(--color-border, #ccc);
+}
 </style>

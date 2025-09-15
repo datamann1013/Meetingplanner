@@ -1,10 +1,16 @@
 <template>
-  <div class="input-row">
-    <label>{{ label }}</label>
-    <input :value="modelValue" @input="onInput($event)" type="datetime-local" class="input" :style="inputStyle" />
-    <slot name="controls" />
+  <div class="date-time-picker-wrapper">
+    <input
+      type="datetime-local"
+      :value="modelValue"
+      @input="$emit('update:modelValue', $event.target.value)"
+      :style="{ backgroundColor: inputColor, borderColor: borderColor }"
+      class="date-time-picker"
+      :placeholder="placeholder"
+    />
   </div>
 </template>
+
 <script setup lang="ts">
 import { computed } from 'vue'
 const props = defineProps<{ label: string; modelValue: string; inputColor?: string; borderColor?: string }>()
@@ -22,7 +28,8 @@ const inputStyle = computed(() => ({
   borderColor: props.borderColor || '',
 }))
 </script>
+
 <style scoped>
-.input-row { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem; }
-.input { flex: 1; padding: 0.5rem; border: 1px solid var(--color-border, #ccc); }
+.date-time-picker-wrapper { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem; }
+.date-time-picker { flex: 1; padding: 0.5rem; border: 1px solid var(--color-border, #ccc); }
 </style>
