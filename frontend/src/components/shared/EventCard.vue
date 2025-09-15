@@ -28,7 +28,7 @@
 
 <script setup lang="ts">
 import { defineProps } from 'vue'
-import { EventCard as useEventCard } from '@/composables/EventCard'
+import { EventCard as useEventCard } from '@/composables/event/EventCard'
 
 const props = defineProps<{ event: any, strapiBaseUrl: string }>()
 const { coverImageStyle, formatDate } = useEventCard(props.event, props.strapiBaseUrl)

@@ -19,7 +19,7 @@
 
 <script setup lang="ts">
 import SidebarItem from '../SidebarItem.vue'
-import { EventActions } from '@/composables/EventActions'
+import { EventActions } from '@/composables/event/EventActions'
 import { defineEmits } from 'vue'
 
 const emit = defineEmits(['updateAction'])

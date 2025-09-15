@@ -49,7 +49,7 @@
 <script setup lang="ts">
 
 import { ref } from 'vue'
-import { EventTable } from '@/composables/EventTable'
+import { EventTable } from '@/composables/event/EventTable'
 import EventCard from '../../components/shared/EventCard.vue'
 
 const {
