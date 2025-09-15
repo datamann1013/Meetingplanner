@@ -53,10 +53,21 @@ import { EventTable } from '@/composables/EventTable'
 import EventCard from '../../components/shared/EventCard.vue'
 
 const {
-  events,
+  events: rawEvents,
   loading,
 } = EventTable()
 
+// Ensure events have the expected structure with a title property
+import { computed } from 'vue'
+const events = computed(() =>
+  rawEvents.value.map(event =>
+    event.title
+      ? event
+      : event.attributes && event.attributes.title
+        ? { ...event, title: event.attributes.title }
+        : event // fallback, may need more mapping depending on actual structure
+  )
+)
 const showError = ref(false)
 const lastFailedQuery = ref('')
 const strapiBaseUrl = import.meta.env.VITE_STRAPI_API_URL || 'http://localhost:1337'
