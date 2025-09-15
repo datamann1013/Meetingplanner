@@ -1,80 +1,58 @@
 <template>
   <div class="event-create-duplicate-box">
     <h3>{{ mode === 'create' ? 'Create Event' : 'Duplicate Event' }}</h3>
-    <div v-if="mode === 'duplicate'">
-      <input v-model="search" placeholder="Search events by tag, name, or date..." class="event-search-input" />
-      <ul class="event-list">
-        <li v-for="event in filteredEvents" :key="event.id" @click="selectEvent(event)" class="event-list-item">
-          <strong>{{ event.title }}</strong> <span>({{ event.date }})</span> <span>{{ event.tag }}</span>
-        </li>
-      </ul>
-      <div v-if="selectedEvent">
-        <p>Selected: <strong>{{ selectedEvent.title }}</strong> ({{ selectedEvent.date }})</p>
-      </div>
-    </div>
-    <div v-else>
-      <p>Fill in event details below:</p>
-      <!-- Simple placeholder for event creation form -->
-      <input placeholder="Event Title" class="event-input" />
-      <input placeholder="Event Date" class="event-input" />
-      <input placeholder="Event Tag" class="event-input" />
-    </div>
+    <form>
+      <TextInput label="Title" v-model="form.title" inputColor="#f5f5f5" borderColor="#616161" />
+      <TextArea label="Description" v-model="form.description" inputColor="#f5f5f5" borderColor="#616161" />
+      <DateTimePicker label="Date" v-model="form.date" inputColor="#f5f5f5" borderColor="#616161" />
+      <TextInput label="Location" v-model="form.location" inputColor="#f5f5f5" borderColor="#616161" />
+      <NumberInput label="Capacity" v-model="form.capacity" inputColor="#f5f5f5" borderColor="#616161" />
+      <DateTimePicker label="Signup Deadline" v-model="form.signup_deadline" inputColor="#f5f5f5" borderColor="#616161" />
+      <TextInput label="Contact Info" v-model="form.contact_info" inputColor="#f5f5f5" borderColor="#616161" />
+      <button type="button" @click="openMediaPicker">Choose Cover Image</button>
+      <CategoryDropdown label="Categories" v-model="form.category" :categories="categories" inputColor="#f5f5f5" borderColor="#616161" />
+    </form>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue'
-import { EventTable } from '@/composables/event/EventTable'
+import { ref } from 'vue'
+import TextInput from '../../shared/TextInput.vue'
+import TextArea from '../../shared/TextArea.vue'
+import DateTimePicker from '../../shared/DateTimePicker.vue'
+import NumberInput from '../../shared/NumberInput.vue'
+import CategoryDropdown from '../../shared/CategoryDropdown.vue'
 
 const props = defineProps<{ mode: 'create' | 'duplicate' }>()
-const { events } = EventTable()
-const search = ref('')
-const selectedEvent = ref<any | null>(null)
-
-const filteredEvents = computed(() => {
-  if (!search.value) return events.value
-  const s = search.value.toLowerCase()
-  return events.value.filter(e =>
-    (e.title && e.title.toLowerCase().includes(s)) ||
-    (e.tag && e.tag.toLowerCase().includes(s)) ||
-    (e.date && e.date.toLowerCase().includes(s))
-  )
+const form = ref({
+  title: '',
+  description: '',
+  date: '',
+  location: '',
+  capacity: 0,
+  signup_deadline: '',
+  contact_info: '',
+  coverimage: '',
+  category: ''
 })
-
-function selectEvent(event: any) {
-  selectedEvent.value = event
+const categories = ref([
+  { id: '1', name: 'Conference' },
+  { id: '2', name: 'Workshop' },
+  { id: '3', name: 'Meetup' }
+])
+function openMediaPicker() {
+  // Placeholder for media picker modal
+  alert('Media picker modal will be implemented soon.')
 }
 </script>
 
 <style scoped>
 .event-create-duplicate-box {
-  padding: 1.5rem;
-  background: var(--color-primary-bg);
-  border-radius: var(--border-radius);
-  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+  /* Remove all custom box-shadow and border-radius to inherit from parent */
 }
-.event-search-input {
-  margin-bottom: 1rem;
-  padding: 0.5rem;
-  width: 100%;
-}
-.event-list {
-  list-style: none;
-  padding: 0;
-  margin: 0 0 1rem 0;
-}
-.event-list-item {
-  padding: 0.5rem 0.75rem;
-  cursor: pointer;
-  border-bottom: 1px solid #eee;
-}
-.event-list-item:hover {
-  background: var(--color-secondary-bg);
-}
-.event-input {
-  display: block;
-  margin-bottom: 0.75rem;
-  padding: 0.5rem;
-  width: 100%;
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
 </style>
