@@ -27,7 +27,7 @@
 </template>
 
 <script setup lang="ts">
-import { EventCard as useEventCard } from '@/composables/event/EventCard'
+import { EventCard as useEventCard } from '@/composables/EventCard'
 
 interface EventCardProps {
   event: {

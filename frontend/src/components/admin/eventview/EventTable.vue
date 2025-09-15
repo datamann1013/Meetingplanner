@@ -76,7 +76,7 @@
 
 <script setup lang="ts">
 import TableEntry from "../../shared/TableEntry.vue";
-import { EventTable } from "@/composables/event/EventTable";
+import { EventTable } from "@/composables/EventTable";
 
 const {
   events,
