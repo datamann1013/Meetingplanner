@@ -21,14 +21,21 @@ Meetingplanner Stylesheet Structure
   --color-primary-bg: #C8DAA6;
   --color-primary-selected: #A3B18A;
   --color-primary-border: #b5c9a3;
-  --color-primary-text: #222;
   --color-accent: #76944C;
+  --color-on-surface: #2E2E2E;
+  --color-deadline: #FFD21D;
   --color-info-bar: rgba(200,218,166,0.85);
   --color-hover-overlay: rgba(200,218,166,0.95);
-  --color-date: #C8DAA6;
-  --color-deadline: #FFD21D;
-  --color-on-surface: #2E2E2E;
   --color-box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  --color-table-border: #e0e0e0;
+  --color-table-header-bg: #f5f5f5;
+  --color-table-input-bg: #f8f3e6;
+  --color-row-selected-bg: #f5eee6;
+  --color-popup-bg: #FBF5DB;
+  --color-placeholder: #aaa;
+  --color-btn-disabled: #888;
+  --color-error: #e74c3c;
+  --color-input-text: #4b3f2a;
 
   /* Spacing */
   --space-xs: 8px;
@@ -90,7 +97,7 @@ Meetingplanner Stylesheet Structure
 }
 .admin-sidebar-item {
   font-size: 1.25rem;
-  color: var(--color-primary-text);
+  color: var(--color-on-surface);
   text-align: left;
   cursor: pointer;
   border-radius: 0;
@@ -254,12 +261,12 @@ html, body {
   border-collapse: collapse;
 }
 .table-entry th, .table-entry td {
-  border: 1px solid #e0e0e0;
+  border: 1px solid var(--color-table-border);
   padding: var(--space-s) var(--space-l);
   text-align: left;
 }
 .table-entry th {
-  background: #f5f5f5;
+  background: var(--color-table-header-bg);
 }
 
 /* 3.3 DashboardLayout */
@@ -281,7 +288,7 @@ html, body {
   margin: 0;
   font-size: 2rem;
   font-weight: 600;
-  color: var(--v-theme-primary);
+  color: #222;
 }
 .dashboard-content {
   flex: 1;
@@ -333,16 +340,16 @@ html, body {
   font-size: 1rem;
   border: 1px solid #ccc;
   border-radius: 6px;
-  background: #f8f3e6;
-  color: #4b3f2a;
+  background: var(--color-table-input-bg);
+  color: var(--color-input-text);
 }
 .event-topbar-btn {
   padding: 0.5rem 1.25rem;
   font-size: 1rem;
   border: none;
   border-radius: 6px;
-  background: #e0e0e0;
-  color: #888;
+  background: var(--color-table-border);
+  color: var(--color-btn-disabled);
   cursor: not-allowed;
   opacity: 0.7;
 }
@@ -363,30 +370,30 @@ html, body {
   color: #4b3f2a;
 }
 .event-row-selected {
-  background: #f5eee6;
+  background: var(--color-row-selected-bg);
 }
 .event-tag-placeholder {
-  color: #aaa;
+  color: var(--color-placeholder);
   font-style: italic;
 }
 .event-status-placeholder {
-  color: #76944C;
+  color: var(--color-accent);
   font-weight: 500;
 }
 .event-row-details {
   margin-top: 1rem;
   padding: 1rem;
-  background: #FBF5DB;
+  background: var(--color-popup-bg);
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-  color: #2E2E2E;
+  color: var(--color-on-surface);
 }
 .event-list-loading, .event-list-error {
   padding: 1rem;
   text-align: center;
 }
 .event-list-error {
-  color: #e74c3c;
+  color: var(--color-error);
 }
 .hoverable-cell {
   position: relative;
@@ -397,9 +404,9 @@ html, body {
   left: 100%;
   top: 50%;
   transform: translateY(-50%);
-  background: #FBF5DB;
-  color: #2E2E2E;
-  border: 1px solid #e0e0e0;
+  background: var(--color-popup-bg);
+  color: var(--color-on-surface);
+  border: 1px solid var(--color-table-border);
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.08);
   padding: 0.5rem 1rem;
