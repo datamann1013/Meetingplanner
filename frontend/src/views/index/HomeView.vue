@@ -47,30 +47,17 @@
 </template>
 
 <script setup lang="ts">
-import EventCard from "../../components/shared/EventCard.vue"
-import { ref, onMounted } from 'vue'
-import { strapi } from '../../services/strapi'
-import { StrapiResponse, Event } from '../../types'
 
-const events = ref<Event[]>([])
-const loading = ref<boolean>(true)
+import { ref } from 'vue'
+import { EventTable } from '@/composables/EventTable'
+import EventCard from '../../components/shared/EventCard.vue'
+
+const {
+  events,
+  loading,
+} = EventTable()
+
 const showError = ref(false)
 const lastFailedQuery = ref('')
-
 const strapiBaseUrl = import.meta.env.VITE_STRAPI_API_URL || 'http://localhost:1337'
-
-onMounted(async (): Promise<void> => {
-  try {
-    const response = await strapi.get<StrapiResponse<Event[]>>('/events?populate=Coverimage&sort=date:asc')
-    events.value = response.data.data
-  } catch (error: any) {
-    if (error.response?.status === 403) {
-      showError.value = true
-      lastFailedQuery.value = '/events?populate=Coverimage&sort=date:asc'
-    }
-    console.error('Error fetching events:', error)
-  } finally {
-    loading.value = false
-  }
-})
 </script>

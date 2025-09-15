@@ -18,8 +18,9 @@
 </template>
 
 <script setup lang="ts">
-import { ref, defineEmits } from 'vue'
 import SidebarItem from '../SidebarItem.vue'
+import { EventActions } from '@/composables/EventActions'
+import { defineEmits } from 'vue'
 
 const emit = defineEmits(['updateAction'])
 const actions = [
@@ -30,12 +31,6 @@ const actions = [
   'Upload Images/Attachments',
   'Email Attendees'
 ]
-const selectedAction = ref('Calendar')
-
-function selectAction(action: string) {
-  selectedAction.value = action
-  emit('updateAction', action)
-}
+const { selectedAction, selectAction } = EventActions('Calendar', actions, (action: string) => emit('updateAction', action))
 </script>
 
-<!-- Styles moved to global stylesheet -->

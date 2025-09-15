@@ -1,9 +1,6 @@
 <template>
   <v-card
-    :style="event.Coverimage?.url
-      ? `background-image: url(${strapiBaseUrl}${event.Coverimage.url}); background-size: cover; background-position: center;`
-      : `background-color: var(--color-primary-bg);`
-    "
+    :style="coverImageStyle"
     class="d-flex flex-column justify-end card-relative event-card"
     height="250"
   >
@@ -31,8 +28,8 @@
 
 <script setup lang="ts">
 import { defineProps } from 'vue'
+import { EventCard as useEventCard } from '@/composables/EventCard'
+
 const props = defineProps<{ event: any, strapiBaseUrl: string }>()
-function formatDate(date: string) {
-  return new Date(date).toLocaleDateString()
-}
+const { coverImageStyle, formatDate } = useEventCard(props.event, props.strapiBaseUrl)
 </script>
