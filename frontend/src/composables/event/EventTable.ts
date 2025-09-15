@@ -26,7 +26,7 @@ export function EventTable() {
       if (res.data && Array.isArray(res.data.data)) {
         events.value = res.data.data.map((item: any) => ({
           id: item.id,
-          title: item.title,
+          name: item.title,
           date: item.date,
           status: item.status || 'Draft',
           rsvp: item.rsvp_count || '0/0',
