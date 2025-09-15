@@ -19,18 +19,13 @@
 
 <script setup lang="ts">
 import SidebarItem from '../SidebarItem.vue'
-import { EventActions } from '@/composables/event/EventActions'
-import { defineEmits } from 'vue'
+import { defineEmits, defineProps } from 'vue'
 
 const emit = defineEmits(['updateAction'])
-const actions = [
-  'Calendar',
-  'Create Event',
-  'Duplicate Previous Event',
-  'Import Events',
-  'Upload Images/Attachments',
-  'Email Attendees'
-]
-const { selectedAction, selectAction } = EventActions('Calendar', actions, (action: string) => emit('updateAction', action))
+const props = defineProps<{ actions: string[]; selectedAction: string }>()
+
+function selectAction(action: string) {
+  emit('updateAction', action)
+}
 </script>
 
