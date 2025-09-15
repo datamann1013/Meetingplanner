@@ -2,10 +2,9 @@
   <div class="text-area-wrapper">
     <textarea
       :value="modelValue"
-      @input="$emit('update:modelValue', $event.target.value)"
+      @input="$emit('update:modelValue', ($event.target as HTMLTextAreaElement).value)"
       :style="{ backgroundColor: inputColor, borderColor: borderColor }"
       class="text-area"
-      :placeholder="placeholder"
     />
   </div>
 </template>

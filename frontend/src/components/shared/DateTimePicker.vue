@@ -3,10 +3,9 @@
     <input
       type="datetime-local"
       :value="modelValue"
-      @input="$emit('update:modelValue', $event.target.value)"
+      @input="$emit('update:modelValue', ($event.target as HTMLInputElement).value)"
       :style="{ backgroundColor: inputColor, borderColor: borderColor }"
       class="date-time-picker"
-      :placeholder="placeholder"
     />
   </div>
 </template>
