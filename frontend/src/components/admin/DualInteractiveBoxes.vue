@@ -21,7 +21,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, watch, defineProps, defineEmits, h } from 'vue'
+import { ref, computed, watch, h } from 'vue'
 import DashboardBox from './DashboardBox.vue'
 import EventActionsBox from "./eventview/EventActionsBox.vue";
 

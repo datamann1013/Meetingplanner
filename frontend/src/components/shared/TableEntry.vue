@@ -18,13 +18,20 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, ref } from 'vue'
+import { ref } from 'vue'
 import { TableEntry as useTableEntry } from '@/composables/TableEntry'
 
-const props = defineProps<{
-  columns: Array<{ key: string, label: string }>
+interface TableEntryColumn {
+  key: string
+  label: string
+}
+
+interface TableEntryProps {
+  columns: TableEntryColumn[]
   rows: Array<Record<string, any>>
-}>()
+}
+
+const props = defineProps<TableEntryProps>()
 const refValue = ref(props.rows)
 useTableEntry(props.rows, refValue)
 </script>

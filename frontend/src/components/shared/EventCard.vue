@@ -27,9 +27,19 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps } from 'vue'
 import { EventCard as useEventCard } from '@/composables/event/EventCard'
 
-const props = defineProps<{ event: any, strapiBaseUrl: string }>()
+interface EventCardProps {
+  event: {
+    title: string
+    date: string
+    signup_deadline?: string
+    description?: string
+    Coverimage?: { url?: string }
+  }
+  strapiBaseUrl: string
+}
+
+const props = defineProps<EventCardProps>()
 const { coverImageStyle, formatDate } = useEventCard(props.event, props.strapiBaseUrl)
 </script>

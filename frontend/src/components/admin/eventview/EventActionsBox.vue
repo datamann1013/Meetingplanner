@@ -19,7 +19,6 @@
 
 <script setup lang="ts">
 import SidebarItem from '../SidebarItem.vue'
-import { defineEmits, defineProps } from 'vue'
 
 const emit = defineEmits(['updateAction'])
 const props = defineProps<{ actions: string[]; selectedAction: string }>()
