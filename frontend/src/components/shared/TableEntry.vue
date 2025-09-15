@@ -25,18 +25,3 @@ defineProps<{
   rows: Array<Record<string, any>>
 }>()
 </script>
-
-<style scoped>
-.table-entry {
-  width: 100%;
-  border-collapse: collapse;
-}
-.table-entry th, .table-entry td {
-  border: 1px solid #e0e0e0;
-  padding: 0.5rem 1rem;
-  text-align: left;
-}
-.table-entry th {
-  background: #f5f5f5;
-}
-</style>

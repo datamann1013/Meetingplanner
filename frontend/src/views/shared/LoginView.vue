@@ -57,10 +57,3 @@ const handleLogin = async (): Promise<void> => {
   }
 }
 </script>
-
-<style scoped>
-.login-card {
-  width: 90%;
-  max-width: 400px;
-}
-</style>
