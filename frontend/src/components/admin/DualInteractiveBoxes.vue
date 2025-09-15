@@ -24,6 +24,7 @@
 import { ref, computed, watch, h } from 'vue'
 import DashboardBox from './DashboardBox.vue'
 import EventActionsBox from "./eventview/EventActionsBox.vue";
+import EventCreateDuplicate from "./eventview/EventCreateDuplicate.vue";
 
 const props = defineProps<{
   actions: string[];
@@ -34,6 +35,20 @@ const emit = defineEmits(['actionChanged'])
 const selectedAction = ref<string>(props.initialAction ?? props.actions[0])
 
 const currentComponent = computed(() => {
+  if (selectedAction.value === 'Create Event') {
+    return {
+      render() {
+        return h(EventCreateDuplicate, { mode: 'create' })
+      }
+    }
+  }
+  if (selectedAction.value === 'Duplicate Previous Event') {
+    return {
+      render() {
+        return h(EventCreateDuplicate, { mode: 'duplicate' })
+      }
+    }
+  }
   return props.contentMap[selectedAction.value] || {
     render() {
       return h('h2', 'Choose an action')
