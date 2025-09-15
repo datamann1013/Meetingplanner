@@ -1,6 +1,6 @@
 <template>
   <div class="event-create-duplicate-box">
-    <h3>{{ mode === 'create' ? 'Create Event' : 'Duplicate Event' }}</h3>
+    <h3 class="event-section-title">{{ mode === 'create' ? 'Create Event' : 'Duplicate Event' }}</h3>
     <form class="event-grid">
       <!-- Full-length fields first -->
       <label class="grid-label" for="title">Title</label>
@@ -108,5 +108,11 @@ function openMediaPicker() {
 }
 .full-width-button {
   width: 100%;
+}
+.event-section-title {
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 24px;
+  margin-top: 0;
 }
 </style>
