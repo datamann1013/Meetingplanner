@@ -9,14 +9,6 @@
 - Exposed constants: `THEME_LIGHT`, `THEME_DARK` for toggling
 - Defaults set for common components: `VBtn`, `VCard`, `VTextField`, `VSelect`, `VAutocomplete`
 
-Notes and next steps:
-
-- System theme: consider dynamic theme based on `prefers-color-scheme` and a user toggle in the UI
-- Icons: if switching to SVG icons for performance, wire with `vuetify/iconsets/svg` or custom SVGs
-- Locale: add Vuetify locale when i18n is introduced (e.g., Norwegian Bokmål)
-- Treeshaking: current setup registers all `components` and `directives`. For smaller bundles, introduce `vite-plugin-vuetify` with auto-import/SSR support and remove the broad registration
-- Lab components: if needed, enable via `vite-plugin-vuetify` options
-
 File location: `frontend/src/plugins/vuetify.ts`
 
 ## Stylesheet Refactor
@@ -29,3 +21,15 @@ File location: `frontend/src/plugins/vuetify.ts`
 - The stylesheet is structured for easy navigation and future extension.
 
 See `frontend/src/styles/styles.css` for the full structure and variable list.
+
+## Composables & Script Refactor
+
+- All major frontend logic has been modularized into composables in `frontend/src/composables/`.
+- Vue components now import and use composables for all business logic, state, and actions. Only minimal wiring code remains in the components.
+- Example composables: `EventTable`, `EventCard`, `TableEntry`, `LoginForm`, `EventActions`.
+- All event, card, table, and login logic is handled in composables, making the codebase more maintainable and testable.
+- Imports in Vue files now reference composables directly, with no duplicated logic or local script blocks.
+- API data mapping (e.g., for event cards) is handled in composables to ensure correct fields and structure for UI components.
+- This approach ensures a clear separation of concerns: UI in components, logic in composables, styles in the global stylesheet.
+
+See the `frontend/src/composables/` folder for details and usage examples.
