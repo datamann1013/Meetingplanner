@@ -68,7 +68,9 @@ const firstDayOfWeek = computed(() => {
 })
 const yearRange = computed(() => {
   const range = []
-  for (let y = today.getFullYear() - 5; y <= today.getFullYear() + 5; y++) {
+  const startYear = 2020
+  const endYear = today.getFullYear() + 10
+  for (let y = startYear; y <= endYear; y++) {
     range.push(y)
   }
   return range
