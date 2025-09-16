@@ -30,7 +30,7 @@
           <DualInteractiveBoxes
             :actions="['Calendar', 'Create Event', 'Duplicate Previous Event', 'Import Events', 'Upload Images/Attachments', 'Email Attendees']"
             :contentMap="{
-              'Calendar': { render() { return h('h2', 'Calendar') } },
+              'Calendar': { render() { return h(CalendarEventSelector) } },
               'Create Event': { render() { return h('h2', 'Create Event') } },
               'Duplicate Previous Event': { render() { return h('h2', 'Duplicate Previous Event') } },
               'Import Events': { render() { return h('h2', 'Import Events') } },
@@ -68,6 +68,7 @@ import SidebarItem from "../../components/admin/SidebarItem.vue";
 import DualInteractiveBoxes from "../../components/admin/DualInteractiveBoxes.vue";
 import EventActionsBox from "../../components/admin/eventview/EventActionsBox.vue";
 import EventTable from "../../components/admin/eventview/EventTable.vue";
+import CalendarEventSelector from "../../components/shared/CalendarEventSelector.vue";
 import { h } from 'vue'
 
 const sidebarItems = [
@@ -127,7 +128,7 @@ const eventColumns = [
   { key: 'location', label: 'Location' },
   { key: 'actions', label: 'Actions' }
 ]
-const eventTopBarProps = {} // Add your top bar props if needed
+const eventTopBarProps = {}
 function onEditEvent(event) {
   // Handle edit
 }
