@@ -28,14 +28,14 @@
     <div class="admin-main">
         <template v-if="selectedTab === 'Events'">
           <DualInteractiveBoxes
-            :actions="['Calendar', 'Create Event', 'Duplicate Previous Event', 'Import Events', 'Upload Images/Attachments', 'Email Attendees']"
+            :actions="['Calendar', 'Create Event', 'Duplicate Previous Event', 'Import Events', 'Upload Images/Attachments', 'Send Mass Email']"
             :contentMap="{
               'Calendar': { render() { return h(CalendarEventSelector) } },
               'Create Event': { render() { return h('h2', 'Create Event') } },
               'Duplicate Previous Event': { render() { return h('h2', 'Duplicate Previous Event') } },
               'Import Events': { render() { return h(FileUploadBox, { mode: 'import', onFileSelected: onImportFileSelected }) } },
               'Upload Images/Attachments': { render() { return h(FileUploadBox, { mode: 'attachment', folders: strapiFolders, onFileSelected: onAttachmentFileSelected, onCreateFolder: onCreateStrapiFolder }) } },
-              'Email Attendees': { render() { return h('h2', 'Email Attendees') } }
+              'Send Mass Email': { render() { return h(EmailSenderBox) } }
             }"
             initialAction="Calendar"
           >
@@ -71,6 +71,7 @@ import EventActionsBox from "../../components/admin/eventview/EventActionsBox.vu
 import EventTable from "../../components/admin/eventview/EventTable.vue";
 import CalendarEventSelector from "../../components/shared/CalendarEventSelector.vue";
 import FileUploadBox from "../../components/shared/FileUploadBox.vue";
+import EmailSenderBox from "../../components/admin/eventview/EmailSenderBox.vue";
 
 // Example folders for Strapi, replace with real fetch if needed
 const strapiFolders = ref(["uploads", "images", "attachments"]);
