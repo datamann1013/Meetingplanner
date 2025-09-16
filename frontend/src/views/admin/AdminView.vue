@@ -33,8 +33,8 @@
               'Calendar': { render() { return h(CalendarEventSelector) } },
               'Create Event': { render() { return h('h2', 'Create Event') } },
               'Duplicate Previous Event': { render() { return h('h2', 'Duplicate Previous Event') } },
-              'Import Events': { render() { return h('h2', 'Import Events') } },
-              'Upload Images/Attachments': { render() { return h('h2', 'Upload Images/Attachments') } },
+              'Import Events': { render() { return h(FileUploadBox, { mode: 'import', onFileSelected: onImportFileSelected }) } },
+              'Upload Images/Attachments': { render() { return h(FileUploadBox, { mode: 'attachment', folders: strapiFolders, onFileSelected: onAttachmentFileSelected, onCreateFolder: onCreateStrapiFolder }) } },
               'Email Attendees': { render() { return h('h2', 'Email Attendees') } }
             }"
             initialAction="Calendar"
@@ -61,15 +61,40 @@
   </div>
 </template>
 
+
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, h } from 'vue'
 import DashboardLayout from "../../components/admin/DashboardLayout.vue";
 import SidebarItem from "../../components/admin/SidebarItem.vue";
 import DualInteractiveBoxes from "../../components/admin/DualInteractiveBoxes.vue";
 import EventActionsBox from "../../components/admin/eventview/EventActionsBox.vue";
 import EventTable from "../../components/admin/eventview/EventTable.vue";
 import CalendarEventSelector from "../../components/shared/CalendarEventSelector.vue";
-import { h } from 'vue'
+import FileUploadBox from "../../components/shared/FileUploadBox.vue";
+
+// Example folders for Strapi, replace with real fetch if needed
+const strapiFolders = ref(["uploads", "images", "attachments"]);
+
+function onImportFileSelected({ files }: { files: FileList }) {
+  // Handle import file selection (CSV/UML etc)
+  // Placeholder: just log
+  console.log("Import file selected", files);
+}
+
+function onAttachmentFileSelected({ files, folder }: { files: FileList, folder: string }) {
+  // Handle attachment/image file selection
+  // Placeholder: just log
+  console.log("Attachment(s) selected", files, "in folder", folder);
+}
+
+function onCreateStrapiFolder(folderName: string) {
+  // Placeholder for folder creation logic
+  // For now, just log and add to folders
+  if (folderName && !strapiFolders.value.includes(folderName)) {
+    strapiFolders.value.push(folderName);
+  }
+  console.log("Create folder:", folderName);
+}
 
 const sidebarItems = [
   { title: 'Dashboard', tag: 'dashboard', hoverColor: '#A3B18A' },
