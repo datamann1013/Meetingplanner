@@ -39,12 +39,10 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 import EditEventModal from "../admin/eventview/EditEventModal.vue"
-// Dummy event data for demonstration
-const events = ref([
-  { id: 1, date: '2025-09-16', title: 'Board Meeting' },
-  { id: 2, date: '2025-09-18', title: 'Workshop' },
-  { id: 3, date: '2025-09-18', title: 'Team Lunch' },
-])
+import { EventTable } from '@/composables/EventTable'
+
+// Use the same event fetching logic as the admin event table
+const { events } = EventTable()
 const today = new Date()
 const monthNames = [
   'January', 'February', 'March', 'April', 'May', 'June',
@@ -98,10 +96,11 @@ const tooltipDate = ref<string | null>(null)
 const tooltipStyle = ref<Record<string, string>>({})
 const modalDate = ref<string | null>(null)
 function hasEvent(date: string) {
-  return events.value.some(e => e.date === date)
+  // Match only the date part (YYYY-MM-DD) of event.date
+  return events.value.some(e => e.date && e.date.slice(0, 10) === date)
 }
 function getEvents(date: string) {
-  return events.value.filter(e => e.date === date)
+  return events.value.filter(e => e.date && e.date.slice(0, 10) === date)
 }
 function showTooltip(date: string, evt: MouseEvent) {
   tooltipDate.value = date
