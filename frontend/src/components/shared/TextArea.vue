@@ -1,10 +1,14 @@
 <template>
   <div class="text-area-wrapper">
-    <textarea
-      :value="modelValue"
-      @input="$emit('update:modelValue', ($event.target as HTMLTextAreaElement).value)"
-      :style="{ backgroundColor: inputColor, borderColor: borderColor }"
-      class="text-area"
+    <v-textarea
+      :model-value="modelValue"
+      @update:modelValue="$emit('update:modelValue', $event)"
+      :label="label"
+      outlined
+      density="compact"
+      hide-details
+      class="text-area compact-input"
+      :style="inputStyle"
     />
   </div>
 </template>
@@ -13,21 +17,22 @@
 import { computed } from 'vue'
 const props = defineProps<{ label: string; modelValue: string; inputColor?: string; borderColor?: string }>()
 defineEmits(['update:modelValue'])
-
-function onInput(e: Event) {
-  const value = (e.target as HTMLTextAreaElement).value
-  // emit update:modelValue
-  // @ts-ignore
-  emit('update:modelValue', value)
-}
-
 const inputStyle = computed(() => ({
-  background: props.inputColor || '',
-  borderColor: props.borderColor || '',
+  backgroundColor: 'var(--color-table-header-bg, #f5f5f5)',
+  borderColor: 'var(--color-primary-border, #b5c9a3)',
+  color: 'var(--color-input-text, #4b3f2a)'
 }))
 </script>
 
 <style scoped>
-.text-area-wrapper { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem; }
-.text-area { flex: 1; padding: 0.5rem; border: 1px solid var(--color-border, #ccc); }
+@import url('https://cdn.jsdelivr.net/npm/vuetify@3.0.0/dist/vuetify.min.css');
+.text-area-wrapper {
+  margin-bottom: 1rem;
+}
+.text-area {
+  width: 100%;
+}
+.compact-input .v-input__control {
+  min-height: 36px !important;
+}
 </style>
