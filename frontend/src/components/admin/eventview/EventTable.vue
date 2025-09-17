@@ -75,161 +75,20 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
 import TableEntry from "../../shared/TableEntry.vue";
-import { strapi } from '../../../services/strapi';
-import { formatDateTime } from '@/composables/DateUtils';
+import { EventTable } from "@/composables/EventTable";
 
-interface TopBarProps {
-  searchPlaceholder?: string;
-  showAdvancedSearch?: boolean;
-  showFilter?: boolean;
-  showBulkEdit?: boolean;
-  showBulkDelete?: boolean;
-  // Add other expected properties here
-}
-
-defineProps<{
-  topBarProps?: TopBarProps
-}>()
-
-const events = ref<any[]>([]);
-const loading = ref(true);
-const error = ref<Error | null>(null);
-const selectedEvents = ref<(string | number)[]>([])
-const selectAll = ref(false)
-const hoveredEvent = ref<string | number | null>(null)
-const hoveredField = ref<string | null>(null)
-
-const columns = [
-  { key: 'select', label: '' },
-  { key: 'name', label: 'Event Name' },
-  { key: 'date', label: 'Date' },
-  { key: 'status', label: 'Status' },
-  { key: 'rsvp', label: 'RSVP' },
-  { key: 'signup_deadline', label: 'Signup Deadline' },
-  { key: 'description', label: 'Description' }
-]
-
-onMounted(async () => {
-  try {
-    const res: any = await strapi.get('/events?populate=*');
-    if (res.data && Array.isArray(res.data.data)) {
-      events.value = res.data.data.map((item: any) => ({
-        id: item.id,
-        name: item.title,
-        date: item.date,
-        status: item.status || 'Draft',
-        rsvp: item.rsvp_count || '0/0',
-        tag: item.tag || '',
-        signup_deadline: item.signup_deadline,
-        description: item.description,
-        coverImage: item.Coverimage?.url || null,
-      }));
-    } else {
-      events.value = [];
-    }
-  } catch (err) {
-    error.value = err instanceof Error ? err : new Error(String(err));
-    events.value = [];
-  } finally {
-    loading.value = false;
-  }
-})
+const {
+  events,
+  loading,
+  error,
+  selectedEvents,
+  hoveredEvent,
+  hoveredField,
+  columns,
+  formatDateTime,
+} = EventTable();
 
 </script>
 
-<style scoped>
-.event-table-wrapper {
-  background: none;
-  padding: 0;
-}
-.event-list-top-bar {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  padding: 1rem 0;
-  border-bottom: 1px solid #e0e0e0;
-  background: none;
-}
-.event-search-input {
-  flex: 1;
-  padding: 0.5rem 1rem;
-  font-size: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  background: #f8f3e6;
-  color: #4b3f2a;
-}
-.event-topbar-btn {
-  padding: 0.5rem 1.25rem;
-  font-size: 1rem;
-  border: none;
-  border-radius: 6px;
-  background: #e0e0e0;
-  color: #888;
-  cursor: not-allowed;
-  opacity: 0.7;
-}
-.event-list-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 1rem;
-  background: none;
-}
-.table-entry th, .table-entry td {
-  padding: 0.75rem 1rem;
-  border-bottom: 1px solid #e0e0e0;
-  text-align: left;
-  background: none;
-}
-.table-entry th {
-  background: #f8f3e6;
-  color: #4b3f2a;
-}
-.event-row-selected {
-  background: #f5eee6;
-}
-.event-tag-placeholder {
-  color: #aaa;
-  font-style: italic;
-}
-.event-status-placeholder {
-  color: #76944C;
-  font-weight: 500;
-}
-.event-row-details {
-  margin-top: 1rem;
-  padding: 1rem;
-  background: #FBF5DB;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-  color: #2E2E2E;
-}
-.event-list-loading, .event-list-error {
-  padding: 1rem;
-  text-align: center;
-}
-.event-list-error {
-  color: #e74c3c;
-}
-.hoverable-cell {
-  position: relative;
-  cursor: pointer;
-}
-.popup-info {
-  position: absolute;
-  left: 100%;
-  top: 50%;
-  transform: translateY(-50%);
-  background: #FBF5DB;
-  color: #2E2E2E;
-  border: 1px solid #e0e0e0;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-  padding: 0.5rem 1rem;
-  min-width: 180px;
-  z-index: 10;
-  white-space: pre-line;
-}
-</style>
+<!-- Styles moved to global stylesheet -->

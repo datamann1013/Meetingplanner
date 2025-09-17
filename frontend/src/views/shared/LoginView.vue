@@ -38,29 +38,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
-import { useAuthStore } from '../../stores/auth'
-import { useRouter } from 'vue-router'
-
-const identifier = ref<string>('')
-const password = ref<string>('')
-
-const authStore = useAuthStore()
-const router = useRouter()
-
-const handleLogin = async (): Promise<void> => {
-  try {
-    await authStore.login(identifier.value, password.value)
-    router.push('/')
-  } catch (err) {
-    console.error('Login error:', err)
-  }
-}
+import { LoginForm } from '@/composables/LoginForm'
+const { identifier, password, authStore, router, handleLogin } = LoginForm()
 </script>
-
-<style scoped>
-.login-card {
-  width: 90%;
-  max-width: 400px;
-}
-</style>
