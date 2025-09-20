@@ -62,6 +62,8 @@
 
 <script lang="ts" setup>
 import { ref, computed, onMounted } from 'vue';
+import InputButton from '../../shared/InputButton.vue';
+import TextArea from '../../shared/TextArea.vue';
 import { EventTable } from '@/composables/event/EventTable';
 
 const recipientOptions = [
@@ -130,16 +132,6 @@ async function sendEmail() {
 </script>
 
 <style scoped>
-.email-sender-box {
-  width: 100%;
-  height: 100%;
-  box-sizing: border-box;
-}
-.box-title {
-  font-size: 1.2rem;
-  font-weight: 600;
-  margin-bottom: 16px;
-}
 .form-row {
   display: flex;
   flex-wrap: wrap;

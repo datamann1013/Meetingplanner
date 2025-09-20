@@ -17,14 +17,19 @@
   </div>
 </template>
 
+
 <script setup lang="ts">
 import SidebarItem from '../SidebarItem.vue'
-
 const emit = defineEmits(['updateAction'])
 const props = defineProps<{ actions: string[]; selectedAction: string }>()
-
 function selectAction(action: string) {
   emit('updateAction', action)
 }
 </script>
+
+<style scoped>
+.event-actions-list-wrapper {
+  margin-top: 12px;
+}
+</style>
 

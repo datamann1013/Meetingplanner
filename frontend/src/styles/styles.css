@@ -58,6 +58,34 @@ Meetingplanner Stylesheet Structure
   /* Heights */
   --height-full-vh: 100vh;
   --height-sidebar: calc(100vh - var(--space-xxl));
+
+  /* Shared Event Admin Box Style */
+  .event-admin-box {
+    background: var(--color-table-header-bg, #f5f5f5);
+    border: 1.5px solid var(--color-primary-border, #b5c9a3);
+    border-radius: 12px;
+    box-shadow: var(--color-box-shadow, 0 2px 8px rgba(0,0,0,0.15));
+    padding: var(--space-l, 24px) var(--space-xl, 36px);
+    margin-bottom: var(--space-l, 24px);
+    color: var(--color-on-surface, #2E2E2E);
+    transition: box-shadow 0.2s;
+  }
+  .event-admin-box h3,
+  .event-admin-box .event-section-title,
+  .event-admin-box .box-title {
+    color: var(--color-accent, #76944C);
+    font-size: 1.35rem;
+    font-weight: 600;
+    margin-bottom: var(--space-m, 16px);
+  }
+  .event-admin-box label,
+  .event-admin-box .grid-label {
+    color: var(--color-on-surface, #2E2E2E);
+    font-weight: 500;
+  }
+  .event-admin-box .full-width-button {
+    width: 100%;
+  }
   --height-card: 100%;
   --height-content-with-bars: calc(100vh - 180px);
 
@@ -260,13 +288,19 @@ html, body {
   width: var(--size-full);
   border-collapse: collapse;
 }
+/* TableEntry cell and header styling for bright, readable table squares only */
 .table-entry th, .table-entry td {
   border: 1px solid var(--color-table-border);
   padding: var(--space-s) var(--space-l);
   text-align: left;
+  background: none;
 }
 .table-entry th {
-  background: var(--color-table-header-bg);
+  background: var(--color-table-header-bg, #f5f5f5);
+  color: #4b3f2a;
+}
+.table-entry td {
+  background: #fff;
 }
 
 /* 3.3 DashboardLayout */
@@ -359,15 +393,18 @@ html, body {
   margin-top: 1rem;
   background: none;
 }
+/* Override for TableEntry cell padding and background for clarity */
 .table-entry th, .table-entry td {
   padding: 0.75rem 1rem;
   border-bottom: 1px solid #e0e0e0;
   text-align: left;
-  background: none;
 }
 .table-entry th {
-  background: #f8f3e6;
+  background: var(--color-table-header-bg, #f5f5f5);
   color: #4b3f2a;
+}
+.table-entry td {
+  background: #fff;
 }
 .event-row-selected {
   background: var(--color-row-selected-bg);

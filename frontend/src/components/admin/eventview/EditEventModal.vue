@@ -1,12 +1,11 @@
 
 <template>
-  <div class="event-modal">
-    <button class="close-btn" @click="$emit('close')">Close</button>
+  <div class="event-admin-box event-modal">
+    <button class="close-btn" @click="$emit('close')">×</button>
+    <h3 class="event-section-title">Edit Event</h3>
     <div class="modal-content">
-      <!-- Edit event form or content will go here -->
-      <p>Edit Event Modal Placeholder</p>
       <div v-if="events && events.length">
-        <div v-for="event in events" :key="event.id">
+        <div v-for="event in events" :key="event.id" class="event-list-item">
           <strong>{{ event.title }}</strong>
         </div>
       </div>
@@ -28,26 +27,28 @@ const emit = defineEmits(['close'])
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background: #fffbe6;
-  border: 1px solid #bfa77a;
-  border-radius: 10px;
-  box-shadow: 0 4px 24px #bfa77a44;
-  padding: 24px 32px;
   z-index: 1000;
-  min-width: 320px;
+  min-width: 340px;
+  max-width: 95vw;
 }
 .close-btn {
   position: absolute;
-  top: 8px;
-  right: 12px;
-  background: #ede3d2;
-  border: 1px solid #bfa77a;
+  top: 12px;
+  right: 18px;
+  background: var(--color-table-header-bg, #f5f5f5);
+  border: 1.5px solid var(--color-primary-border, #b5c9a3);
   border-radius: 4px;
-  padding: 4px 10px;
+  padding: 4px 12px;
   cursor: pointer;
   font-weight: bold;
+  color: var(--color-accent, #76944C);
+  font-size: 1.2rem;
 }
 .modal-content {
-  margin-top: 2rem;
+  margin-top: 1.5rem;
+}
+.event-list-item {
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--color-primary-border, #b5c9a3);
 }
 </style>
