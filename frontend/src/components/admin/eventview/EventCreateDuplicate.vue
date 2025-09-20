@@ -1,36 +1,39 @@
 <template>
   <div class="event-create-duplicate-box">
-  <!-- Removed redundant section title -->
     <form class="event-grid">
-      <!-- Full-length fields first -->
-      <div class="grid-span-3">
+      <div class="grid-span-4">
         <TextInput id="title" label="Title" v-model="form.title" inputColor="#f5f5f5" borderColor="#616161" />
       </div>
 
-      <div class="grid-span-3">
+      <div class="grid-span-4">
         <TextArea id="description" label="Description" v-model="form.description" inputColor="#f5f5f5" borderColor="#616161" />
       </div>
 
-      <div class="grid-span-3">
+      <div>
         <TextInput id="location" label="Location" v-model="form.location" inputColor="#f5f5f5" borderColor="#616161" />
       </div>
-
-      <!-- Split fields: Date & Signup Deadline -->
-      <DateTimePicker id="date" label="Date" v-model="form.date" inputColor="#f5f5f5" borderColor="#616161" />
-      <DateTimePicker id="signup_deadline" label="Signup Deadline" v-model="form.signup_deadline" inputColor="#f5f5f5" borderColor="#616161" />
-
-      <!-- Split fields: Capacity & Categories -->
-      <NumberInput id="capacity" label="Capacity" v-model="form.capacity" inputColor="#f5f5f5" borderColor="#616161" />
-      <Dropdown id="category" label="Categories" v-model="form.category" :options="categoryOptions" inputColor="#f5f5f5" borderColor="#616161" />
-
-      <!-- Split fields: Cover Image & Contact Info -->
+      <div>
+        <DateTimePicker id="date" label="Date" v-model="form.date" inputColor="#f5f5f5" borderColor="#616161" />
+      </div>
+      <div>
+        <DateTimePicker id="signup_deadline" label="Signup Deadline" v-model="form.signup_deadline" inputColor="#f5f5f5" borderColor="#616161" />
+      </div>
+      <div>
+        <NumberInput id="capacity" label="Capacity" v-model="form.capacity" inputColor="#f5f5f5" borderColor="#616161" />
+      </div>
+      <div>
+        <Dropdown id="category" label="Categories" v-model="form.category" :options="categoryOptions" inputColor="#f5f5f5" borderColor="#616161" />
+      </div>
       <div>
         <InputButton type="button" inputColor="#f5f5f5" borderColor="#616161" @click="openMediaPicker">Choose Cover Image</InputButton>
       </div>
-      <TextInput id="contact_info" label="Contact Info" v-model="form.contact_info" inputColor="#f5f5f5" borderColor="#616161" />
-  <Dropdown id="status" label="Status" v-model="form.status" :options="statusOptions" inputColor="#f5f5f5" borderColor="#616161" />
-      <!-- Create Event Button -->
-      <div class="button-row grid-span-3 grid-col-2-4">
+      <div>
+        <TextInput id="contact_info" label="Contact Info" v-model="form.contact_info" inputColor="#f5f5f5" borderColor="#616161" />
+      </div>
+      <div>
+        <Dropdown id="status" label="Status" v-model="form.status" :options="statusOptions" inputColor="#f5f5f5" borderColor="#616161" />
+      </div>
+      <div class="button-row grid-span-4">
         <InputButton type="submit" inputColor="#f5f5f5" borderColor="#616161" class="full-width-button">Create Event</InputButton>
       </div>
     </form>
