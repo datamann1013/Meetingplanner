@@ -3,41 +3,32 @@
   <!-- Removed redundant section title -->
     <form class="event-grid">
       <!-- Full-length fields first -->
-      <label class="grid-label" for="title">Title</label>
       <div class="grid-span-3">
         <TextInput id="title" label="Title" v-model="form.title" inputColor="#f5f5f5" borderColor="#616161" />
       </div>
 
-      <label class="grid-label" for="description">Description</label>
       <div class="grid-span-3">
         <TextArea id="description" label="Description" v-model="form.description" inputColor="#f5f5f5" borderColor="#616161" />
       </div>
 
-      <label class="grid-label" for="location">Location</label>
       <div class="grid-span-3">
         <TextInput id="location" label="Location" v-model="form.location" inputColor="#f5f5f5" borderColor="#616161" />
       </div>
 
       <!-- Split fields: Date & Signup Deadline -->
-      <label class="grid-label" for="date">Date</label>
       <DateTimePicker id="date" label="Date" v-model="form.date" inputColor="#f5f5f5" borderColor="#616161" />
-      <label class="grid-label" for="signup_deadline">Signup Deadline</label>
       <DateTimePicker id="signup_deadline" label="Signup Deadline" v-model="form.signup_deadline" inputColor="#f5f5f5" borderColor="#616161" />
 
       <!-- Split fields: Capacity & Categories -->
-      <label class="grid-label" for="capacity">Capacity</label>
       <NumberInput id="capacity" label="Capacity" v-model="form.capacity" inputColor="#f5f5f5" borderColor="#616161" />
-      <label class="grid-label" for="category">Categories</label>
-  <Dropdown id="category" label="Categories" v-model="form.category" :options="categoryOptions" inputColor="#f5f5f5" borderColor="#616161" />
+      <Dropdown id="category" label="Categories" v-model="form.category" :options="categoryOptions" inputColor="#f5f5f5" borderColor="#616161" />
 
       <!-- Split fields: Cover Image & Contact Info -->
-      <label class="grid-label">Cover Image</label>
       <div>
         <InputButton type="button" inputColor="#f5f5f5" borderColor="#616161" @click="openMediaPicker">Choose Cover Image</InputButton>
       </div>
-      <label class="grid-label" for="contact_info">Contact Info</label>
       <TextInput id="contact_info" label="Contact Info" v-model="form.contact_info" inputColor="#f5f5f5" borderColor="#616161" />
-
+  <Dropdown id="status" label="Status" v-model="form.status" :options="statusOptions" inputColor="#f5f5f5" borderColor="#616161" />
       <!-- Create Event Button -->
       <div class="button-row grid-span-3 grid-col-2-4">
         <InputButton type="submit" inputColor="#f5f5f5" borderColor="#616161" class="full-width-button">Create Event</InputButton>
@@ -65,8 +56,15 @@ const form = ref({
   signup_deadline: '',
   contact_info: '',
   coverimage: '',
-  category: ''
+  category: '',
+  status: ''
 })
+const statusOptions = [
+  { text: 'Unpublished', value: 'unpublished' },
+  { text: 'Published', value: 'published' },
+  { text: 'Draft', value: 'draft' },
+  { text: 'Blueprint', value: 'blueprint' }
+]
 const categories = ref([
   { id: '1', name: 'Conference' },
   { id: '2', name: 'Workshop' },
@@ -85,7 +83,7 @@ function openMediaPicker() {
 }
 .event-grid {
   display: grid;
-  grid-template-columns: 0.7fr 1.3fr 0.7fr 1.3fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
   gap: 16px;
   align-items: center;
 }
