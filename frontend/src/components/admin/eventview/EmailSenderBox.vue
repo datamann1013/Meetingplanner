@@ -2,20 +2,20 @@
   <div class="email-sender-box">
     <h3 class="box-title">Send Mass Email</h3>
     <div class="form-row">
-      <v-select
+      <Dropdown
         v-model="recipientType"
-        :items="recipientOptions"
+        :options="recipientOptions"
         label="Recipients"
-        outlined
-        dense
+        inputColor="#f5f5f5"
+        borderColor="#616161"
         class="form-item"
       />
-      <v-select
+      <Dropdown
         v-model="eventId"
-        :items="eventOptions"
+        :options="eventOptions"
         label="Regarding Event"
-        outlined
-        dense
+        inputColor="#f5f5f5"
+        borderColor="#616161"
         class="form-item"
       />
       <v-btn
@@ -62,6 +62,7 @@
 
 <script lang="ts" setup>
 import { ref, computed, onMounted } from 'vue';
+import Dropdown from '../../shared/Dropdown.vue';
 import InputButton from '../../shared/InputButton.vue';
 import TextArea from '../../shared/TextArea.vue';
 import { EventTable } from '@/composables/event/EventTable';

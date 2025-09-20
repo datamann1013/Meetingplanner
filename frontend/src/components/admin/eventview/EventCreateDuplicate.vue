@@ -28,7 +28,7 @@
       <label class="grid-label" for="capacity">Capacity</label>
       <NumberInput id="capacity" label="Capacity" v-model="form.capacity" inputColor="#f5f5f5" borderColor="#616161" />
       <label class="grid-label" for="category">Categories</label>
-      <CategoryDropdown id="category" label="Categories" v-model="form.category" :categories="categories" inputColor="#f5f5f5" borderColor="#616161" />
+  <Dropdown id="category" label="Categories" v-model="form.category" :options="categoryOptions" inputColor="#f5f5f5" borderColor="#616161" />
 
       <!-- Split fields: Cover Image & Contact Info -->
       <label class="grid-label">Cover Image</label>
@@ -47,12 +47,12 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import TextInput from '../../shared/TextInput.vue'
 import TextArea from '../../shared/TextArea.vue'
 import DateTimePicker from '../../shared/DateTimePicker.vue'
 import NumberInput from '../../shared/NumberInput.vue'
-import CategoryDropdown from '../../shared/CategoryDropdown.vue'
+import Dropdown from '../../shared/Dropdown.vue'
 import InputButton from '../../shared/InputButton.vue'
 
 const props = defineProps<{ mode: 'create' | 'duplicate' }>()
@@ -72,6 +72,7 @@ const categories = ref([
   { id: '2', name: 'Workshop' },
   { id: '3', name: 'Meetup' }
 ])
+const categoryOptions = computed(() => categories.value.map(cat => ({ text: cat.name, value: cat.id })))
 function openMediaPicker() {
   // Placeholder for media picker modal
   alert('Media picker modal will be implemented soon.')

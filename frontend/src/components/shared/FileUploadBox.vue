@@ -3,13 +3,12 @@
     <div v-if="mode === 'attachment'" class="folder-selector">
       <v-row align="center" class="mb-2">
         <v-col cols="auto">
-          <v-select
+          <Dropdown
             v-model="selectedFolder"
-            :items="folders"
+            :options="folderOptions"
             label="Select folder"
-            dense
-            outlined
-            hide-details
+            inputColor="#f5f5f5"
+            borderColor="#616161"
             style="min-width: 180px"
           />
         </v-col>
@@ -63,7 +62,8 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, defineProps, defineEmits } from 'vue';
+import { ref, defineProps, defineEmits, computed } from 'vue';
+import Dropdown from './Dropdown.vue';
 
 const props = defineProps({
   mode: {
@@ -81,6 +81,7 @@ const emit = defineEmits(['file-selected', 'create-folder']);
 const dragActive = ref(false);
 const fileInput = ref<HTMLInputElement | null>(null);
 const selectedFolder = ref(props.folders[0] || '');
+const folderOptions = computed(() => props.folders.map(f => ({ text: f, value: f })));
 const showCreateFolder = ref(false);
 const newFolderName = ref('');
 

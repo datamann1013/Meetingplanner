@@ -1,5 +1,3 @@
-
-
 <template>
   <div class="dropdown-wrapper">
     <v-select
