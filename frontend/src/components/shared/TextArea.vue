@@ -4,6 +4,7 @@
       :model-value="modelValue"
       @update:modelValue="$emit('update:modelValue', $event)"
       :label="label"
+      :rows="rows"
       outlined
       density="compact"
       hide-details
@@ -15,7 +16,7 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
-const props = defineProps<{ label: string; modelValue: string; inputColor?: string; borderColor?: string }>()
+const props = defineProps<{ label: string; modelValue: string; inputColor?: string; borderColor?: string; rows?: number }>()
 defineEmits(['update:modelValue'])
 const inputStyle = computed(() => ({
   backgroundColor: 'var(--color-table-header-bg, #f5f5f5)',

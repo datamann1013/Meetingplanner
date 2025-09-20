@@ -16,19 +16,19 @@
         <DateTimePicker id="date" label="Date" v-model="form.date" inputColor="#f5f5f5" borderColor="#616161" />
       </div>
       <div>
-        <DateTimePicker id="signup_deadline" label="Signup Deadline" v-model="form.signup_deadline" inputColor="#f5f5f5" borderColor="#616161" />
+        <NumberInput id="capacity" label="Capacity" v-model="form.capacity" inputColor="#f5f5f5" borderColor="#616161" />
       </div>
       <div>
-        <NumberInput id="capacity" label="Capacity" v-model="form.capacity" inputColor="#f5f5f5" borderColor="#616161" />
+        <Dropdown id="category" label="Categories" v-model="form.category" :options="categoryOptions" inputColor="#f5f5f5" borderColor="#616161" />
       </div>
       <div>
         <TextInput id="contact_info" label="Contact Info" v-model="form.contact_info" inputColor="#f5f5f5" borderColor="#616161" />
       </div>
       <div>
-        <InputButton type="button" inputColor="#f5f5f5" borderColor="#616161" @click="openMediaPicker">Choose Cover Image</InputButton>
+        <DateTimePicker id="signup_deadline" label="Signup Deadline" v-model="form.signup_deadline" inputColor="#f5f5f5" borderColor="#616161" />
       </div>
-       <div>
-        <Dropdown id="category" label="Categories" v-model="form.category" :options="categoryOptions" inputColor="#f5f5f5" borderColor="#616161" />
+      <div>
+        <InputButton type="button" inputColor="#f5f5f5" borderColor="#616161" @click="openMediaPicker">Choose Cover Image</InputButton>
       </div>
       <div>
         <Dropdown id="status" label="Status" v-model="form.status" :options="statusOptions" inputColor="#f5f5f5" borderColor="#616161" />

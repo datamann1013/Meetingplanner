@@ -2,7 +2,7 @@
   <div class="file-upload-box">
     <div v-if="mode === 'attachment'" class="folder-selector">
       <v-row align="center" class="mb-2">
-        <v-col cols="auto">
+        <v-col cols="9">
           <Dropdown
             v-model="selectedFolder"
             :options="folderOptions"
@@ -12,12 +12,12 @@
             style="min-width: 180px"
           />
         </v-col>
-        <v-col cols="auto">
+        <v-col cols="3">
           <InputButton
             type="button"
             inputColor="#f5f5f5"
             borderColor="#616161"
-            style="min-width: 120px; min-height: 36px;"
+            style="min-width: 120px; min-height: 36px; width: 100%;"
             @click="showCreateFolder = true"
           >
             Create Folder

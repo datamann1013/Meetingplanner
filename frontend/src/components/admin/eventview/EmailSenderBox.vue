@@ -39,13 +39,14 @@
       <TextArea
         v-model="emailBody"
         label="Email Body"
-        class="form-item"
+        :rows="11"
+        class="form-item email-body-area"
       />
     </div>
     <div class="form-row actions">
       <InputButton
         type="button"
-        class="full-width-button"
+        class="full-width-button send-email-button"
         inputColor="#f5f5f5"
         borderColor="#616161"
         :disabled="!canSend || sending"
@@ -149,6 +150,15 @@ async function sendEmail() {
 .form-item {
   min-width: 180px;
   flex: 1;
+}
+.email-body-area {
+  min-height: 160px;
+  flex: 1 1 100%;
+  resize: vertical;
+}
+.send-email-button {
+  flex: 1 1 100%;
+  width: 100%;
 }
 .actions {
   justify-content: flex-end;
