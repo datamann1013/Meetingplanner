@@ -1,6 +1,6 @@
 <template>
   <div class="email-sender-box">
-    <h3 class="box-title">Send Mass Email</h3>
+  <!-- Removed redundant section title -->
     <div class="form-row">
       <Dropdown
         v-model="recipientType"

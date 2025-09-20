@@ -1,6 +1,6 @@
 <template>
   <div class="event-create-duplicate-box">
-    <h3 class="event-section-title">{{ mode === 'create' ? 'Create Event' : 'Duplicate Event' }}</h3>
+  <!-- Removed redundant section title -->
     <form class="event-grid">
       <!-- Full-length fields first -->
       <label class="grid-label" for="title">Title</label>
