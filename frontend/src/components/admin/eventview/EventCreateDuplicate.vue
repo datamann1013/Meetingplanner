@@ -22,13 +22,13 @@
         <NumberInput id="capacity" label="Capacity" v-model="form.capacity" inputColor="#f5f5f5" borderColor="#616161" />
       </div>
       <div>
-        <Dropdown id="category" label="Categories" v-model="form.category" :options="categoryOptions" inputColor="#f5f5f5" borderColor="#616161" />
+        <TextInput id="contact_info" label="Contact Info" v-model="form.contact_info" inputColor="#f5f5f5" borderColor="#616161" />
       </div>
       <div>
         <InputButton type="button" inputColor="#f5f5f5" borderColor="#616161" @click="openMediaPicker">Choose Cover Image</InputButton>
       </div>
-      <div>
-        <TextInput id="contact_info" label="Contact Info" v-model="form.contact_info" inputColor="#f5f5f5" borderColor="#616161" />
+       <div>
+        <Dropdown id="category" label="Categories" v-model="form.category" :options="categoryOptions" inputColor="#f5f5f5" borderColor="#616161" />
       </div>
       <div>
         <Dropdown id="status" label="Status" v-model="form.status" :options="statusOptions" inputColor="#f5f5f5" borderColor="#616161" />
