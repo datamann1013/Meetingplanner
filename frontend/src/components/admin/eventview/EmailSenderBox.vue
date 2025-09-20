@@ -18,14 +18,15 @@
         borderColor="#616161"
         class="form-item"
       />
-      <v-btn
-        color="primary"
-        @click="triggerFileInput"
+      <InputButton
+        type="button"
         class="form-item"
-        outlined
+        inputColor="#f5f5f5"
+        borderColor="#616161"
+        @click="triggerFileInput"
       >
         Add Attachments
-      </v-btn>
+      </InputButton>
       <input
         ref="fileInput"
         type="file"
@@ -35,18 +36,24 @@
       />
     </div>
     <div class="form-row">
-      <v-textarea
+      <TextArea
         v-model="emailBody"
         label="Email Body"
-        rows="6"
-        outlined
         class="form-item"
       />
     </div>
     <div class="form-row actions">
-      <v-btn color="success" @click="sendEmail" :loading="sending" :disabled="!canSend">
-        Send Email
-      </v-btn>
+      <InputButton
+        type="button"
+        class="full-width-button"
+        inputColor="#f5f5f5"
+        borderColor="#616161"
+        :disabled="!canSend || sending"
+        @click="sendEmail"
+      >
+        <span v-if="!sending">Send Email</span>
+        <span v-else>Sending...</span>
+      </InputButton>
     </div>
     <div v-if="attachments.length" class="attachments-list">
       <div v-for="(file, idx) in attachments" :key="idx" class="attachment-item">

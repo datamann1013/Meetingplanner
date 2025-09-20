@@ -13,9 +13,15 @@
           />
         </v-col>
         <v-col cols="auto">
-          <v-btn color="primary" @click="showCreateFolder = true" small>
+          <InputButton
+            type="button"
+            inputColor="#f5f5f5"
+            borderColor="#616161"
+            style="min-width: 120px; min-height: 36px;"
+            @click="showCreateFolder = true"
+          >
             Create Folder
-          </v-btn>
+          </InputButton>
         </v-col>
       </v-row>
       <v-divider class="mb-2" />
@@ -64,6 +70,7 @@
 <script lang="ts" setup>
 import { ref, defineProps, defineEmits, computed } from 'vue';
 import Dropdown from './Dropdown.vue';
+import InputButton from './InputButton.vue';
 
 const props = defineProps({
   mode: {
