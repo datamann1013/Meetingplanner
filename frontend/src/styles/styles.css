@@ -161,7 +161,12 @@ Meetingplanner Stylesheet Structure
 }
 html, body {
   height: 100%;
-  overflow: hidden;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  /* Allow browser to handle scrolling */
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 /* 3. Specific Components */
