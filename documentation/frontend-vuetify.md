@@ -1,35 +1,96 @@
-## Vuetify setup (frontend)
 
-- Vuetify v3.9.5 with Vue 3.5, Vite 7
-- Core styles imported once via `vuetify/styles` and MDI icons via `@mdi/font`
-- Icon set: Material Design Icons (font)
-- Themes:
-  - LightThemeC (default): background/surface and custom tokens used by CSS: `on-surface`, `overlay`, `infoBar`, `deadline`, `date`
-  - DarkThemeC: matching tokens for dark mode; switchable via `defaultTheme` or programmatically
-- Exposed constants: `THEME_LIGHT`, `THEME_DARK` for toggling
-- Defaults set for common components: `VBtn`, `VCard`, `VTextField`, `VSelect`, `VAutocomplete`
+# Meetingplanner Frontend (Vue 3 + Vuetify + Vite)
 
-File location: `frontend/src/plugins/vuetify.ts`
+## Technology Stack
+- **Vue 3.5** with `<script setup>` SFCs
+- **TypeScript** throughout
+- **Vite 7** for build/dev
+- **Vuetify 3.9.5** (Material Design)
+- **Pinia** for state management
+- **Vue Router 4** for routing
+- **Axios** for API calls
 
-## Stylesheet Refactor
+## Project Structure
 
-- All static styles for the frontend are now centralized in `frontend/src/styles/styles.css`.
-- All colors, spacing, sizing, and border-radius values use CSS custom properties (variables) defined in the `:root` block for easy theming and maintainability.
-- Component-specific styles (EventCard, TableEntry, DashboardLayout, EventActionsBox, EventTable, LoginView) are grouped and documented in the stylesheet for clarity.
-- No local `<style>` blocks remain in Vue components except for dynamic inline styles (e.g., background images) and Vuetify theme props.
-- All hardcoded values for color, padding, margin, and border-radius have been replaced with variables for consistency.
-- The stylesheet is structured for easy navigation and future extension.
+- **Main entry:** `frontend/src/main.ts`
+- **App shell:** `frontend/src/App.vue` (uses `<v-app>`, `<v-app-bar>`, `<router-view>`)
+- **Routing:** `frontend/src/router/index.ts` (guards for auth, board role, guest)
+- **State:** `frontend/src/stores/auth.ts` (Pinia, JWT, user roles)
+- **API:** `frontend/src/services/strapi.ts` (Axios, JWT, auto-logout on 401)
+- **Global styles:** `frontend/src/styles/styles.css` (all colors, spacing, etc. as CSS variables)
+- **Vuetify config:** `frontend/src/plugins/vuetify.ts` (themes, defaults, icons)
+- **Composables:** `frontend/src/composables/` (all business logic, e.g. `EventTable`, `EventCard`, `LoginForm`)
+- **Components:**
+  - `components/shared/` (UI: `EventCard`, `TableEntry`, `Dropdown`, etc.)
+  - `components/admin/` (admin dashboard, event management)
+  - `components/admin/eventview/` (event CRUD, modals, email, etc.)
+- **Views:**
+  - `views/index/HomeView.vue` (event list, uses `EventCard`)
+  - `views/shared/LoginView.vue` (login form, uses `LoginForm` composable)
+  - `views/admin/AdminView.vue` (admin dashboard, tabs, event management)
 
-See `frontend/src/styles/styles.css` for the full structure and variable list.
+## Vuetify & Theming
+- **Themes:**
+  - `LightThemeC` (default): custom palette, background/surface, tokens for overlays/infoBar/deadline
+  - `DarkThemeC`: matching tokens for dark mode
+- **Switching:** Use `THEME_LIGHT`/`THEME_DARK` constants or set `defaultTheme` in `vuetify.ts`
+- **Icons:** Material Design Icons (mdi)
+- **Component defaults:**
+  - `VBtn`, `VCard`, `VTextField`, `VSelect`, `VAutocomplete` (density, variant, rounded)
+- **Location:** `frontend/src/plugins/vuetify.ts`
 
-## Composables & Script Refactor
+## Stylesheet
+- **All static styles** in `frontend/src/styles/styles.css`
+- **CSS variables** for all colors, spacing, sizing, border-radius (see `:root`)
+- **Component-specific sections**: EventCard, TableEntry, DashboardLayout, EventActionsBox, EventTable, LoginView
+- **No local `<style>` blocks** in Vue files except for dynamic inline styles (e.g. background images)
+- **Consistent use of variables** for all color, padding, margin, border-radius
+- **Structure:**
+  1. Root Variables
+  2. Shared Components
+  3. Specific Components (EventCard, TableEntry, etc.)
+  4. Views (LoginView, etc.)
 
-- All major frontend logic has been modularized into composables in `frontend/src/composables/`.
-- Vue components now import and use composables for all business logic, state, and actions. Only minimal wiring code remains in the components.
-- Example composables: `EventTable`, `EventCard`, `TableEntry`, `LoginForm`, `EventActions`.
-- All event, card, table, and login logic is handled in composables, making the codebase more maintainable and testable.
-- Imports in Vue files now reference composables directly, with no duplicated logic or local script blocks.
-- API data mapping (e.g., for event cards) is handled in composables to ensure correct fields and structure for UI components.
-- This approach ensures a clear separation of concerns: UI in components, logic in composables, styles in the global stylesheet.
+## Composables
+- **All business logic** is in composables in `frontend/src/composables/`
+- **Examples:**
+  - `EventTable`: fetches and maps event data for tables
+  - `EventCard`: computes cover image style, date formatting
+  - `LoginForm`: handles login, state, navigation
+  - `TableEntry`: generic table logic
+- **Pattern:** Components import composables, only minimal wiring in `<script setup>`
+- **API mapping** (e.g. event fields) is handled in composables
 
-See the `frontend/src/composables/` folder for details and usage examples.
+## Components
+- **Shared:**
+  - `EventCard.vue`: Card for event display (used in HomeView, etc.)
+  - `TableEntry.vue`: Generic table, slot-based columns
+  - `Dropdown.vue`, `DateTimePicker.vue`, `FileUploadBox.vue`, etc.
+- **Admin:**
+  - `DashboardLayout.vue`, `DualInteractiveBoxes.vue`, `SidebarItem.vue`
+  - `eventview/`: `EventTable.vue`, `EditEventModal.vue`, `EmailSenderBox.vue`, etc.
+
+## Views
+- **HomeView.vue:** Event list, uses `EventCard`, shows loading/errors
+- **LoginView.vue:** Login form, uses `LoginForm` composable
+- **AdminView.vue:** Sidebar, tabs, event management, dashboard widgets
+
+## Routing & Auth
+- **Routes:** `/` (Home), `/login`, `/admin` (board only)
+- **Guards:**
+  - `requiresAuth`, `requiresBoard`, `requiresGuest` (see `router/index.ts`)
+- **Auth:**
+  - Pinia store, JWT in localStorage, auto-check on navigation
+  - Board role: `user.role.name === 'Board'`
+
+## API
+- **Strapi backend** via Axios wrapper (`services/strapi.ts`)
+- **JWT** sent on all requests, auto-logout on 401
+- **Event data**: `/events?populate=*` (see `EventTable` composable)
+
+---
+**For peers:**
+- All business/data logic is in composables, not components
+- All static styles are in the global stylesheet, not in components
+- All theming and Vuetify config is in `plugins/vuetify.ts`
+- Use the folder structure above to quickly locate logic, UI, or config

@@ -30,8 +30,8 @@
       </v-col>
     </v-row>
       <v-dialog v-model="showError" max-width="400">
-        <v-card style="position: relative;">
-          <v-btn icon @click="showError = false" style="position: absolute; top: 8px; right: 8px; z-index: 10; background: var(--v-theme-surface); box-shadow: 0 2px 8px rgba(0,0,0,0.15);">
+        <v-card class="error-dialog-card">
+          <v-btn icon @click="showError = false" class="error-dialog-close-btn">
             <v-icon>mdi-close</v-icon>
           </v-btn>
           <v-card-title class="d-flex align-center">

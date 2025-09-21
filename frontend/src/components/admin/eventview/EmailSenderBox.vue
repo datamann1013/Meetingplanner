@@ -139,38 +139,3 @@ async function sendEmail() {
   }
 }
 </script>
-
-<style scoped>
-.form-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 16px;
-  margin-bottom: 16px;
-}
-.form-item {
-  min-width: 180px;
-  flex: 1;
-}
-.email-body-area {
-  min-height: 160px;
-  flex: 1 1 100%;
-  resize: vertical;
-}
-.send-email-button {
-  flex: 1 1 100%;
-  width: 100%;
-}
-.actions {
-  justify-content: flex-end;
-}
-.attachments-list {
-  margin-top: 8px;
-}
-.attachment-item {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 0.95em;
-  margin-bottom: 4px;
-}
-</style>
