@@ -379,9 +379,9 @@ html, body {
   flex: 1;
   padding: 0.5rem 1rem;
   font-size: 1rem;
-  border: 1px solid #ccc;
+  /* border removed to allow system to handle input border */
   border-radius: 6px;
-  background: var(--color-table-input-bg);
+  /* background removed to allow system to handle input background */
   color: var(--color-input-text);
 }
 .event-topbar-btn {

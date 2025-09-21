@@ -2,11 +2,16 @@
   <div class="event-table-wrapper">
     <h3 class="event-section-title">Event List</h3>
     <div class="event-list-top-bar">
-      <input class="event-search-input" type="text" placeholder="Search events..." />
-      <button class="event-topbar-btn" disabled>Advanced Search</button>
-      <button class="event-topbar-btn" disabled>Filter</button>
-      <button class="event-topbar-btn" disabled>Bulk Edit</button>
-      <button class="event-topbar-btn" disabled>Bulk Delete</button>
+      <TextInput
+        class="event-search-input"
+        id="event-search"
+        label="Search events..."
+        v-model="searchQuery"
+      />
+      <InputButton disabled>Advanced Search</InputButton>
+      <InputButton disabled>Filter</InputButton>
+      <InputButton disabled>Bulk Edit</InputButton>
+      <InputButton disabled>Bulk Delete</InputButton>
     </div>
     <div v-if="loading" class="event-list-loading">Loading events...</div>
     <div v-else-if="error" class="event-list-error">Error loading events: {{ error.message }}
@@ -78,9 +83,15 @@
 </template>
 
 <script setup lang="ts">
+
 import TableEntry from "../../shared/TableEntry.vue";
+import TextInput from "../../shared/TextInput.vue";
+import InputButton from "../../shared/InputButton.vue";
+import { ref } from "vue";
 import { EventTable } from "@/composables/EventTable";
 
+
+const searchQuery = ref("");
 const {
   events,
   loading,
