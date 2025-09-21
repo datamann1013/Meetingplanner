@@ -31,21 +31,21 @@ const buttonStyle = computed(() => ({
 .input-button-wrapper {
   margin-bottom: 1rem;
 }
-.input-button {
-  width: 100%;
-  border: 1px solid var(--color-primary-border, #b5c9a3);
-  border-radius: 4px;
-  padding: 0 14px;
-  font-size: 1rem;
-  color: var(--color-input-text, #4b3f2a);
-  background-color: var(--color-table-header-bg, #f5f5f5);
-  cursor: pointer;
-  transition: border-color 0.2s, box-shadow 0.2s;
-  min-height: 36px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+  .input-button {
+    width: 100%;
+    border: 1px solid var(--color-primary-border, #b5c9a3);
+    border-radius: 4px;
+    padding: 0 14px;
+    font-size: 1rem;
+    color: var(--color-input-text, #4b3f2a);
+    background-color: var(--color-table-header-bg, #f5f5f5);
+    cursor: pointer;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    min-height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 .input-button:focus,
 .input-button:hover {
   border-color: #424242;
@@ -54,6 +54,6 @@ const buttonStyle = computed(() => ({
   background-color: var(--color-table-header-bg, #f5f5f5);
 }
 .compact-input {
-  min-height: 36px !important;
+  min-height: 40px !important;
 }
 </style>

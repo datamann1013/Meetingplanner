@@ -100,6 +100,26 @@ Meetingplanner Stylesheet Structure
   display: flex;
   height: var(--height-full-vh);
 }
+
+/* Force datetime-local input to match other input heights */
+.compact-input input[type="datetime-local"] {
+  height: 40px !important;
+  min-height: 40px !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  font-size: 1rem !important;
+  line-height: 40px !important;
+  box-sizing: border-box;
+}
+
+/* Remove extra padding/margin from datetime-local container if present */
+.compact-input .v-field__input {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  min-height: 40px !important;
+  height: 40px !important;
+  box-sizing: border-box;
+}
 .admin-sidebar {
   width: var(--size-sidebar);
   background: var(--color-primary-bg);
