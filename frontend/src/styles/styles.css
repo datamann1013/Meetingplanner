@@ -101,8 +101,10 @@ Meetingplanner Stylesheet Structure
   height: var(--height-full-vh);
 }
 
-/* Force datetime-local input to match other input heights */
-.compact-input input[type="datetime-local"] {
+/* Restrict height for .compact-input only for text, number, and datetime-local, NOT textarea */
+.compact-input input[type="datetime-local"],
+.compact-input input[type="text"],
+.compact-input input[type="number"] {
   height: 40px !important;
   min-height: 40px !important;
   padding-top: 0 !important;
@@ -112,13 +114,15 @@ Meetingplanner Stylesheet Structure
   box-sizing: border-box;
 }
 
-/* Remove extra padding/margin from datetime-local container if present */
-.compact-input .v-field__input {
-  padding-top: 0 !important;
-  padding-bottom: 0 !important;
-  min-height: 40px !important;
-  height: 40px !important;
-  box-sizing: border-box;
+/* Allow textarea (description box) to expand naturally */
+.compact-input textarea {
+  min-height: 120px !important;
+  height: auto !important;
+  line-height: 1.5 !important;
+  font-size: 1rem !important;
+  resize: vertical;
+  padding-top: 8px !important;
+  padding-bottom: 8px !important;
 }
 .admin-sidebar {
   width: var(--size-sidebar);
