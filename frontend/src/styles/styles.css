@@ -224,6 +224,7 @@ Meetingplanner Stylesheet Structure
 :root {
   /* Colors */
   --color-primary-bg: #C8DAA6;
+  --color-creme-bg: #FBF5DB;
   --color-primary-selected: #A3B18A;
   --color-primary-border: #b5c9a3;
   --color-accent: #76944C;
@@ -369,6 +370,7 @@ html, body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  background: var(--color-creme-bg);
   /* Allow browser to handle scrolling */
   overflow-x: hidden;
   overflow-y: auto;
