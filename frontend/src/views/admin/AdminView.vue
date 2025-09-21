@@ -25,7 +25,7 @@
         />
       </div>
     </div>
-    <div class="admin-main">
+  <div class="admin-main" ref="adminMainRef">
         <template v-if="selectedTab === 'Events'">
           <DualInteractiveBoxes
             :actions="['Calendar', 'Create Event', 'Duplicate Previous Event', 'Import Events', 'Upload Images/Attachments', 'Send Mass Email']"
@@ -107,7 +107,19 @@ const sidebarItems = [
   { title: 'Settings', tag: 'settings', hoverColor: '#A3B18A' },
 ]
 
+
+import { watch, nextTick } from 'vue'
 const selectedTab = ref('Dashboard')
+const adminMainRef = ref<HTMLElement | null>(null)
+
+// Scroll to top of main content when selectedTab changes
+watch(selectedTab, async () => {
+  await nextTick()
+  if (adminMainRef.value) {
+    adminMainRef.value.scrollTop = 0
+    adminMainRef.value.scrollTo?.({ top: 0, behavior: 'auto' })
+  }
+})
 
 const dashboardConfigs = {
   dashboard: [
