@@ -8,11 +8,32 @@
         label="Search events..."
         v-model="searchQuery"
       />
-      <InputButton disabled>Advanced Search</InputButton>
-      <InputButton disabled>Filter</InputButton>
-      <InputButton disabled>Bulk Edit</InputButton>
-      <InputButton disabled>Bulk Delete</InputButton>
+  <InputButton @click="showAdvancedSearch = true">Advanced Search</InputButton>
+  <InputButton @click="showFilter = true">Filter</InputButton>
+  <InputButton @click="showBulkEdit = true">Bulk Edit</InputButton>
+  <InputButton @click="showBulkDelete = true">Bulk Delete</InputButton>
     </div>
+    <Modal v-model="showAdvancedSearch">
+      <h3>Advanced Search</h3>
+      <p>Here you can add advanced search options.</p>
+      <!-- Add your advanced search form here -->
+    </Modal>
+    <Modal v-model="showFilter">
+      <h3>Filter Events</h3>
+      <p>Here you can add filter options.</p>
+      <!-- Add your filter form here -->
+    </Modal>
+    <Modal v-model="showBulkEdit">
+      <h3>Bulk Edit Events</h3>
+      <p>Here you can add bulk edit options.</p>
+      <!-- Add your bulk edit form here -->
+    </Modal>
+    <Modal v-model="showBulkDelete">
+      <h3>Bulk Delete Events</h3>
+      <p>Are you sure you want to delete the selected events?</p>
+      <button @click="confirmBulkDelete">Yes, Delete</button>
+      <button @click="showBulkDelete = false">Cancel</button>
+    </Modal>
     <div v-if="loading" class="event-list-loading">Loading events...</div>
     <div v-else-if="error" class="event-list-error">Error loading events: {{ error.message }}
     </div>
@@ -56,14 +77,22 @@
 
 <script setup lang="ts">
 
+
 import TableEntry from "../../shared/TableEntry.vue";
 import TextInput from "../../shared/TextInput.vue";
 import InputButton from "../../shared/InputButton.vue";
+import Modal from "../../shared/Modal.vue";
 
 import { ref } from "vue";
 import { EventTable } from "@/composables/EventTable";
 
+
 const searchQuery = ref("");
+const showAdvancedSearch = ref(false);
+const showFilter = ref(false);
+const showBulkEdit = ref(false);
+const showBulkDelete = ref(false);
+
 const {
   events,
   loading,
@@ -72,6 +101,11 @@ const {
   columns,
   formatDateTime,
 } = EventTable();
+
+function confirmBulkDelete() {
+  // Implement your bulk delete logic here
+  showBulkDelete.value = false;
+}
 
 
 
