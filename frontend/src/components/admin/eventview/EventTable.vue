@@ -37,7 +37,7 @@
     <div v-if="loading" class="event-list-loading">Loading events...</div>
     <div v-else-if="error" class="event-list-error">Error loading events: {{ error.message }}
     </div>
-    <div class="event-table-inner-bg">
+  <div>
       <TableEntry :columns="columns" :rows="events" @row-click="openEventModal">
         <template #select="{ row }">
           <input type="checkbox" :value="row.id" v-model="selectedEvents" />
