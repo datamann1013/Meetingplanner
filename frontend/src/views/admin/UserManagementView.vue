@@ -4,7 +4,18 @@ import DashboardBox from '@/components/admin/DashboardBox.vue';
 import SidebarItem from '@/components/admin/SidebarItem.vue';
 import TableEntry from '@/components/shared/TableEntry.vue';
 import TextInput from '@/components/shared/TextInput.vue';
+
 import InputButton from '@/components/shared/InputButton.vue';
+import Modal from '@/components/shared/Modal.vue';
+
+const showFilter = ref(false);
+const showBulkEdit = ref(false);
+const showBulkDelete = ref(false);
+
+function confirmBulkDelete() {
+  // Implement your bulk delete logic here
+  showBulkDelete.value = false;
+}
 
 
 
@@ -20,7 +31,6 @@ const columns = [
   { key: 'role', label: 'Role' },
   { key: 'status', label: 'Status' },
   { key: 'verification', label: 'Verification' },
-  { key: 'actions', label: '' },
 ];
 
 const selectedUsers = ref<number[]>([]);
@@ -98,13 +108,13 @@ const StatusIndicator = defineComponent({
       <h3 class="event-section-title">User List</h3>
       <div class="event-list-top-bar">
         <TextInput class="event-search-input" id="user-search" label="Search users..." v-model="searchQuery" />
-        <InputButton @click="filterModal = true">Filter</InputButton>
+        <InputButton @click="showFilter = true">Filter</InputButton>
         <InputButton color="primary" @click="openUserModal(null)">Add User</InputButton>
-        <InputButton disabled>Bulk Edit</InputButton>
-        <InputButton disabled>Bulk Delete</InputButton>
+        <InputButton @click="showBulkEdit = true">Bulk Edit</InputButton>
+        <InputButton @click="showBulkDelete = true">Bulk Delete</InputButton>
       </div>
       <div class="event-table-inner-bg">
-        <TableEntry :columns="columns" :rows="filteredUsers">
+  <TableEntry :columns="columns" :rows="filteredUsers">
           <template #select="{ row }">
             <input type="checkbox" :value="row.id" v-model="selectedUsers" />
           </template>
@@ -128,52 +138,50 @@ const StatusIndicator = defineComponent({
           <template #verification="{ row }">
             <StatusIndicator :status="row.verification as StatusType" type="verification" />
           </template>
-          <template #actions="{ row }">
-            <span class="kebab-menu" @click="openUserModal(row)">⋮</span>
-          </template>
         </TableEntry>
       </div>
     </DashboardBox>
 
-    <!-- Filter Modal -->
-    <div v-if="filterModal" class="modal-backdrop">
-      <div class="modal-container">
-        <div class="modal-header">
-          Filter Users
-          <button class="close-btn" @click="filterModal = false">×</button>
-        </div>
-        <div class="modal-body">
-          <div class="filter-options">
-            <label><input type="radio" value="all" v-model="userFilter" /> All Users</label><br />
-            <label><input type="radio" value="active" v-model="userFilter" /> Active Users</label><br />
-            <label><input type="radio" value="inactive" v-model="userFilter" /> Inactive Users</label><br />
-            <label><input type="radio" value="verified" v-model="userFilter" /> Verified</label><br />
-            <label><input type="radio" value="pending" v-model="userFilter" /> Pending</label>
-          </div>
-        </div>
-        <div class="modal-actions">
-          <button @click="filterModal = false">Close</button>
-        </div>
+    <Modal v-model="showFilter">
+      <h3>Filter Users</h3>
+      <div class="filter-options">
+        <label><input type="radio" value="all" v-model="userFilter" /> All Users</label><br />
+        <label><input type="radio" value="active" v-model="userFilter" /> Active Users</label><br />
+        <label><input type="radio" value="inactive" v-model="userFilter" /> Inactive Users</label><br />
+        <label><input type="radio" value="verified" v-model="userFilter" /> Verified</label><br />
+        <label><input type="radio" value="pending" v-model="userFilter" /> Pending</label>
       </div>
-    </div>
-    <!-- User Modal Placeholder -->
-    <div v-if="userModal" class="modal-backdrop">
-      <div class="modal-container">
-        <div class="modal-header">
-          Edit User: {{ selectedUser?.name || '' }}
-          <button class="close-btn" @click="userModal = false">×</button>
-        </div>
-        <div class="modal-body">
-          <div>Form fields go here (placeholder)</div>
-          <StatusIndicator :status="selectedUser?.verification as StatusType" type="verification" />
-        </div>
-        <div class="modal-actions">
-          <button @click="userModal = false">Cancel</button>
-          <button>Reset Password</button>
-          <button>Save Changes</button>
-        </div>
+      <div class="modal-actions">
+        <button @click="showFilter = false">Close</button>
       </div>
-    </div>
+    </Modal>
+    <Modal v-model="showBulkEdit">
+      <h3>Bulk Edit Users</h3>
+      <p>Here you can add bulk edit options for users.</p>
+      <div class="modal-actions">
+        <button @click="showBulkEdit = false">Close</button>
+      </div>
+    </Modal>
+    <Modal v-model="showBulkDelete">
+      <h3>Bulk Delete Users</h3>
+      <p>Are you sure you want to delete the selected users?</p>
+      <div class="modal-actions">
+        <button @click="confirmBulkDelete">Yes, Delete</button>
+        <button @click="showBulkDelete = false">Cancel</button>
+      </div>
+    </Modal>
+    <Modal v-model="userModal">
+      <h3>{{ selectedUser ? `Edit User: ${selectedUser.name}` : 'Add User' }}</h3>
+      <div class="modal-body">
+        <div>Form fields go here (placeholder)</div>
+        <StatusIndicator v-if="selectedUser" :status="selectedUser?.verification as StatusType" type="verification" />
+      </div>
+      <div class="modal-actions">
+        <button @click="userModal = false">Cancel</button>
+        <button v-if="selectedUser">Reset Password</button>
+        <button>Save Changes</button>
+      </div>
+    </Modal>
     <!-- Confirmation Modal Placeholder -->
     <div v-if="confirmModal" class="modal-backdrop">
       <div class="modal-container">
