@@ -25,8 +25,7 @@ const columns = [
 
 const selectedUsers = ref<number[]>([]);
 const searchQuery = ref('');
-const hoveredUser = ref<number|null>(null);
-const hoveredField = ref<string|null>(null);
+
 
 
 
@@ -109,10 +108,10 @@ const StatusIndicator = defineComponent({
           <template #select="{ row }">
             <input type="checkbox" :value="row.id" v-model="selectedUsers" />
           </template>
-          <template #name="{ row }">
-            <span class="hoverable-cell" @mouseenter="hoveredUser = row.id; hoveredField = 'name'" @mouseleave="hoveredUser = null; hoveredField = null">
+          <template #name="{ row, hoveredRow }">
+            <span class="hoverable-cell">
               <a href="#" @click.prevent="openUserModal(row)">{{ row.name }}</a>
-              <div v-if="hoveredUser === row.id && hoveredField === 'name'" class="popup-info">
+              <div v-if="hoveredRow && hoveredRow.id === row.id" class="popup-info">
                 <strong>Email:</strong> {{ row.email }}<br />
                 <strong>Phone:</strong> {{ row.phone }}
               </div>

@@ -22,62 +22,34 @@
           <input type="checkbox" :value="row.id" v-model="selectedEvents" />
         </template>
         <template #name="{ row }">
-          <span class="hoverable-cell" @mouseenter="hoveredEvent = row.id; hoveredField = 'name'" @mouseleave="hoveredEvent = null; hoveredField = null">
-            {{ row.name }}
-            <div v-if="hoveredEvent === row.id && hoveredField === 'name'" class="popup-info">
-              <strong>Name:</strong> {{ row.name }}
-            </div>
-          </span>
+          <span class="hoverable-cell">{{ row.name }}</span>
         </template>
         <template #date="{ row }">
-          <span class="hoverable-cell" @mouseenter="hoveredEvent = row.id; hoveredField = 'date'" @mouseleave="hoveredEvent = null; hoveredField = null">
-            {{ formatDateTime(row.date || '') }}
-            <div v-if="hoveredEvent === row.id && hoveredField === 'date'" class="popup-info">
-              <strong>Date:</strong> {{ formatDateTime(row.date || '') }}
-            </div>
-          </span>
+          <span class="hoverable-cell">{{ formatDateTime(row.date || '') }}</span>
         </template>
         <template #status="{ row }">
-          <span class="hoverable-cell" @mouseenter="hoveredEvent = row.id; hoveredField = 'status'" @mouseleave="hoveredEvent = null; hoveredField = null">
-            {{ row.status }}
-            <div v-if="hoveredEvent === row.id && hoveredField === 'status'" class="popup-info">
-              <strong>Status:</strong> {{ row.status }}
-            </div>
-          </span>
+          <span class="hoverable-cell">{{ row.status }}</span>
         </template>
         <template #rsvp="{ row }">
-          <span class="hoverable-cell" @mouseenter="hoveredEvent = row.id; hoveredField = 'rsvp'" @mouseleave="hoveredEvent = null; hoveredField = null">
-            {{ row.rsvp }}
-            <div v-if="hoveredEvent === row.id && hoveredField === 'rsvp'" class="popup-info">
-              <strong>RSVP:</strong> {{ row.rsvp }}
-            </div>
-          </span>
+          <span class="hoverable-cell">{{ row.rsvp }}</span>
         </template>
         <template #signup_deadline="{ row }">
-          <span class="hoverable-cell" @mouseenter="hoveredEvent = row.id; hoveredField = 'signup_deadline'" @mouseleave="hoveredEvent = null; hoveredField = null">
-            {{ formatDateTime(row.signup_deadline || '') }}
-            <div v-if="hoveredEvent === row.id && hoveredField === 'signup_deadline'" class="popup-info">
-              <strong>Signup Deadline:</strong> {{ formatDateTime(row.signup_deadline || '') }}
-            </div>
-          </span>
+          <span class="hoverable-cell">{{ formatDateTime(row.signup_deadline || '') }}</span>
         </template>
         <template #description="{ row }">
-          <span class="hoverable-cell" @mouseenter="hoveredEvent = row.id; hoveredField = 'description'" @mouseleave="hoveredEvent = null; hoveredField = null">
-            {{ row.description }}
-            <div v-if="hoveredEvent === row.id && hoveredField === 'description'" class="popup-info">
-              <strong>Description:</strong> {{ row.description }}
-            </div>
-          </span>
+          <span class="hoverable-cell">{{ row.description }}</span>
+        </template>
+        <template #after-rows="{ hoveredRow }">
+          <div v-if="hoveredRow" class="popup-modal" :style="popupPositionStyle as any">
+            <strong>Name:</strong> {{ hoveredRow.name }}<br />
+            <strong>Date:</strong> {{ formatDateTime(hoveredRow.date || '') }}<br />
+            <strong>Status:</strong> {{ hoveredRow.status }}<br />
+            <strong>RSVP:</strong> {{ hoveredRow.rsvp }}<br />
+            <strong>Signup Deadline:</strong> {{ formatDateTime(hoveredRow.signup_deadline || '') }}<br />
+            <strong>Description:</strong> {{ hoveredRow.description }}
+          </div>
         </template>
       </TableEntry>
-      <div v-if="hoveredEvent" class="event-row-details">
-        <strong>Details for:</strong> {{ events.find(e => e.id === hoveredEvent)?.name }}<br>
-        RSVP: {{ events.find(e => e.id === hoveredEvent)?.rsvp }}<br>
-        Status: {{ events.find(e => e.id === hoveredEvent)?.status }}
-        <br />Signup Deadline: {{ events.find(e => e.id === hoveredEvent)?.signup_deadline }}
-        <br />Description: {{ events.find(e => e.id === hoveredEvent)?.description }}
-        <br />Date: {{ formatDateTime(events.find(e => e.id === hoveredEvent)?.date || '') }}
-      </div>
     </div>
   </div>
 </template>
@@ -87,9 +59,9 @@
 import TableEntry from "../../shared/TableEntry.vue";
 import TextInput from "../../shared/TextInput.vue";
 import InputButton from "../../shared/InputButton.vue";
+
 import { ref } from "vue";
 import { EventTable } from "@/composables/EventTable";
-
 
 const searchQuery = ref("");
 const {
@@ -97,18 +69,40 @@ const {
   loading,
   error,
   selectedEvents,
-  hoveredEvent,
-  hoveredField,
   columns,
   formatDateTime,
 } = EventTable();
 
 
+
+import { computed } from "vue";
+
+// Optional: You can compute popup position if you want to position it near the hovered row
+const popupPositionStyle = computed(() => {
+  // For now, just use a fixed style. You can enhance this to position near the row if needed.
+  return {
+    position: 'absolute',
+    left: '50%',
+    top: '30%',
+    transform: 'translate(-50%, 0)',
+    zIndex: 10,
+    background: '#fff',
+    border: '1px solid #ccc',
+    borderRadius: '8px',
+    padding: '1rem',
+    boxShadow: '0 2px 8px rgba(0,0,0,0.15)'
+  };
+});
 </script>
 
 <style scoped>
 .event-table-inner-bg {
   background: var(--color-table-header-bg, #f5f5f5);
   padding: 0.5rem 0.5rem 0.5rem 0.5rem;
+  position: relative;
+}
+
+.popup-modal {
+  pointer-events: none;
 }
 </style>
