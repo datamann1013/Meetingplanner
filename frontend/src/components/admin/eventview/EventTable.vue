@@ -73,20 +73,8 @@
       </TableEntry>
     </div>
     <Modal v-model="eventModal">
-      <h3>{{ selectedEvent ? `Edit Event: ${selectedEvent.name}` : 'Edit Event' }}</h3>
       <div class="modal-body">
-        <div>Event form fields go here (placeholder)</div>
-        <div v-if="selectedEvent">
-          <strong>Date:</strong> {{ formatDateTime(selectedEvent.date || '') }}<br />
-          <strong>Status:</strong> {{ selectedEvent.status }}<br />
-          <strong>RSVP:</strong> {{ selectedEvent.rsvp }}<br />
-          <strong>Signup Deadline:</strong> {{ formatDateTime(selectedEvent.signup_deadline || '') }}<br />
-          <strong>Description:</strong> {{ selectedEvent.description }}
-        </div>
-      </div>
-      <div class="modal-actions">
-        <button @click="eventModal = false">Cancel</button>
-        <button>Save Changes</button>
+        <EventCreateDuplicate :mode="'edit'" />
       </div>
     </Modal>
   </div>
@@ -99,6 +87,7 @@ import TableEntry from "../../shared/TableEntry.vue";
 import TextInput from "../../shared/TextInput.vue";
 import InputButton from "../../shared/InputButton.vue";
 import Modal from "../../shared/Modal.vue";
+import EventCreateDuplicate from "./EventCreateDuplicate.vue";
 
 import { ref } from "vue";
 import { EventTable } from "@/composables/EventTable";
@@ -118,6 +107,8 @@ function openEventModal(event: any) {
   eventModal.value = true
 }
 
+// Register EventCreateDuplicate as a local component for template usage
+defineExpose({ EventCreateDuplicate });
 const {
   events,
   loading,
