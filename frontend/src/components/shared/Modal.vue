@@ -1,7 +1,7 @@
 <template>
   <div v-if="modelValue" class="modal-overlay" @click.self="close">
     <div class="modal-content">
-      <button class="modal-close" @click="close">&times;</button>
+      <button v-if="!hideDefaultClose" class="modal-close" @click="close">&times;</button>
       <slot />
     </div>
   </div>
@@ -9,7 +9,8 @@
 
 <script setup lang="ts">
 import { defineProps, defineEmits } from 'vue';
-const props = defineProps<{ modelValue: boolean }>();
+const props = defineProps<{ modelValue: boolean, hideDefaultClose?: boolean }>();
+const hideDefaultClose = props.hideDefaultClose ?? false;
 const emit = defineEmits(['update:modelValue']);
 function close() {
   emit('update:modelValue', false);

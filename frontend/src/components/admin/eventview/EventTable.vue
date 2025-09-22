@@ -72,7 +72,11 @@
         </template>
       </TableEntry>
     </div>
-    <Modal v-model="eventModal">
+    <Modal v-model="eventModal" :hide-default-close="true">
+      <div class="modal-header-row">
+        <h3 class="modal-title">Edit Event</h3>
+        <button class="modal-close-btn" @click="eventModal = false" aria-label="Close">×</button>
+      </div>
       <div class="modal-body">
         <EventCreateDuplicate :mode="'edit'" />
       </div>
@@ -154,5 +158,33 @@ const popupPositionStyle = computed(() => {
 
 .popup-modal {
   pointer-events: none;
+}
+/* Modal header row for title and close button */
+.modal-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1.5rem 0 1.5rem;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+}
+.modal-title {
+  font-size: 1.35rem;
+  font-weight: 600;
+  margin: 0;
+}
+.modal-close-btn {
+  background: none;
+  border: none;
+  font-size: 2rem;
+  line-height: 1;
+  cursor: pointer;
+  color: #888;
+  padding: 0 0.5rem;
+  margin-left: 1rem;
+  transition: color 0.2s;
+}
+.modal-close-btn:hover {
+  color: #222;
 }
 </style>
