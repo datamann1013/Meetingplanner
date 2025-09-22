@@ -114,29 +114,27 @@ const StatusIndicator = defineComponent({
         <InputButton @click="showBulkDelete = true">Bulk Delete</InputButton>
       </div>
       <div class="event-table-inner-bg">
-  <TableEntry :columns="columns" :rows="filteredUsers">
+        <TableEntry :columns="columns" :rows="filteredUsers" @row-click="openUserModal">
           <template #select="{ row }">
-            <input type="checkbox" :value="row.id" v-model="selectedUsers" />
+            <input type="checkbox" :value="row.id" v-model="selectedUsers" @click.stop />
           </template>
-          <template #name="{ row, hoveredRow }">
-            <span class="hoverable-cell">
-              <a href="#" @click.prevent="openUserModal(row)">{{ row.name }}</a>
-              <div v-if="hoveredRow && hoveredRow.id === row.id" class="popup-info">
-                <strong>Email:</strong> {{ row.email }}<br />
-                <strong>Phone:</strong> {{ row.phone }}
-              </div>
-            </span>
+          <template #name="{ row }">
+            <span class="hoverable-cell user-row-clickable">{{ row.name }}</span>
           </template>
           <template #role="{ row }">
-            <span>
+            <span class="user-row-clickable">
               <span :class="['role-tag', row.role.replace(/\s/g, '-').toLowerCase()]">{{ row.role }}</span>
             </span>
           </template>
           <template #status="{ row }">
-            <StatusIndicator :status="row.status as StatusType" />
+            <span class="user-row-clickable">
+              <StatusIndicator :status="row.status as StatusType" />
+            </span>
           </template>
           <template #verification="{ row }">
-            <StatusIndicator :status="row.verification as StatusType" type="verification" />
+            <span class="user-row-clickable">
+              <StatusIndicator :status="row.verification as StatusType" type="verification" />
+            </span>
           </template>
         </TableEntry>
       </div>
