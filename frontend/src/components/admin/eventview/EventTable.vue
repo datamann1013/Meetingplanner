@@ -38,7 +38,7 @@
     <div v-else-if="error" class="event-list-error">Error loading events: {{ error.message }}
     </div>
     <div class="event-table-inner-bg">
-      <TableEntry :columns="columns" :rows="events">
+      <TableEntry :columns="columns" :rows="events" @row-click="openEventModal">
         <template #select="{ row }">
           <input type="checkbox" :value="row.id" v-model="selectedEvents" />
         </template>
@@ -72,6 +72,23 @@
         </template>
       </TableEntry>
     </div>
+    <Modal v-model="eventModal">
+      <h3>{{ selectedEvent ? `Edit Event: ${selectedEvent.name}` : 'Edit Event' }}</h3>
+      <div class="modal-body">
+        <div>Event form fields go here (placeholder)</div>
+        <div v-if="selectedEvent">
+          <strong>Date:</strong> {{ formatDateTime(selectedEvent.date || '') }}<br />
+          <strong>Status:</strong> {{ selectedEvent.status }}<br />
+          <strong>RSVP:</strong> {{ selectedEvent.rsvp }}<br />
+          <strong>Signup Deadline:</strong> {{ formatDateTime(selectedEvent.signup_deadline || '') }}<br />
+          <strong>Description:</strong> {{ selectedEvent.description }}
+        </div>
+      </div>
+      <div class="modal-actions">
+        <button @click="eventModal = false">Cancel</button>
+        <button>Save Changes</button>
+      </div>
+    </Modal>
   </div>
 </template>
 
@@ -92,6 +109,14 @@ const showAdvancedSearch = ref(false);
 const showFilter = ref(false);
 const showBulkEdit = ref(false);
 const showBulkDelete = ref(false);
+
+// Event modal state
+const eventModal = ref(false)
+const selectedEvent = ref<any>(null)
+function openEventModal(event: any) {
+  selectedEvent.value = event
+  eventModal.value = true
+}
 
 const {
   events,
