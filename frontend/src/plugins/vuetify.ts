@@ -10,7 +10,7 @@ const LightThemeC: ThemeDefinition = {
   dark: false,
   colors: {
     background: '#FBF5DB', 
-    surface: '#C8DAA6',    
+    surface: '#f5f5f5',    // Changed to match input field color (--color-table-header-bg)
     primary: '#76944C',    
     'primary-darken-1': '#60793E', 
     secondary: '#FFD21D',  
