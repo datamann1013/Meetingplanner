@@ -27,6 +27,7 @@ export function EventTable() {
         events.value = res.data.data.map((item: any) => ({
           id: item.id,
           title: item.title,
+          name: item.title, // Ensure the table's 'name' column is filled
           date: item.date,
           status: item.status || 'Draft',
           rsvp: item.rsvp_count || '0/0',

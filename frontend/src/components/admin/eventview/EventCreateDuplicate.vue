@@ -34,7 +34,7 @@
         <Dropdown id="status" label="Status" v-model="form.status" :options="statusOptions" inputColor="#f5f5f5" borderColor="#616161" />
       </div>
       <div class="button-row grid-span-4">
-        <InputButton type="submit" inputColor="#f5f5f5" borderColor="#616161" class="full-width-button">Create Event</InputButton>
+        <InputButton type="submit" inputColor="#f5f5f5" borderColor="#616161" class="full-width-button">{{ mode === 'edit' ? 'Confirm Changes' : 'Create Event' }}</InputButton>
       </div>
     </form>
   </div>
@@ -49,7 +49,7 @@ import NumberInput from '../../shared/NumberInput.vue'
 import Dropdown from '../../shared/Dropdown.vue'
 import InputButton from '../../shared/InputButton.vue'
 
-const props = defineProps<{ mode: 'create' | 'duplicate' }>()
+const props = defineProps<{ mode: 'create' | 'duplicate' | 'edit' }>()
 const form = ref({
   title: '',
   description: '',
