@@ -105,10 +105,3 @@ const {
 
 
 </script>
-
-<style scoped>
-.event-table-inner-bg {
-  background: var(--color-table-header-bg, #f5f5f5);
-  padding: 0.5rem 0.5rem 0.5rem 0.5rem;
-}
-</style>

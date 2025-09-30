@@ -394,6 +394,26 @@ html, body {
   background: none;
   padding: 0;
 }
+.event-table-inner-bg {
+  background: var(--color-table-header-bg, #f5f5f5);
+  padding: 0.5rem 0.5rem 0.5rem 0.5rem;
+}
+/* EventTable specific - remove borders for cleaner look */
+.event-table-inner-bg .table-entry th,
+.event-table-inner-bg .table-entry td {
+  border: none;
+  border-bottom: 1px solid #e0e0e0;
+  padding: var(--space-s) var(--space-l);
+  text-align: left;
+  background: none;
+}
+.event-table-inner-bg .table-entry th {
+  background: var(--color-table-header-bg, #f5f5f5);
+  color: #4b3f2a;
+}
+.event-table-inner-bg .table-entry td {
+  background: #fff;
+}
 .event-list-top-bar {
   display: flex;
   align-items: center;
