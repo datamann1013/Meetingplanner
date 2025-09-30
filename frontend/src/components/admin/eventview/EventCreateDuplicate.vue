@@ -19,7 +19,15 @@
         <NumberInput id="capacity" label="Capacity" v-model="form.capacity" inputColor="#f5f5f5" borderColor="#616161" />
       </div>
       <div>
-        <Dropdown id="category" label="Categories" v-model="form.category" :options="categoryOptions" inputColor="#f5f5f5" borderColor="#616161" />
+        <Dropdown 
+          id="category" 
+          label="Categories" 
+          v-model="form.category" 
+          :options="categoryOptionsWithCreate" 
+          inputColor="#f5f5f5" 
+          borderColor="#616161" 
+          @update:modelValue="handleCategoryChange"
+        />
       </div>
       <div>
         <TextInput id="contact_info" label="Contact Info" v-model="form.contact_info" inputColor="#f5f5f5" borderColor="#616161" />
@@ -37,19 +45,28 @@
         <InputButton type="submit" inputColor="#f5f5f5" borderColor="#616161" class="full-width-button">{{ mode === 'edit' ? 'Confirm Changes' : 'Create Event' }}</InputButton>
       </div>
     </form>
+    
+    <!-- Category Create Modal -->
+    <CategoryCreateModal 
+      v-model="showCategoryModal"
+      @categoryCreated="handleCategoryCreated"
+    />
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import TextInput from '../../shared/TextInput.vue'
 import TextArea from '../../shared/TextArea.vue'
 import DateTimePicker from '../../shared/DateTimePicker.vue'
 import NumberInput from '../../shared/NumberInput.vue'
 import Dropdown from '../../shared/Dropdown.vue'
 import InputButton from '../../shared/InputButton.vue'
+import CategoryCreateModal from '../../shared/CategoryCreateModal.vue'
+import { categoryService, type Category } from '@/services/categoryService'
 
-const props = defineProps<{ mode: 'create' | 'duplicate' | 'edit' }>()
+defineProps<{ mode: 'create' | 'duplicate' | 'edit' }>()
+
 const form = ref({
   title: '',
   description: '',
@@ -62,28 +79,105 @@ const form = ref({
   category: '',
   status: ''
 })
+
 const statusOptions = [
   { text: 'Unpublished', value: 'unpublished' },
   { text: 'Published', value: 'published' },
   { text: 'Draft', value: 'draft' },
   { text: 'Blueprint', value: 'blueprint' }
 ]
-const categories = ref([
-  { id: '1', name: 'Conference' },
-  { id: '2', name: 'Workshop' },
-  { id: '3', name: 'Meetup' }
-])
-const categoryOptions = computed(() => categories.value.map(cat => ({ text: cat.name, value: cat.id })))
+
+// Category state
+const categories = ref<Category[]>([])
+const loadingCategories = ref(false)
+const showCategoryModal = ref(false)
+
+// Category options with "Create New" option
+const categoryOptionsWithCreate = computed(() => {
+  console.log('Computing category options from:', categories.value)
+  
+  if (!categories.value || categories.value.length === 0) {
+    console.log('No categories available')
+    return [{ 
+      text: '+ Create New Category',
+      value: 'CREATE_NEW' 
+    }]
+  }
+  
+  const categoryOptions = categories.value.map(cat => {
+    console.log('Processing category - full object:', cat)
+    
+    // Handle both direct property and nested attributes structure
+    const categoryData = cat as any
+    const name = categoryData.name || categoryData.attributes?.name || 'Unknown Category'
+    const id = categoryData.id?.toString() || ''
+    
+    console.log('Final extracted values:', { name, id })
+    
+    return { 
+      text: name,
+      value: id 
+    }
+  }).filter(option => option.text !== 'Unknown Category' && option.value !== '')
+  
+  console.log('Final formatted category options:', categoryOptions)
+  
+  // Add "Create New Category" option at the end
+  categoryOptions.push({ 
+    text: '+ Create New Category',
+    value: 'CREATE_NEW' 
+  })
+  
+  return categoryOptions
+})
+
+// Load categories from Strapi
+async function loadCategories() {
+  loadingCategories.value = true
+  try {
+    console.log('Loading categories...')
+    const response = await categoryService.getCategories()
+    console.log('Categories loaded:', response)
+    categories.value = response.data
+    console.log('Categories set to:', categories.value)
+  } catch (error) {
+    console.error('Failed to load categories:', error)
+    // Fallback to empty categories if API fails
+    categories.value = []
+  } finally {
+    loadingCategories.value = false
+  }
+}
+
+// Handle category selection change
+function handleCategoryChange(value: string) {
+  if (value === 'CREATE_NEW') {
+    // Reset the dropdown and open modal
+    form.value.category = ''
+    showCategoryModal.value = true
+  }
+}
+
+// Handle new category creation
+function handleCategoryCreated(newCategory: Category) {
+  // Add new category to the list
+  categories.value.push(newCategory)
+  // Select the newly created category
+  form.value.category = newCategory.id.toString()
+}
+
 function openMediaPicker() {
   // Placeholder for media picker modal
   alert('Media picker modal will be implemented soon.')
 }
+
+// Load categories when component mounts
+onMounted(() => {
+  loadCategories()
+})
 </script>
 
 <style scoped>
-.event-create-duplicate-box {
-  /* Remove all custom box-shadow and border-radius to inherit from parent */
-}
 .event-grid {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;

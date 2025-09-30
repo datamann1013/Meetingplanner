@@ -5,6 +5,8 @@
       :label="label"
       :model-value="modelValue"
       @update:modelValue="$emit('update:modelValue', $event)"
+      item-title="text"
+      item-value="value"
       outlined
       density="compact"
       hide-details
