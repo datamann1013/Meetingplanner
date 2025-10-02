@@ -51,19 +51,29 @@
         </div>
       </div>
     </div>
-    <v-dialog v-model="showCreateFolder" max-width="400">
-      <v-card>
-        <v-card-title>Create Folder</v-card-title>
-        <v-card-text>
-          <v-text-field v-model="newFolderName" label="Folder Name" />
-        </v-card-text>
-        <v-card-actions>
-          <v-spacer />
-          <v-btn text @click="showCreateFolder = false">Cancel</v-btn>
-          <v-btn color="primary" text @click="onCreateFolder">Create</v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
+    <Modal v-model="showCreateFolder" :hide-default-close="true">
+      <div class="modal-header-row">
+        <h3 class="modal-title">Create Folder</h3>
+        <button class="modal-close-btn" @click="showCreateFolder = false" aria-label="Close">×</button>
+      </div>
+      <div class="modal-body">
+        <div class="folder-input-group">
+          <label for="folderName" class="folder-label">Folder Name</label>
+          <input 
+            id="folderName"
+            v-model="newFolderName" 
+            type="text"
+            class="folder-input"
+            placeholder="Enter folder name..."
+            @keyup.enter="onCreateFolder"
+          />
+        </div>
+        <div class="folder-actions">
+          <button class="folder-btn folder-btn-cancel" @click="showCreateFolder = false">Cancel</button>
+          <button class="folder-btn folder-btn-create" @click="onCreateFolder">Create</button>
+        </div>
+      </div>
+    </Modal>
   </div>
 </template>
 
@@ -71,6 +81,7 @@
 import { ref, defineProps, defineEmits, computed } from 'vue';
 import Dropdown from './Dropdown.vue';
 import InputButton from './InputButton.vue';
+import Modal from './Modal.vue';
 
 const props = defineProps({
   mode: {
@@ -117,4 +128,114 @@ function onCreateFolder() {
   newFolderName.value = '';
 }
 </script>
+
+<style scoped>
+.modal-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.modal-title {
+  margin: 0;
+  color: var(--v-theme-on-surface, #000);
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.modal-close-btn {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: var(--v-theme-on-surface, #000);
+  padding: 0.25rem;
+  line-height: 1;
+}
+
+.modal-close-btn:hover {
+  color: var(--v-theme-on-surface-variant, #666);
+}
+
+.modal-body {
+  margin-top: 0;
+  min-width: 400px;
+  padding: 1rem;
+}
+
+.folder-input-group {
+  margin-bottom: 2rem;
+}
+
+.folder-label {
+  display: block;
+  margin-bottom: 0.75rem;
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--v-theme-on-surface, #000);
+}
+
+.folder-input {
+  width: 100%;
+  padding: 1rem;
+  border: 2px solid #ddd;
+  border-radius: 6px;
+  font-size: 1rem;
+  transition: all 0.2s;
+  box-sizing: border-box;
+}
+
+.folder-input:focus {
+  outline: none;
+  border-color: var(--v-theme-primary);
+  box-shadow: 0 0 0 3px rgba(var(--v-theme-primary), 0.1);
+}
+
+.folder-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 1.5rem;
+}
+
+.folder-btn {
+  padding: 0.875rem 1.5rem;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  min-width: 120px;
+  white-space: nowrap;
+  text-align: center;
+}
+
+.folder-btn-cancel {
+  background-color: #f8f9fa;
+  color: #495057;
+  border: 2px solid #dee2e6;
+}
+
+.folder-btn-cancel:hover {
+  background-color: #e9ecef;
+  border-color: #adb5bd;
+  transform: translateY(-1px);
+}
+
+.folder-btn-create {
+  background-color: #76944C;
+  color: white;
+  border: 2px solid #76944C;
+  box-shadow: 0 2px 4px rgba(118, 148, 76, 0.2);
+}
+
+.folder-btn-create:hover {
+  background-color: #5a7139;
+  border-color: #5a7139;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(118, 148, 76, 0.3);
+}
+</style>
 

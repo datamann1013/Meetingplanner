@@ -29,20 +29,16 @@
         <EventCard :event="event" :strapiBaseUrl="strapiBaseUrl" />
       </v-col>
     </v-row>
-      <v-dialog v-model="showError" max-width="400">
-        <v-card class="error-dialog-card">
-          <v-btn icon @click="showError = false" class="error-dialog-close-btn">
-            <v-icon>mdi-close</v-icon>
-          </v-btn>
-          <v-card-title class="d-flex align-center">
-            <span>Error</span>
-          </v-card-title>
-          <v-card-text>
-            <div>You don't have access to this resource.</div>
-            <div class="mt-2"><strong>Query:</strong> {{ lastFailedQuery }}</div>
-          </v-card-text>
-        </v-card>
-      </v-dialog>
+      <Modal v-model="showError" :hide-default-close="true">
+        <div class="modal-header-row">
+          <h3 class="modal-title">Error</h3>
+          <button class="modal-close-btn" @click="showError = false" aria-label="Close">×</button>
+        </div>
+        <div class="modal-body">
+          <div>You don't have access to this resource.</div>
+          <div class="mt-2"><strong>Query:</strong> {{ lastFailedQuery }}</div>
+        </div>
+      </Modal>
   </v-container>
 </template>
 
@@ -51,6 +47,7 @@
 import { ref } from 'vue'
 import { EventTable } from '@/composables/EventTable'
 import EventCard from '../../components/shared/EventCard.vue'
+import Modal from '../../components/shared/Modal.vue'
 
 const {
   events: rawEvents,
@@ -72,3 +69,41 @@ const showError = ref(false)
 const lastFailedQuery = ref('')
 const strapiBaseUrl = import.meta.env.VITE_STRAPI_API_URL || 'http://localhost:1337'
 </script>
+
+<style scoped>
+.modal-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.modal-title {
+  margin: 0;
+  color: var(--v-theme-on-surface, #000);
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.modal-close-btn {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: var(--v-theme-on-surface, #000);
+  padding: 0.25rem;
+  line-height: 1;
+}
+
+.modal-close-btn:hover {
+  color: var(--v-theme-on-surface-variant, #666);
+}
+
+.modal-body {
+  margin-top: 0;
+}
+
+.mt-2 {
+  margin-top: 0.5rem;
+}
+</style>
