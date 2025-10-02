@@ -45,18 +45,25 @@
         </div>
       </div>
     </div>
-  <EditEventModal v-if="modalDate" :date="modalDate" :events="getEvents(modalDate)" @close="modalDate = null" @editEvent="openEditModal" />
   
-  <!-- Edit Modal (same as EventTable) -->
-  <Modal v-model="editModal" :hide-default-close="true">
+  <!-- Event Selection Modal (for multiple events) -->
+  <Modal v-model="showEventSelector" :hide-default-close="true">
     <div class="modal-header-row">
-      <h3 class="modal-title">Edit Event</h3>
-      <button class="modal-close-btn" @click="editModal = false" aria-label="Close">×</button>
+      <h3 class="modal-title">Select Event to Edit</h3>
+      <button class="modal-close-btn" @click="showEventSelector = false" aria-label="Close">×</button>
     </div>
     <div class="modal-body">
-      <EventCreateDuplicate :mode="'edit'" />
+      <div v-if="modalDate && getEvents(modalDate).length">
+        <div v-for="event in getEvents(modalDate)" :key="event.id" class="event-list-item">
+          <strong>{{ event.title }}</strong>
+          <button class="select-btn" @click="selectEventToEdit(event)">Select</button>
+        </div>
+      </div>
     </div>
   </Modal>
+  
+  <!-- Edit Modal (same as EventTable) -->
+  <EditEventModal v-model="editModal" />
   </div>
 </template>
 
@@ -130,10 +137,18 @@ const tooltipDate = ref<string | null>(null)
 const tooltipStyle = ref<Record<string, string>>({})
 const modalDate = ref<string | null>(null)
 const editModal = ref(false)
+const showEventSelector = ref(false)
 
-function openEditModal(event: any) {
-  modalDate.value = null // Close the event selection modal
+function openEditModal(_event: any) {
+  showEventSelector.value = false // Close the event selection modal
   editModal.value = true // Open the edit modal
+}
+
+function selectEventToEdit(_event: any) {
+  // Here we would set the selected event for editing
+  // For now, we'll just open the edit modal
+  showEventSelector.value = false
+  editModal.value = true
 }
 function hasEvent(date: string) {
   // Use DateUtils for consistent date formatting
@@ -161,10 +176,36 @@ function openEventModal(date: string) {
     } else {
       // If multiple events, show selection modal
       modalDate.value = date
+      showEventSelector.value = true
     }
   }
 }
 </script>
 
+<style scoped>
+.event-badge {
+  background-color: rgb(var(--v-theme-primary));
+  color: white;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 4px;
+}
 
+.event-list-item {
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  margin-bottom: 8px;
+  padding: 12px;
+  transition: background-color 0.2s;
+}
+
+.event-list-item:hover {
+  background-color: #f5f5f5;
+}
+</style>
 

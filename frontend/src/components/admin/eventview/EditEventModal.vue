@@ -1,72 +1,80 @@
 
 <template>
-  <div class="event-admin-box event-modal">
-    <button class="close-btn" @click="$emit('close')">×</button>
-    <h3 class="event-section-title">Edit Event</h3>
-    <div class="modal-content">
-      <div v-if="events && events.length">
-        <div v-for="event in events" :key="event.id" class="event-list-item">
-          <strong>{{ event.title }}</strong>
-          <button class="select-btn" @click="openEditModal(event)">Select</button>
-        </div>
-      </div>
-      <div v-else>
-        <em>No events for this date.</em>
-      </div>
+  <Modal v-model="isOpen" :hide-default-close="true">
+    <div class="modal-header-row">
+      <h3 class="modal-title">Edit Event</h3>
+      <button class="modal-close-btn" @click="closeModal" aria-label="Close">×</button>
     </div>
-  </div>
+    <div class="modal-body">
+      <EventCreateDuplicate :mode="'edit'" />
+    </div>
+  </Modal>
 </template>
 
 <script setup lang="ts">
-defineProps<{ date: string, events: any[] }>()
-const emit = defineEmits(['close', 'editEvent'])
+import { ref, watch } from 'vue'
+import Modal from '../../shared/Modal.vue'
+import EventCreateDuplicate from './EventCreateDuplicate.vue'
 
-function openEditModal(event: any) {
-  emit('editEvent', event)
-  emit('close')
+interface Props {
+  modelValue: boolean
+}
+
+interface Emits {
+  'update:modelValue': [value: boolean]
+}
+
+const props = defineProps<Props>()
+const emit = defineEmits<Emits>()
+
+const isOpen = ref(props.modelValue)
+
+// Watch for prop changes
+watch(() => props.modelValue, (newValue) => {
+  isOpen.value = newValue
+})
+
+// Watch for internal changes
+watch(isOpen, (newValue) => {
+  emit('update:modelValue', newValue)
+})
+
+function closeModal() {
+  isOpen.value = false
 }
 </script>
 
 <style scoped>
-.event-modal {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 1000;
-  min-width: 340px;
-  max-width: 95vw;
-}
-.close-btn {
-  position: absolute;
-  top: 12px;
-  right: 18px;
-  background: var(--color-table-header-bg, #f5f5f5);
-  border: 1.5px solid var(--color-primary-border, #b5c9a3);
-  border-radius: 4px;
-  padding: 4px 12px;
-  cursor: pointer;
-  font-weight: bold;
-  color: var(--color-accent, #76944C);
-  font-size: 1.2rem;
-}
-.modal-content {
-  margin-top: 1.5rem;
-}
-.event-list-item {
-  padding: 0.5rem 0;
-  border-bottom: 1px solid var(--color-primary-border, #b5c9a3);
+.modal-header-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 1.5rem;
 }
-.select-btn {
-  background: var(--color-accent, #76944C);
-  color: white;
-  border: none;
-  border-radius: 4px;
-  padding: 0.5rem 1rem;
-  cursor: pointer;
+
+.modal-title {
+  margin: 0;
+  color: var(--color-accent, #76944C);
+  font-size: 1.25rem;
   font-weight: 600;
 }
+
+.modal-close-btn {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: var(--color-accent, #76944C);
+  padding: 0.25rem;
+  line-height: 1;
+}
+
+.modal-close-btn:hover {
+  color: var(--color-accent-dark, #5a7139);
+}
+
+.modal-body {
+  margin-top: 0;
+}
 </style>
+
