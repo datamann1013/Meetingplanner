@@ -2,7 +2,7 @@
   <div class="calendar-event-selector-box">
     <div class="calendar-header">
       <button class="calendar-arrow" @click="prevMonth" title="Previous Month">&#8592;</button>
-  <div :class="$style['calendar-header-center']">
+  <div class="calendar-header-center">
         <Dropdown
           id="month"
           label="Month"
@@ -49,7 +49,6 @@
 </template>
 
 <script setup lang="ts">
-import $style from './CalendarEventSelector.module.css'
 import { ref, computed } from 'vue'
 import EditEventModal from "../admin/eventview/EditEventModal.vue"
 import { EventTable } from '@/composables/EventTable'
