@@ -471,6 +471,7 @@ export interface ApiEventEvent extends Struct.CollectionTypeSchema {
     publishedAt: Schema.Attribute.DateTime;
     rsvps: Schema.Attribute.Relation<'oneToMany', 'api::rsvp.rsvp'>;
     signup_deadline: Schema.Attribute.DateTime;
+    State: Schema.Attribute.String;
     title: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
