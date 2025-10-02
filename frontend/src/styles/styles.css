@@ -163,9 +163,11 @@ Meetingplanner Stylesheet Structure
   flex: 1;
   padding: var(--space-xxl) var(--space-xl);
   margin-left: var(--size-sidebar);
-  height: 100vh;
-  overflow-y: auto;
+  min-height: calc(100vh - 48px); /* Account for top bar */
   box-sizing: border-box;
+  /* Only allow scrolling when content actually exceeds viewport */
+  overflow-y: auto;
+  max-height: calc(100vh - 48px);
 }
 .centered-content {
   display: flex;
@@ -193,9 +195,8 @@ html, body {
   padding: 0;
   box-sizing: border-box;
   background: var(--color-creme-bg);
-  /* Allow browser to handle scrolling */
-  overflow-x: hidden;
-  overflow-y: auto;
+  /* Prevent body scrollbar - let admin-main handle all scrolling */
+  overflow: hidden;
 }
 
 /* 3. Specific Components */

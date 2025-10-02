@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="dual-interactive-container">
     <div class="dashboard-row">
       <DashboardBox variant="primary" :flex="1">
         <EventActionsBox
