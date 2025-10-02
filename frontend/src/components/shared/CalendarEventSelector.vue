@@ -31,12 +31,13 @@
         v-for="day in daysInMonth"
         :key="day.date"
         class="calendar-day"
-        :class="{ 'has-event': hasEvent(day.date) }"
+        :class="{ 'has-event': hasEvent(day.date), 'has-multiple-events': getEvents(day.date).length > 1 }"
         @mouseenter="showTooltip(day.date, $event)"
         @mouseleave="hideTooltip"
         @click="openEventModal(day.date)"
       >
         {{ day.day }}
+        <div v-if="hasEvent(day.date)" class="event-count">{{ getEvents(day.date).length }}</div>
         <div v-if="tooltipDate === day.date && hasEvent(day.date)" class="calendar-tooltip" :style="tooltipStyle">
           <div v-for="event in getEvents(day.date)" :key="event.id">
             {{ event.title }}
@@ -44,14 +45,28 @@
         </div>
       </div>
     </div>
-  <EditEventModal v-if="modalDate" :date="modalDate" :events="getEvents(modalDate)" @close="modalDate = null" />
+  <EditEventModal v-if="modalDate" :date="modalDate" :events="getEvents(modalDate)" @close="modalDate = null" @editEvent="openEditModal" />
+  
+  <!-- Edit Modal (same as EventTable) -->
+  <Modal v-model="editModal" :hide-default-close="true">
+    <div class="modal-header-row">
+      <h3 class="modal-title">Edit Event</h3>
+      <button class="modal-close-btn" @click="editModal = false" aria-label="Close">×</button>
+    </div>
+    <div class="modal-body">
+      <EventCreateDuplicate :mode="'edit'" />
+    </div>
+  </Modal>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 import EditEventModal from "../admin/eventview/EditEventModal.vue"
+import Modal from "../shared/Modal.vue"
+import EventCreateDuplicate from "../admin/eventview/EventCreateDuplicate.vue"
 import { EventTable } from '@/composables/EventTable'
+import { getDateOnly } from '@/composables/DateUtils'
 import Dropdown from '../shared/Dropdown.vue'
 
 // Use the same event fetching logic as the admin event table
@@ -114,12 +129,18 @@ function nextMonth() {
 const tooltipDate = ref<string | null>(null)
 const tooltipStyle = ref<Record<string, string>>({})
 const modalDate = ref<string | null>(null)
+const editModal = ref(false)
+
+function openEditModal(event: any) {
+  modalDate.value = null // Close the event selection modal
+  editModal.value = true // Open the edit modal
+}
 function hasEvent(date: string) {
-  // Match only the date part (YYYY-MM-DD) of event.date
-  return events.value.some(e => e.date && e.date.slice(0, 10) === date)
+  // Use DateUtils for consistent date formatting
+  return events.value.some(e => e.date && getDateOnly(e.date) === date)
 }
 function getEvents(date: string) {
-  return events.value.filter(e => e.date && e.date.slice(0, 10) === date)
+  return events.value.filter(e => e.date && getDateOnly(e.date) === date)
 }
 function showTooltip(date: string, evt: MouseEvent) {
   tooltipDate.value = date
@@ -133,7 +154,14 @@ function hideTooltip() {
 }
 function openEventModal(date: string) {
   if (hasEvent(date)) {
-    modalDate.value = date
+    const eventsOnDate = getEvents(date)
+    if (eventsOnDate.length === 1) {
+      // If only one event, open edit modal directly
+      editModal.value = true
+    } else {
+      // If multiple events, show selection modal
+      modalDate.value = date
+    }
   }
 }
 </script>

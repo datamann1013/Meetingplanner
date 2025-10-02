@@ -644,6 +644,26 @@ html, body {
 .calendar-day:hover {
   box-shadow: 0 2px 8px var(--color-calendar-shadow-hover, #d6bfa7);
 }
+.calendar-day.has-multiple-events {
+  background: var(--color-calendar-multiple-events, #d6bfa7);
+  border-color: var(--color-accent, #76944C);
+}
+.event-count {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  background: var(--color-accent, #76944C);
+  color: white;
+  border-radius: 50%;
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: bold;
+  line-height: 1;
+}
 .calendar-tooltip {
   position: absolute;
   z-index: 10;

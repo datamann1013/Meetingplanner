@@ -7,6 +7,7 @@
       <div v-if="events && events.length">
         <div v-for="event in events" :key="event.id" class="event-list-item">
           <strong>{{ event.title }}</strong>
+          <button class="select-btn" @click="openEditModal(event)">Select</button>
         </div>
       </div>
       <div v-else>
@@ -18,7 +19,12 @@
 
 <script setup lang="ts">
 defineProps<{ date: string, events: any[] }>()
-const emit = defineEmits(['close'])
+const emit = defineEmits(['close', 'editEvent'])
+
+function openEditModal(event: any) {
+  emit('editEvent', event)
+  emit('close')
+}
 </script>
 
 <style scoped>
@@ -50,5 +56,17 @@ const emit = defineEmits(['close'])
 .event-list-item {
   padding: 0.5rem 0;
   border-bottom: 1px solid var(--color-primary-border, #b5c9a3);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.select-btn {
+  background: var(--color-accent, #76944C);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  font-weight: 600;
 }
 </style>
