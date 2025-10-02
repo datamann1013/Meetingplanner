@@ -1,11 +1,14 @@
 <template>
   <div class="rsvp-admin-view">
-    <RsvpTable />
+    <DashboardBox variant="long">
+      <RsvpEventsTable />
+    </DashboardBox>
   </div>
 </template>
 
 <script setup lang="ts">
-import RsvpTable from '@/components/admin/rsvp/RsvpTable.vue'
+import RsvpEventsTable from '@/components/admin/rsvp/RsvpEventsTable.vue'
+import DashboardBox from '@/components/admin/DashboardBox.vue'
 </script>
 
 <style scoped>
