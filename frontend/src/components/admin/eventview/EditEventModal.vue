@@ -54,7 +54,7 @@ function closeModal() {
 
 .modal-title {
   margin: 0;
-  color: var(--color-accent, #76944C);
+  color: var(--v-theme-on-surface, #000);
   font-size: 1.25rem;
   font-weight: 600;
 }
@@ -64,13 +64,13 @@ function closeModal() {
   border: none;
   font-size: 1.5rem;
   cursor: pointer;
-  color: var(--color-accent, #76944C);
+  color: var(--v-theme-on-surface, #000);
   padding: 0.25rem;
   line-height: 1;
 }
 
 .modal-close-btn:hover {
-  color: var(--color-accent-dark, #5a7139);
+  color: var(--v-theme-on-surface-variant, #666);
 }
 
 .modal-body {
