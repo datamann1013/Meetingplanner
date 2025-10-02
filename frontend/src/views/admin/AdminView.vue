@@ -53,6 +53,9 @@
         <template v-else-if="selectedTab === 'Users'">
           <UserManagementView />
         </template>
+        <template v-else-if="selectedTab === 'RSVPs'">
+          <RsvpAdminView />
+        </template>
         <template v-else>
           <DashboardLayout
             v-if="dashboardConfigs[selectedTab.toLowerCase() as keyof typeof dashboardConfigs]"
@@ -76,6 +79,7 @@ import CalendarEventSelector from "../../components/shared/CalendarEventSelector
 import FileUploadBox from "../../components/shared/FileUploadBox.vue";
 import EmailSenderBox from "../../components/admin/eventview/EmailSenderBox.vue";
 import UserManagementView from './UserManagementView.vue';
+import RsvpAdminView from './RsvpAdminView.vue';
 
 // Example folders for Strapi, replace with real fetch if needed
 const strapiFolders = ref(["uploads", "images", "attachments"]);
