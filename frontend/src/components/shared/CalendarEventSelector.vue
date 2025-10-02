@@ -54,9 +54,13 @@
     </div>
     <div class="modal-body">
       <div v-if="modalDate && getEvents(modalDate).length">
-        <div v-for="event in getEvents(modalDate)" :key="event.id" class="event-list-item">
+        <div 
+          v-for="event in getEvents(modalDate)" 
+          :key="event.id" 
+          class="event-list-item clickable"
+          @click="selectEventToEdit(event)"
+        >
           <strong>{{ event.title }}</strong>
-          <button class="select-btn" @click="selectEventToEdit(event)">Select</button>
         </div>
       </div>
     </div>
@@ -71,7 +75,6 @@
 import { ref, computed } from 'vue'
 import EditEventModal from "../admin/eventview/EditEventModal.vue"
 import Modal from "../shared/Modal.vue"
-import EventCreateDuplicate from "../admin/eventview/EventCreateDuplicate.vue"
 import { EventTable } from '@/composables/EventTable'
 import { getDateOnly } from '@/composables/DateUtils'
 import Dropdown from '../shared/Dropdown.vue'
@@ -139,11 +142,6 @@ const modalDate = ref<string | null>(null)
 const editModal = ref(false)
 const showEventSelector = ref(false)
 
-function openEditModal(_event: any) {
-  showEventSelector.value = false // Close the event selection modal
-  editModal.value = true // Open the edit modal
-}
-
 function selectEventToEdit(_event: any) {
   // Here we would set the selected event for editing
   // For now, we'll just open the edit modal
@@ -183,6 +181,38 @@ function openEventModal(date: string) {
 </script>
 
 <style scoped>
+.modal-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.modal-title {
+  margin: 0;
+  color: var(--v-theme-on-surface, #000);
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.modal-close-btn {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: var(--v-theme-on-surface, #000);
+  padding: 0.25rem;
+  line-height: 1;
+}
+
+.modal-close-btn:hover {
+  color: var(--v-theme-on-surface-variant, #666);
+}
+
+.modal-body {
+  margin-top: 0;
+}
+
 .event-badge {
   background-color: rgb(var(--v-theme-primary));
   color: white;
@@ -200,12 +230,20 @@ function openEventModal(date: string) {
   border: 1px solid #e0e0e0;
   border-radius: 8px;
   margin-bottom: 8px;
-  padding: 12px;
-  transition: background-color 0.2s;
+  padding: 16px;
+  transition: all 0.2s;
+  background-color: white;
+}
+
+.event-list-item.clickable {
+  cursor: pointer;
 }
 
 .event-list-item:hover {
   background-color: #f5f5f5;
+  border-color: var(--v-theme-primary);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 </style>
 
