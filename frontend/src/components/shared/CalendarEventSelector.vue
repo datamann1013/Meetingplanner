@@ -2,13 +2,25 @@
   <div class="calendar-event-selector-box">
     <div class="calendar-header">
       <button class="calendar-arrow" @click="prevMonth" title="Previous Month">&#8592;</button>
-      <div class="calendar-header-center">
-        <select v-model="month" class="calendar-month-select">
-          <option v-for="(m, idx) in monthNames" :key="m" :value="idx">{{ m }}</option>
-        </select>
-        <select v-model="selectedYear" class="calendar-year-select">
-          <option v-for="y in yearRange" :key="y" :value="y">{{ y }}</option>
-        </select>
+  <div :class="$style['calendar-header-center']">
+        <Dropdown
+          id="month"
+          label="Month"
+          v-model="month"
+          :options="monthDropdownOptions"
+          inputColor="#f5f5f5"
+          borderColor="#616161"
+          class="calendar-month-select"
+        />
+        <Dropdown
+          id="year"
+          label="Year"
+          v-model="selectedYear"
+          :options="yearDropdownOptions"
+          inputColor="#f5f5f5"
+          borderColor="#616161"
+          class="calendar-year-select"
+        />
       </div>
       <button class="calendar-arrow" @click="nextMonth" title="Next Month">&#8594;</button>
     </div>
@@ -37,9 +49,11 @@
 </template>
 
 <script setup lang="ts">
+import $style from './CalendarEventSelector.module.css'
 import { ref, computed } from 'vue'
 import EditEventModal from "../admin/eventview/EditEventModal.vue"
 import { EventTable } from '@/composables/EventTable'
+import Dropdown from '../shared/Dropdown.vue'
 
 // Use the same event fetching logic as the admin event table
 const { events } = EventTable()
@@ -48,21 +62,24 @@ const monthNames = [
   'January', 'February', 'March', 'April', 'May', 'June',
   'July', 'August', 'September', 'October', 'November', 'December'
 ]
+const monthDropdownOptions = monthNames.map((m, idx) => ({ text: m, value: idx.toString() }))
 const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
-const selectedYear = ref(today.getFullYear())
-const year = computed(() => selectedYear.value)
-const month = ref(today.getMonth())
+const selectedYear = ref(today.getFullYear().toString())
+const year = computed(() => parseInt(selectedYear.value, 10))
+const month = ref(today.getMonth().toString())
 const daysInMonth = computed(() => {
   const days = []
-  const numDays = new Date(year.value, month.value + 1, 0).getDate()
+  const monthNum = parseInt(month.value, 10)
+  const numDays = new Date(year.value, monthNum + 1, 0).getDate()
   for (let i = 1; i <= numDays; i++) {
-    const date = `${year.value}-${String(month.value + 1).padStart(2, '0')}-${String(i).padStart(2, '0')}`
+    const date = `${year.value}-${String(monthNum + 1).padStart(2, '0')}-${String(i).padStart(2, '0')}`
     days.push({ day: i, date })
   }
   return days
 })
 const firstDayOfWeek = computed(() => {
-  return new Date(year.value, month.value, 1).getDay()
+  const monthNum = parseInt(month.value, 10)
+  return new Date(year.value, monthNum, 1).getDay()
 })
 const yearRange = computed(() => {
   const range = []
@@ -73,25 +90,28 @@ const yearRange = computed(() => {
   }
   return range
 })
+const yearDropdownOptions = computed(() => yearRange.value.map(y => ({ text: y.toString(), value: y.toString() })))
 function prevMonth() {
-  if (month.value === 0) {
-    month.value = 11
-    selectedYear.value--
+  let monthNum = parseInt(month.value, 10)
+  let yearNum = parseInt(selectedYear.value, 10)
+  if (monthNum === 0) {
+    month.value = '11'
+    selectedYear.value = (yearNum - 1).toString()
   } else {
-    month.value--
+    month.value = (monthNum - 1).toString()
   }
 }
 function nextMonth() {
-  if (month.value === 11) {
-    month.value = 0
-    selectedYear.value++
+  let monthNum = parseInt(month.value, 10)
+  let yearNum = parseInt(selectedYear.value, 10)
+  if (monthNum === 11) {
+    month.value = '0'
+    selectedYear.value = (yearNum + 1).toString()
   } else {
-    month.value++
+    month.value = (monthNum + 1).toString()
   }
 }
-function changeYear() {
-  // No-op, v-model already updates selectedYear
-}
+// changeYear function removed as v-model updates selectedYear directly
 const tooltipDate = ref<string | null>(null)
 const tooltipStyle = ref<Record<string, string>>({})
 const modalDate = ref<string | null>(null)
