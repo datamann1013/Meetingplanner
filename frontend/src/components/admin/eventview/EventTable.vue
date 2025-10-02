@@ -38,7 +38,13 @@
     <div v-else-if="error" class="event-list-error">Error loading events: {{ error.message }}
     </div>
     <div class="event-table-inner-bg">
-      <TableEntry :columns="columns" :rows="events" @row-click="openEventModal">
+      <TableEntry
+        :columns="columns"
+        :rows="events"
+        @row-click="openEventModal"
+        @row-hover="handleRowHover"
+        @row-leave="handleRowLeave"
+      >
         <template #select="{ row }">
           <input type="checkbox" :value="row.id" v-model="selectedEvents" />
         </template>
@@ -61,7 +67,7 @@
           <span class="hoverable-cell">{{ row.description }}</span>
         </template>
         <template #after-rows="{ hoveredRow }">
-          <div v-if="hoveredRow" class="popup-modal" :style="popupPositionStyle as any">
+          <div v-if="hoveredRow && popupCoords" class="popup-modal" :style="popupPositionStyle as import('vue').CSSProperties">
             <strong>Name:</strong> {{ hoveredRow.name }}<br />
             <strong>Date:</strong> {{ formatDateTime(hoveredRow.date || '') }}<br />
             <strong>Status:</strong> {{ hoveredRow.status }}<br />
@@ -93,7 +99,7 @@ import InputButton from "../../shared/InputButton.vue";
 import Modal from "../../shared/Modal.vue";
 import EventCreateDuplicate from "./EventCreateDuplicate.vue";
 
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import { EventTable } from "@/composables/EventTable";
 
 
@@ -129,22 +135,37 @@ function confirmBulkDelete() {
 
 
 
-import { computed } from "vue";
 
-// Optional: You can compute popup position if you want to position it near the hovered row
+
+
+// --- Popup position logic ---
+const popupCoords = ref<{ x: number; y: number } | null>(null);
+
+function handleRowHover(row: any, event: MouseEvent) {
+  if (row && event) {
+    popupCoords.value = { x: event.clientX, y: event.clientY };
+  }
+}
+function handleRowLeave() {
+  popupCoords.value = null;
+}
+
 const popupPositionStyle = computed(() => {
-  // For now, just use a fixed style. You can enhance this to position near the row if needed.
+  if (!popupCoords.value) return { display: 'none' };
   return {
-    position: 'absolute',
-    left: '50%',
-    top: '30%',
-    transform: 'translate(-50%, 0)',
-    zIndex: 10,
+    position: 'fixed',
+    left: popupCoords.value.x + 16 + 'px',
+    top: popupCoords.value.y + 8 + 'px',
+    zIndex: 20,
     background: '#fff',
-    border: '1px solid #ccc',
+    color: 'var(--color-on-surface, #2E2E2E)',
+    border: '1px solid var(--color-table-border, #e0e0e0)',
     borderRadius: '8px',
     padding: '1rem',
-    boxShadow: '0 2px 8px rgba(0,0,0,0.15)'
+    boxShadow: 'var(--color-box-shadow, 0 2px 8px rgba(0,0,0,0.15))',
+    minWidth: '220px',
+    maxWidth: '340px',
+    pointerEvents: 'none' as const,
   };
 });
 </script>

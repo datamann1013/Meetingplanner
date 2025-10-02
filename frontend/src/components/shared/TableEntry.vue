@@ -10,8 +10,9 @@
       <tr
         v-for="row in rows"
         :key="row.id || row.key"
-        @mouseenter="setHoveredRow(row)"
-        @mouseleave="clearHoveredRow"
+        @mouseenter="(e) => { setHoveredRow(row); $emit('row-hover', row, e) }"
+        @mousemove="(e) => $emit('row-hover', row, e)"
+        @mouseleave="() => { clearHoveredRow(); $emit('row-leave') }"
         :class="{ 'row-hovered': hoveredRow && (hoveredRow.id === row.id || hoveredRow.key === row.key), 'table-row-clickable': true }"
         @click="onRowClick(row, $event)"
       >
@@ -55,7 +56,7 @@ function clearHoveredRow() {
   hoveredRow.value = null
 }
 
-const emit = defineEmits(['row-click'])
+const emit = defineEmits(['row-click', 'row-hover', 'row-leave'])
 
 function onRowClick(row: any, event: MouseEvent) {
   emit('row-click', row, event)
