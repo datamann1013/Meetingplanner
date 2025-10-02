@@ -101,6 +101,37 @@ const StatusIndicator = defineComponent({
     </span>
   `
 });
+
+// --- Popup position logic ---
+const popupCoords = ref<{ x: number; y: number } | null>(null);
+
+function handleRowHover(row: any, event: MouseEvent) {
+  if (row && event) {
+    popupCoords.value = { x: event.clientX, y: event.clientY };
+  }
+}
+function handleRowLeave() {
+  popupCoords.value = null;
+}
+
+const popupPositionStyle = computed(() => {
+  if (!popupCoords.value) return { display: 'none' };
+  return {
+    position: 'fixed',
+    left: popupCoords.value.x + 16 + 'px',
+    top: popupCoords.value.y + 8 + 'px',
+    zIndex: 20,
+    background: '#fff',
+    color: 'var(--color-on-surface, #2E2E2E)',
+    border: '1px solid var(--color-table-border, #e0e0e0)',
+    borderRadius: '8px',
+    padding: '1rem',
+    boxShadow: 'var(--color-box-shadow, 0 2px 8px rgba(0,0,0,0.15))',
+    minWidth: '220px',
+    maxWidth: '340px',
+    pointerEvents: 'none' as const,
+  };
+});
 </script>
 <template>
   <div>
@@ -114,7 +145,13 @@ const StatusIndicator = defineComponent({
         <InputButton @click="showBulkDelete = true">Bulk Delete</InputButton>
       </div>
       <div class="event-table-inner-bg">
-        <TableEntry :columns="columns" :rows="filteredUsers" @row-click="openUserModal">
+        <TableEntry
+          :columns="columns"
+          :rows="filteredUsers"
+          @row-click="openUserModal"
+          @row-hover="handleRowHover"
+          @row-leave="handleRowLeave"
+        >
           <template #select="{ row }">
             <input type="checkbox" :value="row.id" v-model="selectedUsers" @click.stop />
           </template>
@@ -136,7 +173,17 @@ const StatusIndicator = defineComponent({
               <StatusIndicator :status="row.verification as StatusType" type="verification" />
             </span>
           </template>
-        </TableEntry>
+        <template #after-rows="{ hoveredRow }">
+          <div v-if="hoveredRow && popupCoords" class="popup-modal" :style="popupPositionStyle as import('vue').CSSProperties">
+            <strong>Name:</strong> {{ hoveredRow.name }}<br />
+            <strong>Email:</strong> {{ hoveredRow.email }}<br />
+            <strong>Phone:</strong> {{ hoveredRow.phone }}<br />
+            <strong>Role:</strong> {{ hoveredRow.role }}<br />
+            <strong>Status:</strong> {{ hoveredRow.status }}<br />
+            <strong>Verification:</strong> {{ hoveredRow.verification }}
+          </div>
+  </template>
+  </TableEntry>
       </div>
     </DashboardBox>
 
