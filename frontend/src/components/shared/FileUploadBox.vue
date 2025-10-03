@@ -51,9 +51,8 @@
         </div>
       </div>
     </div>
-    <Modal v-model="showCreateFolder" title="Create New Folder">
+    <Modal v-model="showCreateFolder" title="Create Folder">
       <div class="folder-input-group">
-          <label for="folderName" class="folder-label">Folder Name</label>
           <input 
             id="folderName"
             v-model="newFolderName" 
