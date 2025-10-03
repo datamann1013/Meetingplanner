@@ -13,23 +13,19 @@
   <InputButton @click="showBulkEdit = true">Bulk Edit</InputButton>
   <InputButton @click="showBulkDelete = true">Bulk Delete</InputButton>
     </div>
-    <Modal v-model="showAdvancedSearch">
-      <h3>Advanced Search</h3>
+    <Modal v-model="showAdvancedSearch" title="Advanced Search">
       <p>Here you can add advanced search options.</p>
       <!-- Add your advanced search form here -->
     </Modal>
-    <Modal v-model="showFilter">
-      <h3>Filter Events</h3>
+    <Modal v-model="showFilter" title="Filter Events">
       <p>Here you can add filter options.</p>
       <!-- Add your filter form here -->
     </Modal>
-    <Modal v-model="showBulkEdit">
-      <h3>Bulk Edit Events</h3>
+    <Modal v-model="showBulkEdit" title="Bulk Edit Events">
       <p>Here you can add bulk edit options.</p>
       <!-- Add your bulk edit form here -->
     </Modal>
-    <Modal v-model="showBulkDelete">
-      <h3>Bulk Delete Events</h3>
+    <Modal v-model="showBulkDelete" title="Bulk Delete Events">
       <p>Are you sure you want to delete the selected events?</p>
       <button @click="confirmBulkDelete">Yes, Delete</button>
       <button @click="showBulkDelete = false">Cancel</button>
@@ -78,14 +74,8 @@
         </template>
       </TableEntry>
     </div>
-    <Modal v-model="eventModal" :hide-default-close="true">
-      <div class="modal-header-row">
-        <h3 class="modal-title">Edit Event</h3>
-        <button class="modal-close-btn" @click="eventModal = false" aria-label="Close">×</button>
-      </div>
-      <div class="modal-body">
-        <EventCreateDuplicate :mode="'edit'" />
-      </div>
+    <Modal v-model="eventModal" title="Edit Event">
+      <EventCreateDuplicate :mode="'edit'" />
     </Modal>
   </div>
 </template>
@@ -117,8 +107,6 @@ function openEventModal(event: any) {
   eventModal.value = true
 }
 
-// Register EventCreateDuplicate as a local component for template usage
-defineExpose({ EventCreateDuplicate });
 const {
   events,
   loading,

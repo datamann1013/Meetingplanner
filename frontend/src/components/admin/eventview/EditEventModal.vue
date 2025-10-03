@@ -1,13 +1,7 @@
 
 <template>
-  <Modal v-model="isOpen" :hide-default-close="true">
-    <div class="modal-header-row">
-      <h3 class="modal-title">Edit Event</h3>
-      <button class="modal-close-btn" @click="closeModal" aria-label="Close">×</button>
-    </div>
-    <div class="modal-body">
-      <EventCreateDuplicate :mode="'edit'" />
-    </div>
+  <Modal v-model="isOpen" title="Edit Event">
+    <EventCreateDuplicate :mode="'edit'" />
   </Modal>
 </template>
 
@@ -38,43 +32,5 @@ watch(() => props.modelValue, (newValue) => {
 watch(isOpen, (newValue) => {
   emit('update:modelValue', newValue)
 })
-
-function closeModal() {
-  isOpen.value = false
-}
 </script>
-
-<style scoped>
-.modal-header-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1.5rem;
-}
-
-.modal-title {
-  margin: 0;
-  color: var(--v-theme-on-surface, #000);
-  font-size: 1.25rem;
-  font-weight: 600;
-}
-
-.modal-close-btn {
-  background: none;
-  border: none;
-  font-size: 1.5rem;
-  cursor: pointer;
-  color: var(--v-theme-on-surface, #000);
-  padding: 0.25rem;
-  line-height: 1;
-}
-
-.modal-close-btn:hover {
-  color: var(--v-theme-on-surface-variant, #666);
-}
-
-.modal-body {
-  margin-top: 0;
-}
-</style>
 

@@ -51,13 +51,8 @@
         </div>
       </div>
     </div>
-    <Modal v-model="showCreateFolder" :hide-default-close="true">
-      <div class="modal-header-row">
-        <h3 class="modal-title">Create Folder</h3>
-        <button class="modal-close-btn" @click="showCreateFolder = false" aria-label="Close">×</button>
-      </div>
-      <div class="modal-body">
-        <div class="folder-input-group">
+    <Modal v-model="showCreateFolder" title="Create New Folder">
+      <div class="folder-input-group">
           <label for="folderName" class="folder-label">Folder Name</label>
           <input 
             id="folderName"
@@ -72,7 +67,6 @@
           <button class="folder-btn folder-btn-cancel" @click="showCreateFolder = false">Cancel</button>
           <button class="folder-btn folder-btn-create" @click="onCreateFolder">Create</button>
         </div>
-      </div>
     </Modal>
   </div>
 </template>

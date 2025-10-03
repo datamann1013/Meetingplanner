@@ -1,10 +1,6 @@
 <template>
-  <Modal v-model="isOpen" :hide-default-close="true">
-    <div class="modal-header-row">
-      <h3 class="modal-title">RSVPs for "{{ selectedEvent?.name || 'Event' }}"</h3>
-      <button class="modal-close-btn" @click="closeModal" aria-label="Close">×</button>
-    </div>
-    <div class="modal-body">
+  <Modal v-model="isOpen" :title="`RSVPs for '${selectedEvent?.name || 'Event'}'`">
+    <div>
       <div class="rsvp-tabs">
         <button 
           v-for="tab in tabs" 
@@ -135,10 +131,6 @@ const filteredRsvpsByTab = computed(() => {
   return rsvps.value.filter(rsvp => rsvp.status_answer === currentTab.status)
 })
 
-function closeModal() {
-  isOpen.value = false
-}
-
 function getTabCount(tabKey: string) {
   const tab = tabs.find(t => t.key === tabKey)
   if (!tab) return 0
@@ -190,38 +182,6 @@ function asRsvpEntry(row: any): RsvpEntry {
 </script>
 
 <style scoped>
-.modal-header-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1.5rem;
-}
-
-.modal-title {
-  margin: 0;
-  color: var(--v-theme-on-surface, #000);
-  font-size: 1.25rem;
-  font-weight: 600;
-}
-
-.modal-close-btn {
-  background: none;
-  border: none;
-  font-size: 1.5rem;
-  cursor: pointer;
-  color: var(--v-theme-on-surface, #000);
-  padding: 0.25rem;
-  line-height: 1;
-}
-
-.modal-close-btn:hover {
-  color: var(--v-theme-on-surface-variant, #666);
-}
-
-.modal-body {
-  margin-top: 0;
-}
-
 .rsvp-tabs {
   display: flex;
   border-bottom: 2px solid var(--color-table-border, #e0e0e0);

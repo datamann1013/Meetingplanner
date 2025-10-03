@@ -187,8 +187,7 @@ const popupPositionStyle = computed(() => {
       </div>
     </DashboardBox>
 
-    <Modal v-model="showFilter">
-      <h3>Filter Users</h3>
+    <Modal v-model="showFilter" title="Filter Users">
       <div class="filter-options">
         <label><input type="radio" value="all" v-model="userFilter" /> All Users</label><br />
         <label><input type="radio" value="active" v-model="userFilter" /> Active Users</label><br />
@@ -200,24 +199,23 @@ const popupPositionStyle = computed(() => {
         <button @click="showFilter = false">Close</button>
       </div>
     </Modal>
-    <Modal v-model="showBulkEdit">
-      <h3>Bulk Edit Users</h3>
-      <p>Here you can add bulk edit options for users.</p>
+    
+    <Modal v-model="showBulkEdit" title="Bulk Edit Users">
+      <p>Here you can add bulk edit options.</p>
       <div class="modal-actions">
         <button @click="showBulkEdit = false">Close</button>
       </div>
     </Modal>
-    <Modal v-model="showBulkDelete">
-      <h3>Bulk Delete Users</h3>
+    
+    <Modal v-model="showBulkDelete" title="Bulk Delete Users">
       <p>Are you sure you want to delete the selected users?</p>
       <div class="modal-actions">
         <button @click="confirmBulkDelete">Yes, Delete</button>
         <button @click="showBulkDelete = false">Cancel</button>
       </div>
     </Modal>
-    <Modal v-model="userModal">
-      <h3>{{ selectedUser ? `Edit User: ${selectedUser.name}` : 'Add User' }}</h3>
-      <div class="modal-body">
+    <Modal v-model="userModal" :title="selectedUser ? `Edit User: ${selectedUser.name}` : 'Add User'">
+      <div>
         <div>Form fields go here (placeholder)</div>
         <StatusIndicator v-if="selectedUser" :status="selectedUser?.verification as StatusType" type="verification" />
       </div>

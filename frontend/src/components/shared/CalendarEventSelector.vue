@@ -47,34 +47,30 @@
     </div>
   
   <!-- Event Selection Modal (for multiple events) -->
-  <Modal v-model="showEventSelector" :hide-default-close="true">
-    <div class="modal-header-row">
-      <h3 class="modal-title">Select Event to Edit</h3>
-      <button class="modal-close-btn" @click="showEventSelector = false" aria-label="Close">×</button>
-    </div>
-    <div class="modal-body">
-      <div v-if="modalDate && getEvents(modalDate).length">
-        <div 
-          v-for="event in getEvents(modalDate)" 
-          :key="event.id" 
-          class="event-list-item clickable"
-          @click="selectEventToEdit(event)"
-        >
-          <strong>{{ event.title }}</strong>
-        </div>
+  <Modal v-model="showEventSelector" title="Select Event to Edit">
+    <div v-if="modalDate && getEvents(modalDate).length">
+      <div 
+        v-for="event in getEvents(modalDate)" 
+        :key="event.id" 
+        class="event-list-item clickable"
+        @click="selectEventToEdit(event)"
+      >
+        <strong>{{ event.title }}</strong>
       </div>
     </div>
   </Modal>
   
-  <!-- Edit Modal (same as EventTable) -->
-  <EditEventModal v-model="editModal" />
+  <!-- Edit Modal -->
+  <Modal v-model="editModal" title="Edit Event">
+    <EventCreateDuplicate :mode="'edit'" />
+  </Modal>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref, computed } from 'vue'
-import EditEventModal from "../admin/eventview/EditEventModal.vue"
 import Modal from "../shared/Modal.vue"
+import EventCreateDuplicate from "../admin/eventview/EventCreateDuplicate.vue"
 import { EventTable } from '@/composables/EventTable'
 import { getDateOnly } from '@/composables/DateUtils'
 import Dropdown from '../shared/Dropdown.vue'
@@ -181,38 +177,6 @@ function openEventModal(date: string) {
 </script>
 
 <style scoped>
-.modal-header-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1.5rem;
-}
-
-.modal-title {
-  margin: 0;
-  color: var(--v-theme-on-surface, #000);
-  font-size: 1.25rem;
-  font-weight: 600;
-}
-
-.modal-close-btn {
-  background: none;
-  border: none;
-  font-size: 1.5rem;
-  cursor: pointer;
-  color: var(--v-theme-on-surface, #000);
-  padding: 0.25rem;
-  line-height: 1;
-}
-
-.modal-close-btn:hover {
-  color: var(--v-theme-on-surface-variant, #666);
-}
-
-.modal-body {
-  margin-top: 0;
-}
-
 .event-badge {
   background-color: rgb(var(--v-theme-primary));
   color: white;

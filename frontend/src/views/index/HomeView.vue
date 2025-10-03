@@ -29,12 +29,8 @@
         <EventCard :event="event" :strapiBaseUrl="strapiBaseUrl" />
       </v-col>
     </v-row>
-      <Modal v-model="showError" :hide-default-close="true">
-        <div class="modal-header-row">
-          <h3 class="modal-title">Error</h3>
-          <button class="modal-close-btn" @click="showError = false" aria-label="Close">×</button>
-        </div>
-        <div class="modal-body">
+      <Modal v-model="showError" title="Error">
+        <div>
           <div>You don't have access to this resource.</div>
           <div class="mt-2"><strong>Query:</strong> {{ lastFailedQuery }}</div>
         </div>
@@ -71,38 +67,6 @@ const strapiBaseUrl = import.meta.env.VITE_STRAPI_API_URL || 'http://localhost:1
 </script>
 
 <style scoped>
-.modal-header-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1.5rem;
-}
-
-.modal-title {
-  margin: 0;
-  color: var(--v-theme-on-surface, #000);
-  font-size: 1.25rem;
-  font-weight: 600;
-}
-
-.modal-close-btn {
-  background: none;
-  border: none;
-  font-size: 1.5rem;
-  cursor: pointer;
-  color: var(--v-theme-on-surface, #000);
-  padding: 0.25rem;
-  line-height: 1;
-}
-
-.modal-close-btn:hover {
-  color: var(--v-theme-on-surface-variant, #666);
-}
-
-.modal-body {
-  margin-top: 0;
-}
-
 .mt-2 {
   margin-top: 0.5rem;
 }

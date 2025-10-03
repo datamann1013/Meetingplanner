@@ -1,11 +1,6 @@
 <template>
-  <Modal v-model="isOpen" :hide-default-close="true">
-    <div class="category-modal-header">
-      <h3 class="modal-title">{{ editingCategory ? 'Edit Category' : 'Create New Category' }}</h3>
-      <button class="modal-close-btn" @click="closeModal" aria-label="Close">×</button>
-    </div>
-    
-    <div class="category-modal-body">
+  <Modal v-model="isOpen" :title="editingCategory ? 'Edit Category' : 'Create New Category'">
+    <div>
       <TextInput
         v-model="categoryName"
         label="Category Name"
@@ -130,36 +125,6 @@ async function saveCategory() {
 </script>
 
 <style scoped>
-.category-modal-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1.5rem;
-}
-
-.modal-title {
-  margin: 0;
-  font-size: 1.5rem;
-  color: var(--color-accent, #76944C);
-}
-
-.modal-close-btn {
-  background: none;
-  border: none;
-  font-size: 2rem;
-  cursor: pointer;
-  color: var(--color-on-surface, #2E2E2E);
-  line-height: 1;
-}
-
-.modal-close-btn:hover {
-  color: var(--color-accent, #76944C);
-}
-
-.category-modal-body {
-  margin-bottom: 1.5rem;
-}
-
 .category-modal-actions {
   display: flex;
   gap: 1rem;
