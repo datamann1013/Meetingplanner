@@ -10,14 +10,26 @@
     "--security-opt",
     "label=disable"
   ],
-  "forwardPorts": [1337, 5173],
-  "postCreateCommand": "bash -lc 'set -e; rm -rf backend/node_modules frontend/node_modules; cd backend && npm ci --no-audit --no-fund && npm cache clean --force && cd ../frontend && npm ci --no-audit --no-fund && npm cache clean --force'",
+  "forwardPorts": [8000, 5173, 5432],
+  "portsAttributes": {
+    "8000": { "label": "FastAPI backend" },
+    "5173": { "label": "Vue frontend" },
+    "5432": { "label": "PostgreSQL" }
+  },
+  "postCreateCommand": "bash /workspaces/Meetingplanner/.devcontainer/setup.sh",
   "customizations": {
     "vscode": {
       "extensions": [
         "dbaeumer.vscode-eslint",
-        "Vue.volar"
-      ]
+        "Vue.volar",
+        "ms-python.python",
+        "ms-python.vscode-pylance",
+        "mtxr.sqltools",
+        "mtxr.sqltools-driver-pg"
+      ],
+      "settings": {
+        "python.defaultInterpreterPath": "/workspaces/Meetingplanner/backend/venv/bin/python"
+      }
     }
   },
   "remoteUser": "node"
