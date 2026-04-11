@@ -1,0 +1,24 @@
+{
+  "name": "Meetingplanner",
+  "build": {
+    "dockerfile": "Dockerfile",
+    "context": ".."
+  },
+  "workspaceFolder": "/workspaces/Meetingplanner",
+  "runArgs": [
+    "--userns=keep-id",
+    "--security-opt",
+    "label=disable"
+  ],
+  "forwardPorts": [1337, 5173],
+  "postCreateCommand": "bash -lc 'set -e; rm -rf backend/node_modules frontend/node_modules; cd backend && npm ci --no-audit --no-fund && npm cache clean --force && cd ../frontend && npm ci --no-audit --no-fund && npm cache clean --force'",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "dbaeumer.vscode-eslint",
+        "Vue.volar"
+      ]
+    }
+  },
+  "remoteUser": "node"
+}
