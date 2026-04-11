@@ -1,13 +1,18 @@
 from datetime import datetime
+from decimal import Decimal
 
-from sqlalchemy import DateTime, ForeignKey, Integer, String, Text, func
+from sqlalchemy import DateTime, ForeignKey, Integer, Numeric, String, Text, func
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.database import Base
 
 
 class EventType(Base):
-    """Categorises events by kind: rehearsal, concert, social, meeting, custom."""
+    """
+    Categorises events by kind.
+    Seeded defaults: rehearsal, concert, social, meeting, gig.
+    The board can add custom types via the admin UI.
+    """
     __tablename__ = "event_types"
 
     id: Mapped[int] = mapped_column(primary_key=True)
@@ -54,6 +59,15 @@ class Event(Base):
     is_published: Mapped[bool] = mapped_column(default=False)
     slug: Mapped[str | None] = mapped_column(String(255), unique=True)  # used for public concert pages
 
+    # Financial fields — relevant for gigs (external performances the orchestra is paid for).
+    # fee_charged: what the orchestra invoices the client.
+    # fee_received: what has actually been paid (useful for tracking outstanding payments).
+    # fee_currency: ISO 4217 code, e.g. "DKK", "EUR", "NOK".
+    fee_charged: Mapped[Decimal | None] = mapped_column(Numeric(10, 2))
+    fee_received: Mapped[Decimal | None] = mapped_column(Numeric(10, 2))
+    fee_currency: Mapped[str | None] = mapped_column(String(3))    # e.g. "DKK"
+    fee_notes: Mapped[str | None] = mapped_column(Text)            # e.g. client name, invoice number
+
     event_type_id: Mapped[int | None] = mapped_column(ForeignKey("event_types.id"))
     created_by_id: Mapped[int | None] = mapped_column(ForeignKey("users.id"))
 
@@ -70,6 +84,5 @@ class Event(Base):
     )
     rsvps: Mapped[list["RSVP"]] = relationship("RSVP", back_populates="event", cascade="all, delete-orphan")  # noqa: F821
     chat_messages: Mapped[list["ChatMessage"]] = relationship("ChatMessage", back_populates="event", cascade="all, delete-orphan")  # noqa: F821
-    attendances: Mapped[list["Attendance"]] = relationship("Attendance", back_populates="event", cascade="all, delete-orphan")  # noqa: F821
-    sheet_music: Mapped[list["SheetMusic"]] = relationship("SheetMusic", back_populates="event")  # noqa: F821
+    sheet_music_pieces: Mapped[list["SheetMusicPiece"]] = relationship("SheetMusicPiece", back_populates="event")  # noqa: F821
     seating_chart: Mapped["SeatingChart | None"] = relationship("SeatingChart", back_populates="event", uselist=False)  # noqa: F821
