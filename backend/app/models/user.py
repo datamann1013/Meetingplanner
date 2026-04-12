@@ -24,6 +24,5 @@ class User(Base):
     events_created: Mapped[list["Event"]] = relationship("Event", back_populates="creator")  # noqa: F821
     rsvps: Mapped[list["RSVP"]] = relationship("RSVP", back_populates="user")  # noqa: F821
     chat_messages: Mapped[list["ChatMessage"]] = relationship("ChatMessage", back_populates="user")  # noqa: F821
-    attendances: Mapped[list["Attendance"]] = relationship("Attendance", back_populates="user", foreign_keys="Attendance.user_id")  # noqa: F821
     section_memberships: Mapped[list["SectionMembership"]] = relationship("SectionMembership", back_populates="user")  # noqa: F821
-    sheet_music_uploaded: Mapped[list["SheetMusic"]] = relationship("SheetMusic", back_populates="uploaded_by_user")  # noqa: F821
+    sheet_music_uploaded: Mapped[list["SheetMusicPiece"]] = relationship("SheetMusicPiece", back_populates="uploaded_by_user")  # noqa: F821
