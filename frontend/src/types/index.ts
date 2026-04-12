@@ -1,123 +1,106 @@
-export interface StrapiResponse<T> {
-  data: T;
-  meta?: {
-    pagination?: {
-      page: number;
-      pageSize: number;
-      pageCount: number;
-      total: number;
-    };
-  };
+// ─── API response wrappers ───────────────────────────────────────────────────
+
+export interface PaginatedResponse<T> {
+  items: T[]
+  total: number
+  page: number
+  page_size: number
 }
 
-export interface StrapiEntity<T> {
-  id: number;
-  attributes: T;
-}
+// ─── Auth ────────────────────────────────────────────────────────────────────
 
 export interface User {
-  id: number;
-  username: string;
-  email: string;
-  provider: string;
-  confirmed: boolean;
-  blocked: boolean;
-  createdAt: string;
-  updatedAt: string;
-  role?: {
-    id: number;
-    name: string;
-    description: string;
-    type: string;
-  };
+  id: number
+  email: string
+  username: string
+  is_active: boolean
+  roles: string[]          // list of role names, e.g. ["Board", "Member"]
+  created_at?: string
 }
 
 export interface LoginResponse {
-  jwt: string;
-  user: User;
+  token: string
+  user: User
 }
 
-export interface Event {
-  id: number;
-  title: string;
-  description: string;
-  date: string;
-  location: string;
-  capacity: number;
-  signup_deadline: string;
-  contact_info: string;
-  createdAt: string;
-  updatedAt: string;
-  publishedAt: string;
-  categories?: {
-    data: StrapiEntity<Category>[];
-  };
-  responsible_person?: {
-    data: StrapiEntity<User>;
-  };
-  chat_messages?: {
-    data: StrapiEntity<ChatMessage>[];
-  };
-  rsvps?: {
-    data: StrapiEntity<RSVP>[];
-  };
-  Coverimage?: {
-    id?: number;
-    url?: string;
-    name?: string;
-    alternativeText?: string | null;
-    caption?: string | null;
-    width?: number;
-    height?: number;
-    formats?: Record<string, any>;
-    hash?: string;
-    ext?: string;
-    mime?: string;
-    size?: number;
-    previewUrl?: string | null;
-    provider?: string;
-    provider_metadata?: any;
-    createdAt?: string;
-    updatedAt?: string;
-    publishedAt?: string;
-  }
+// ─── Events ──────────────────────────────────────────────────────────────────
+
+export interface EventType {
+  id: number
+  name: string
 }
 
 export interface Category {
-  name: string;
-  createdAt: string;
-  updatedAt: string;
-  publishedAt: string;
+  id: number
+  name: string
 }
 
-export interface ChatMessage {
-  message: string;
-  createdAt: string;
-  updatedAt: string;
-  publishedAt: string;
-  event?: {
-    data: StrapiEntity<Event>;
-  };
-  user?: {
-    data: StrapiEntity<User>;
-  };
+export interface Event {
+  id: number
+  title: string
+  description: string | null
+  date: string
+  location: string | null
+  capacity: number | null
+  signup_deadline: string | null
+  contact_info: string | null
+  cover_image_url: string | null
+  is_published: boolean
+  slug: string | null
+  fee_charged: number | null
+  fee_received: number | null
+  fee_currency: string | null
+  fee_notes: string | null
+  event_type: EventType | null
+  creator: { id: number; username: string } | null
+  categories: Category[]
+  created_at: string
+  updated_at: string
 }
+
+// ─── RSVPs ───────────────────────────────────────────────────────────────────
+
+export type RSVPStatus = 'yes' | 'no' | 'maybe'
 
 export interface RSVP {
-  status_answer: 'yes' | 'no' | 'maybe';
-  createdAt: string;
-  updatedAt: string;
-  publishedAt: string;
-  event?: {
-    data: StrapiEntity<Event>;
-  };
-  user?: {
-    data: StrapiEntity<User>;
-  };
+  id: number
+  status: RSVPStatus
+  user_id: number
+  event_id: number
+  created_at: string
+  updated_at: string
 }
 
+// ─── Chat ────────────────────────────────────────────────────────────────────
+
+export interface ChatMessage {
+  id: number
+  message: string
+  user_id: number
+  event_id: number
+  created_at: string
+}
+
+// ─── Roles & permissions ─────────────────────────────────────────────────────
+
+export interface Permission {
+  id: number
+  resource: string
+  action: string
+}
+
+export interface Role {
+  id: number
+  name: string
+  description: string
+  is_system: boolean
+  permissions: Permission[]
+}
+
+// ─── Auth state (Pinia store) ─────────────────────────────────────────────────
+
 export interface AuthState {
-  user: User | null;
-  jwt: string | null;
-  isAuthenticated: boolean;
+  user: User | null
+  token: string | null
+  isAuthenticated: boolean
 }
