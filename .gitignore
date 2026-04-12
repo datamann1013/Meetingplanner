@@ -526,3 +526,5 @@ FodyWeavers.xsd
 *.msix
 *.msm
 *.msp
+
+backend/venv/*
