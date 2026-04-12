@@ -16,7 +16,9 @@
         <span class="event-title">{{ event.title }}</span>
       </div>
       <span class="event-date event-date-bottomright">{{ formatDate(event.date) }}</span>
-      <span class="event-deadline event-deadline-bottomleft">Signup: {{ formatDate(event.signup_deadline) }}</span>
+      <span class="event-deadline event-deadline-bottomleft">
+        Signup: {{ event.signup_deadline ? formatDate(event.signup_deadline) : 'No deadline' }}
+      </span>
       <v-btn icon color="primary" size="small" class="event-info-btn-topright">
         <v-icon color="secondary">mdi-information</v-icon>
       </v-btn>
@@ -27,19 +29,9 @@
 </template>
 
 <script setup lang="ts">
-import { EventCard as useEventCard } from '@/composables/EventCard'
+import type { Event } from '@/types'
+import { useEventCard } from '@/composables/EventCard'
 
-interface EventCardProps {
-  event: {
-    title: string
-    date: string
-    signup_deadline?: string
-    description?: string
-    Coverimage?: { url?: string }
-  }
-  strapiBaseUrl: string
-}
-
-const props = defineProps<EventCardProps>()
-const { coverImageStyle, formatDate } = useEventCard(props.event, props.strapiBaseUrl)
+const props = defineProps<{ event: Event }>()
+const { coverImageStyle, formatDate } = useEventCard(props.event)
 </script>

@@ -5,18 +5,19 @@
         <h1 class="text-h4 mb-4">Upcoming Events</h1>
       </v-col>
     </v-row>
-    
+
     <v-row v-if="loading">
       <v-col cols="12" class="text-center">
-        <v-progress-circular indeterminate color="primary"></v-progress-circular>
+        <v-progress-circular indeterminate color="primary" />
       </v-col>
     </v-row>
-    
+
     <v-row v-else-if="events.length === 0">
       <v-col cols="12" class="text-center">
         <p>No events found.</p>
       </v-col>
     </v-row>
+
     <v-row v-else>
       <v-col
         v-for="event in events"
@@ -26,49 +27,15 @@
         lg="4"
         class="mb-4"
       >
-        <EventCard :event="event" :strapiBaseUrl="strapiBaseUrl" />
+        <EventCard :event="event" />
       </v-col>
     </v-row>
-      <v-dialog v-model="showError" max-width="400">
-        <v-card style="position: relative;">
-          <v-btn icon @click="showError = false" style="position: absolute; top: 8px; right: 8px; z-index: 10; background: var(--v-theme-surface); box-shadow: 0 2px 8px rgba(0,0,0,0.15);">
-            <v-icon>mdi-close</v-icon>
-          </v-btn>
-          <v-card-title class="d-flex align-center">
-            <span>Error</span>
-          </v-card-title>
-          <v-card-text>
-            <div>You don't have access to this resource.</div>
-            <div class="mt-2"><strong>Query:</strong> {{ lastFailedQuery }}</div>
-          </v-card-text>
-        </v-card>
-      </v-dialog>
   </v-container>
 </template>
 
 <script setup lang="ts">
+import EventCard from '@/components/shared/EventCard.vue'
+import { useEventTable } from '@/composables/EventTable'
 
-import { ref } from 'vue'
-import { EventTable } from '@/composables/EventTable'
-import EventCard from '../../components/shared/EventCard.vue'
-
-const {
-  events: rawEvents,
-  loading,
-} = EventTable()
-
-// Ensure events have the expected structure with a title property
-import { computed } from 'vue'
-const events = computed(() =>
-  rawEvents.value.map(event =>
-    event.title
-      ? event
-      : event.attributes && event.attributes.title
-        ? { ...event, title: event.attributes.title }
-        : event // fallback, may need more mapping depending on actual structure
-  )
-)
-const showError = ref(false)
-const lastFailedQuery = ref('')
-const strapiBaseUrl = import.meta.env.VITE_STRAPI_API_URL || 'http://localhost:1337'
+const { events, loading } = useEventTable()
 </script>

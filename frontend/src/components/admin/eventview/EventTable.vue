@@ -14,11 +14,11 @@
       <template #select="{ row }">
         <input type="checkbox" :value="row.id" v-model="selectedEvents" />
       </template>
-      <template #name="{ row }">
-        <span class="hoverable-cell" @mouseenter="hoveredEvent = row.id; hoveredField = 'name'" @mouseleave="hoveredEvent = null; hoveredField = null">
-          {{ row.name }}
-          <div v-if="hoveredEvent === row.id && hoveredField === 'name'" class="popup-info">
-            <strong>Name:</strong> {{ row.name }}
+      <template #title="{ row }">
+        <span class="hoverable-cell" @mouseenter="hoveredEvent = row.id; hoveredField = 'title'" @mouseleave="hoveredEvent = null; hoveredField = null">
+          {{ row.title }}
+          <div v-if="hoveredEvent === row.id && hoveredField === 'title'" class="popup-info">
+            <strong>Name:</strong> {{ row.title }}
           </div>
         </span>
       </template>
@@ -64,19 +64,18 @@
       </template>
     </TableEntry>
     <div v-if="hoveredEvent" class="event-row-details">
-      <strong>Details for:</strong> {{ events.find(e => e.id === hoveredEvent)?.name }}<br>
-      RSVP: {{ events.find(e => e.id === hoveredEvent)?.rsvp }}<br>
-      Status: {{ events.find(e => e.id === hoveredEvent)?.status }}
-      <br />Signup Deadline: {{ events.find(e => e.id === hoveredEvent)?.signup_deadline }}
+      <strong>Details for:</strong> {{ events.find(e => e.id === hoveredEvent)?.title }}<br>
+      Type: {{ events.find(e => e.id === hoveredEvent)?.event_type?.name ?? '—' }}<br>
+      <br />Signup Deadline: {{ formatDateTime(events.find(e => e.id === hoveredEvent)?.signup_deadline ?? '') }}
       <br />Description: {{ events.find(e => e.id === hoveredEvent)?.description }}
-      <br />Date: {{ formatDateTime(events.find(e => e.id === hoveredEvent)?.date || '') }}
+      <br />Date: {{ formatDateTime(events.find(e => e.id === hoveredEvent)?.date ?? '') }}
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import TableEntry from "../../shared/TableEntry.vue";
-import { EventTable } from "@/composables/EventTable";
+import { useEventTable } from "@/composables/EventTable";
 
 const {
   events,
@@ -87,7 +86,7 @@ const {
   hoveredField,
   columns,
   formatDateTime,
-} = EventTable();
+} = useEventTable();
 
 </script>
 
