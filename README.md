@@ -1,106 +1,163 @@
-# EventHub - Student Organisation Event Manager
+# Meetingplanner — Student Orchestra System
 
-A self-hosted, modern event management system for student organisations. Built with Strapi (backend) and Vue 3 (frontend).
-
-## Features
-
-- **User Roles:** Members and Board members.
-- **Event Management:** Board members can create, edit, and delete events.
-- **RSVP System:** Users can respond with Yes, No, or Maybe until a set signup deadline.
-- **Event Chat:** Live discussion for each event.
-- **Transparency:** Everyone can see who has answered what for an event.
-- **Moderation:** Board members can delete chat messages and manage users.
-- **User Tags:** Assign custom roles (e.g., "Treasurer", "Lead Volunteer") to users.
-- **Active/Inactive:** Mark members as active or inactive.
+A self-hosted event management system built for a student orchestra. Handles events, RSVPs, instrument sections, sheet music, seating charts, and a fully configurable role/permission system that the board can manage without touching code.
 
 ## Tech Stack
 
-### Backend
-- **Strapi** (Headless CMS)
-- **PostgreSQL** (Production Database)
-- **JWT** (Authentication)
+| Layer | Technology |
+|-------|-----------|
+| Frontend | Vue 3 + Vuetify 3 + Pinia + TypeScript + Vite |
+| Backend | Python 3.12 + FastAPI |
+| ORM / Migrations | SQLAlchemy 2 (async) + Alembic |
+| Database | PostgreSQL |
+| Auth | JWT (python-jose + passlib/bcrypt) |
+| Background jobs | Celery + Redis (Phase 4) |
 
-### Frontend
-- **Vue 3** (Composition API)
-- **Vite** (Build Tool)
-- **Pinia** (State Management)
-- **Vue Router** (Navigation)
-- **Vuetify** (UI Component Library)
-- **Axios** (HTTP Client)
+---
 
-## Project Setup
+## Local Development (DevContainer)
 
-### Prerequisites
-- Node.js (v18 or higher)
-- A PostgreSQL database (for production)
-- npm or yarn
+The easiest way to run this project is using the VS Code DevContainer — it sets up Python, Node, and PostgreSQL automatically.
 
-### 1. Backend (Strapi) Setup
+1. Open the repo in VS Code
+2. When prompted, click **Reopen in Container**
+3. Wait for `setup.sh` to finish (installs frontend deps, starts PostgreSQL, creates DB)
+
+Then in two terminals:
 
 ```bash
-# Clone the repository (when available)
-# git clone <your-repo>
-# cd backend
-
-# Or create a new Strapi project
-npx create-strapi-app@latest backend --quickstart
+# Terminal 1 — Backend
 cd backend
-
-# Install dependencies (if cloning)
-npm install
-
-# Start the development server
-npm run develop
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+cp .env.example .env          # edit if needed
+alembic upgrade head           # run migrations
+python seed.py                 # create default roles, permissions, admin user
+uvicorn app.main:app --reload --port 8000
 ```
 
-Access the Strapi admin panel at http://localhost:1337/admin to create your first admin user.
-
-**Configuration:**
-
-- In the Admin Panel, go to Settings > Content-Type Builder and create the Collections as described in the plan.
-- Go to Settings > Users & Permissions Plugin > Roles and configure the permissions for Public, Authenticated, and Board roles.
-
-### 2. Frontend (Vue) Setup
 ```bash
-# Navigate to the frontend directory
-cd ../frontend
-
-# Install dependencies
-npm install
-
-# Start the development server
+# Terminal 2 — Frontend
+cd frontend
 npm run dev
 ```
 
-Access the application at http://localhost:5173.
+- Backend API + interactive docs: http://localhost:8000/docs
+- Frontend: http://localhost:5173
+- Default admin login: `admin@yourorchestra.com` / `changeme123` (set in `.env`)
 
-#### Environment Variables:
-Create a .env file in the frontend directory:
+---
 
-```env
-VITE_STRAPI_API_URL=http://localhost:1337/api
+## Project Structure
+
 ```
-## Deployment
-This setup is designed for deployment on a Linux server (e.g., Ubuntu).
+backend/
+  app/
+    main.py          # FastAPI app — register new routers here
+    config.py        # All settings (reads from .env)
+    database.py      # DB engine + session
+    models/          # SQLAlchemy models (one file per feature)
+    schemas/         # Pydantic request/response shapes
+    routers/         # API endpoints (one file per feature)
+    core/
+      security.py    # JWT + password hashing
+      dependencies.py  # get_current_user, require_permission()
+  alembic/           # Database migrations
+  seed.py            # Seeds default roles, permissions, admin user
 
-### Backend Deployment (Strapi + PostgreSQL):
-1. Server Setup: Install Node.js, PM2, Nginx, and PostgreSQL on your server.
-2. Database: Create a new PostgreSQL user and database for Strapi.
-3. Configuration: Update the backend's config/database.js and config/server.js files for production settings (use environment variables for secrets!).
-4. Process Management: Use PM2 to run npm start in the backend directory to keep Strapi running.
-5. Web Server: Configure Nginx as a reverse proxy to forward requests to your Strapi port (e.g., 1337).
+frontend/
+  src/
+    services/api.ts  # Axios client — all API calls go through here
+    stores/auth.ts   # Pinia auth store
+    types/index.ts   # TypeScript interfaces for all entities
+    composables/     # Reusable Vue logic
+    components/
+      admin/         # Board-only components
+      shared/        # Public components
+    views/           # Page-level components
+```
 
-### Frontend Deployment (Vue):
-1. Build: Run npm run build in the frontend directory. This creates a dist folder with static files.
-2. Serve with Nginx: Configure a separate Nginx server block to serve the contents of the dist folder as a static website. Point your domain (e.g., app.yourdomain.com) to this.
+---
 
-## Usage
-- Board Members: Log in and access the Admin Panel via the link in the navigation. You can create events and manage users there. You can also delete chat messages directly from the event view in the main app.
-- Members: Log in to view events, RSVP, and participate in event chats.
-- Signup Deadline: After an event's signup deadline passes, the RSVP buttons will be disabled for everyone.
-  
-## Delayed features
-Customization (Optional but Recommended for deadlines):
-We will write custom code in /src/api/rsvp/controllers/rsvp.js to prevent creating/updating an RSVP if the event's signup_deadline has passed.
+## Adding a New Feature
 
-Proper board member check through Strapi. Go over authenticationwith that in mind later.
+See [docs/adding-a-feature.md](docs/adding-a-feature.md) for the full guide. The short version:
+
+1. Add a model to `backend/app/models/newfeature.py`
+2. Import it in `backend/app/models/__init__.py`
+3. Add schemas to `backend/app/schemas/newfeature.py`
+4. Add a router to `backend/app/routers/newfeature.py`
+5. Register the router in `backend/app/main.py`
+6. Add any new permissions to `seed.py` → `ALL_PERMISSIONS`
+7. Run `alembic revision --autogenerate -m "add newfeature"` then `alembic upgrade head`
+8. Re-run `python seed.py` (safe to re-run — skips existing data)
+
+---
+
+## Roles & Permissions
+
+The board can create custom roles and assign permissions through the admin UI — no code changes needed.
+
+System roles (cannot be deleted):
+- **SuperAdmin** — all permissions
+- **Board** — manage events, users, roles, sections, sheet music, seating
+- **Member** — RSVP, chat, view events and sheet music
+- **Guest** — view published events only
+
+To add a new permission when building a new feature, add it to `ALL_PERMISSIONS` in `seed.py` and decorate the route:
+
+```python
+@router.post("/newfeature")
+async def create_thing(
+    ...,
+    _: None = Depends(require_permission("newfeature", "create")),
+):
+```
+
+---
+
+## ⚠️ Before Going to Production
+
+Work through this checklist before deploying for real users:
+
+### Secrets & Configuration
+- [ ] Generate a strong `JWT_SECRET` (e.g. `python -c "import secrets; print(secrets.token_hex(32))"`)
+- [ ] Change `SEED_ADMIN_PASSWORD` in `.env` — and change the admin password immediately after first login
+- [ ] Set `CORS_ORIGINS` to your actual frontend domain (e.g. `https://orchestra.example.com`) — remove `localhost`
+- [ ] Set `VITE_API_URL` in `frontend/.env` to your production backend URL
+- [ ] Never commit `.env` files to git (`.gitignore` covers this)
+
+### Database
+- [ ] Switch from local PostgreSQL to a managed database (or your university's server)
+- [ ] Update `DATABASE_URL` with production credentials
+- [ ] Run `alembic upgrade head` on the production database
+- [ ] Run `python seed.py` once on production to create roles and admin user
+- [ ] Set up automated database backups
+
+### Deployment
+- [ ] Run `npm run build` in `frontend/` and serve the `dist/` folder via Nginx or similar
+- [ ] Run FastAPI with `uvicorn app.main:app --host 0.0.0.0 --port 8000` behind a reverse proxy (Nginx/Caddy)
+- [ ] Use a process manager (systemd or supervisord) to keep the backend running
+- [ ] Set up HTTPS — Let's Encrypt is free and works with Nginx/Caddy
+- [ ] Set `echo=False` in `database.py` (already done) to avoid SQL logging in production
+
+### Email (Phase 4)
+- [ ] Configure `SMTP_*` variables with your email provider credentials
+- [ ] Start the Celery worker: `celery -A app.tasks.celery_app worker --loglevel=info`
+- [ ] Start Redis: `redis-server` (or use a managed Redis service)
+
+### Security
+- [ ] Review all `require_permission()` decorators on sensitive routes
+- [ ] Ensure uploaded files (`uploads/`) are not directly accessible from the internet without auth
+- [ ] Consider rate-limiting the `/api/auth/login` endpoint
+
+---
+
+## Documentation
+
+- [docs/architecture.md](docs/architecture.md) — system overview and data model
+- [docs/adding-a-feature.md](docs/adding-a-feature.md) — step-by-step guide for contributors
+- [docs/rbac.md](docs/rbac.md) — how roles and permissions work
+- [docs/deployment.md](docs/deployment.md) — full deployment guide
+- http://localhost:8000/docs — interactive API docs (auto-generated, always up to date)
