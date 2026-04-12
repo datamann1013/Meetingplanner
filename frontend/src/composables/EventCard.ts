@@ -1,10 +1,11 @@
 import { computed } from 'vue'
+import type { Event } from '@/types'
 
-export function EventCard(event: any, strapiBaseUrl: string) {
+export function useEventCard(event: Event) {
   const coverImageStyle = computed(() => {
-    if (event.Coverimage?.url) {
+    if (event.cover_image_url) {
       return {
-        backgroundImage: `url(${strapiBaseUrl}${event.Coverimage.url})`,
+        backgroundImage: `url(${event.cover_image_url})`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
       }
@@ -18,8 +19,5 @@ export function EventCard(event: any, strapiBaseUrl: string) {
     return new Date(date).toLocaleDateString()
   }
 
-  return {
-    coverImageStyle,
-    formatDate,
-  }
+  return { coverImageStyle, formatDate }
 }

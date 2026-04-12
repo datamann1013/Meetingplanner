@@ -1,59 +1,35 @@
-import { ref, onMounted } from 'vue'
-import { strapi } from '../services/strapi'
+import { onMounted, ref } from 'vue'
+import { fetchEvents } from '@/services/eventData'
+import type { Event } from '@/types'
 import { formatDateTime } from './DateUtils'
 
-export function EventTable() {
-  const events = ref<any[]>([])
+export function useEventTable() {
+  const events = ref<Event[]>([])
   const loading = ref(true)
   const error = ref<Error | null>(null)
-  const selectedEvents = ref<(string | number)[]>([])
-  const hoveredEvent = ref<string | number | null>(null)
+  const selectedEvents = ref<number[]>([])
+  const hoveredEvent = ref<number | null>(null)
   const hoveredField = ref<string | null>(null)
 
   const columns = [
     { key: 'select', label: '' },
-    { key: 'name', label: 'Event Name' },
+    { key: 'title', label: 'Event Name' },
     { key: 'date', label: 'Date' },
-    { key: 'status', label: 'Status' },
-    { key: 'rsvp', label: 'RSVP' },
+    { key: 'event_type', label: 'Type' },
+    { key: 'rsvps', label: 'RSVPs' },
     { key: 'signup_deadline', label: 'Signup Deadline' },
-    { key: 'description', label: 'Description' }
+    { key: 'description', label: 'Description' },
   ]
 
   onMounted(async () => {
     try {
-      const res: any = await strapi.get('/events?populate=*')
-      if (res.data && Array.isArray(res.data.data)) {
-        events.value = res.data.data.map((item: any) => ({
-          id: item.id,
-          title: item.title,
-          date: item.date,
-          status: item.status || 'Draft',
-          rsvp: item.rsvp_count || '0/0',
-          tag: item.tag || '',
-          signup_deadline: item.signup_deadline,
-          description: item.description,
-          Coverimage: item.Coverimage || null,
-        }))
-      } else {
-        events.value = []
-      }
+      events.value = await fetchEvents()
     } catch (err) {
       error.value = err instanceof Error ? err : new Error(String(err))
-      events.value = []
     } finally {
       loading.value = false
     }
   })
 
-  return {
-    events,
-    loading,
-    error,
-    selectedEvents,
-    hoveredEvent,
-    hoveredField,
-    columns,
-    formatDateTime,
-  }
+  return { events, loading, error, selectedEvents, hoveredEvent, hoveredField, columns, formatDateTime }
 }
